@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Алгоритмы в нашей жизни · 4 класс</title>
+<style>
+  :root{--ink:#1b2740; --accent:#3b5bdb; --accent-d:#2743a8; --line:#d8e0f0; --muted:#5b6b83;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:#161c33; font:24px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink);}
+  #deck{position:relative; width:100vw; height:100vh; overflow:hidden;}
+  .slide{position:absolute; inset:0; display:none; padding:6vh 6vw; flex-direction:column; justify-content:center; background:#f2f6ff;}
+  .slide.active{display:flex;}
+  .slide h1{font-size:2.6em; font-weight:800; color:var(--accent-d); line-height:1.15; margin-bottom:.5em;}
+  .slide h2{font-size:1.6em; font-weight:700; margin-bottom:.4em;}
+  .slide p,.slide li{font-size:1em;}
+  .slide ul{margin:.4em 0 .4em 1.2em;}
+  .slide li{margin:.18em 0;}
+  .slide .kicker{font-size:.66em; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:.5em;}
+  .slide .foot{margin-top:auto; font-size:.5em; color:var(--muted); padding-top:1em;}
+  .slide.cover{background:linear-gradient(135deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff;}
+  .slide.cover .kicker{color:#c7d4fa;}
+  .slide.cover h1{color:#fff;}
+  .steps{counter-reset:st; list-style:none; margin:.4em 0;}
+  .steps li{counter-increment:st; position:relative; padding:.4em 0 .4em 2em; letter-spacing:.01em;}
+  .steps li::before{content:counter(st); position:absolute; left:0; top:.45em; width:1.3em; height:1.3em; border-radius:50%;
+    background:var(--accent); color:#fff; font-size:.8em; display:grid; place-items:center; font-weight:700;}
+  .btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); color:#fff; border:none; width:56px; height:56px; border-radius:50%; font-size:24px; cursor:pointer; z-index:10;}
+  #prev{left:14px;} #next{right:14px;}
+  #count{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:#fff; opacity:.7; font-size:13px; background:rgba(0,0,0,.3); padding:3px 12px; border-radius:20px; z-index:10;}
+  @media print{ body{background:#fff;} .btn,#count{display:none;} .slide{position:static; display:flex!important; height:auto; min-height:96vh; break-after:page;} }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <section class="slide cover active">
+    <div class="kicker">Информатика · 4 класс</div>
+    <h1>Алгоритмы в нашей жизни</h1>
+    <p>Что такое алгоритм и почему он помогает всё делать правильно.</p>
+    <div class="foot">Автор: [ваше имя] · Информатика · ФГОС</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Организационный момент</div>
+    <h2>О чём урок</h2>
+    <ul>
+      <li>Что такое алгоритм.</li>
+      <li>Где алгоритмы встречаются в жизни.</li>
+      <li>Как составить свой алгоритм.</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Основное понятие</div>
+    <h2>Что такое алгоритм?</h2>
+    <p>Алгоритм — это <b>порядок действий</b>, который нужно выполнить, чтобы получить нужный результат.</p>
+    <p>Если действия перепутать — результат получится неправильный.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Пример</div>
+    <h2>Как почистить зубы</h2>
+    <ol class="steps">
+      <li>Взять зубную щётку и пасту.</li>
+      <li>Выдавить пасту на щётку.</li>
+      <li>Почистить зубы.</li>
+      <li>Прополоскать рот.</li>
+      <li>Помыть щётку и поставить на место.</li>
+    </ol>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Главные признаки</div>
+    <h2>Признаки алгоритма</h2>
+    <ul>
+      <li><b>Пошаговость</b> — действия идут друг за другом.</li>
+      <li><b>Понятность</b> — каждый шаг ясен.</li>
+      <li><b>Конечность</b> — у алгоритма есть конец.</li>
+      <li><b>Результат</b> — в конце получаем ответ.</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Где встречаются алгоритмы</div>
+    <h2>Алгоритмы вокруг нас</h2>
+    <p>Рецепт бутерброда, расписание дня, дорога в школу, сборка конструктора — это всё алгоритмы.</p>
+    <p>Компьютер тоже выполняет алгоритмы — программы.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Практика</div>
+    <h2>Задание на уроке</h2>
+    <p>В приложении расставь шаги по порядку и собери свой алгоритм.</p>
+    <p>Придумай алгоритм «Как собраться в школу» из пяти шагов.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Рефлексия</div>
+    <h2>Итог урока</h2>
+    <ul>
+      <li>Алгоритм — порядок действий для нужного результата.</li>
+      <li>Алгоритмы есть в жизни и в компьютере.</li>
+      <li>Мы умеем составлять свои алгоритмы.</li>
+    </ul>
+    <p><b>Дома:</b> запиши алгоритм «Как сделать бутерброд» на листочке.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+</div>
+
+<button class="btn" id="prev">‹</button>
+<button class="btn" id="next">›</button>
+<div id="count">1 / 9</div>
+
+<script>
+"use strict";
+const slides=[].slice.call(document.querySelectorAll(".slide"));
+let cur=slides.findIndex(s=>s.classList.contains("active"));
+function upd(){slides.forEach((s,k)=>s.classList.toggle("active",k===cur));document.getElementById("count").textContent=(cur+1)+" / "+slides.length;}
+function next(){cur=Math.min(cur+1,slides.length-1);upd();}
+function prev(){cur=Math.max(cur-1,0);upd();}
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){next();e.preventDefault();}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){prev();e.preventDefault();}
+});
+</script>
+</body>
+</html>

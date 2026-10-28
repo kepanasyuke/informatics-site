@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Системы счисления · урок 1 · 8 класс</title><style>
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{background:#0e1526;font:100%/1.2 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#222a3a}
+#deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+/* базовый плакат: светлая «бумага» + карандашные наброски по краям */
+.slide{position:absolute;inset:0;display:none;padding:5.5vh 7vw;flex-direction:column;justify-content:center;
+  background:radial-gradient(120% 120% at 100% 0%,rgba(232,233,246,.40) 0%,rgba(255,253,247,0) 48%),#fffdf6;overflow:hidden}
+.slide.active{display:flex}
+.slide>*{position:relative;z-index:3}
+/* пер-слайд акцентная палитра через CSS-переменные (один из 5 цветов) */
+.slide.acc1{--ac:#e8436f;--ac-soft:rgba(232,67,111,.12);--ac-chip:#ffe4ec}
+.slide.acc2{--ac:#0f9d8c;--ac-soft:rgba(15,157,140,.12);--ac-chip:#dcf4f0}
+.slide.acc3{--ac:#d97706;--ac-soft:rgba(217,119,6,.12);--ac-chip:#fdeedd}
+.slide.acc4{--ac:#6d4fd1;--ac-soft:rgba(109,79,209,.12);--ac-chip:#ece6fb}
+.slide.acc5{--ac:#2563eb;--ac-soft:rgba(37,99,235,.12);--ac-chip:#e3ecfc}
+.slide.cover{--ac:#ffd9e5;--ac-soft:rgba(255,217,229,.18);--ac-chip:rgba(255,255,255,.16)}
+/* карандашные наброски (чистый CSS): штрихи-волны, кружки, пятна-штриховка */
+.slide::before{content:"";position:absolute;left:-6vmin;bottom:-10vmin;width:44vmin;height:44vmin;border:.6vmin dashed rgba(120,90,30,.12);border-radius:45% 55% 62% 38%/55% 45% 55% 45%;transform:rotate(16deg);z-index:1;pointer-events:none}
+.slide::after{content:"";position:absolute;right:-5vmin;top:-7vmin;width:34vmin;height:34vmin;background:radial-gradient(circle at 35% 35%,var(--ac-soft),transparent 62%);border-radius:50%;z-index:1;pointer-events:none}
+.slide .dw{position:absolute;z-index:1;pointer-events:none}
+.slide .dw-a{left:6%;bottom:18%;width:8vmin;height:8vmin;border:.5vmin solid var(--ac-soft);border-radius:50%;box-shadow:inset 0 0 0 .6vmin transparent}
+.slide .dw-b{right:11%;bottom:14%;width:10vmin;height:5vmin;border:.55vmin dashed var(--ac-soft);border-radius:50% 50% 50% 0;transform:rotate(-14deg)}
+.slide .dw-c{left:16%;top:12%;width:9vmin;height:9vmin;background:conic-gradient(from 0deg,var(--ac-soft) 0 60deg,transparent 60deg 120deg,var(--ac-soft) 120deg 180deg,transparent 180deg 240deg,var(--ac-soft) 240deg 300deg,transparent 300deg);border-radius:50%;opacity:.55}
+/* типографика */
+.slide .kicker{font-size:max(13px,1.05vw);letter-spacing:.26em;text-transform:uppercase;color:var(--ac);font-weight:800;margin-bottom:1.5vh;display:flex;align-items:center;gap:.8em}
+.slide .kicker::before{content:"";width:1.7em;height:.42em;border-radius:2px;background:var(--ac);display:inline-block}
+.slide h1{font-size:max(34px,6.4vw);font-weight:900;letter-spacing:-.01em;line-height:.98;color:#191f33;margin-bottom:2.2vh}
+.slide h1 .hl{color:var(--ac);display:inline;position:relative}
+.slide h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.2em;background:var(--ac-soft);z-index:-1;border-radius:3px}
+.slide h2{font-size:max(26px,4vw);font-weight:900;line-height:1.03;color:#191f33;margin-bottom:.6em}
+.slide h2 .hl{color:var(--ac)}
+.slide .subt{font-size:max(15px,1.4vw);color:#4a5470;line-height:1.45;max-width:74ch}
+.slide ul{list-style:none;margin:1.2vh 0;padding:0}
+.slide li{font-size:max(16px,1.75vw);line-height:1.3;font-weight:600;color:#1f2740;padding:.3em 0 .3em 1.6em;position:relative;max-width:34em}
+.slide li::before{content:"";position:absolute;left:0;top:.66em;width:.82em;height:.82em;border-radius:2px;background:var(--ac);box-shadow:0 2px 0 var(--ac-soft)}
+.slide p{font-size:max(16px,1.75vw);line-height:1.4;color:#2c3550;max-width:34em}
+.slide .foot{margin-top:auto;font-size:max(11px,.78vw);color:#8a93ad;padding-top:2vh;z-index:3}
+/* крупная карточка понятия + определение + пример-выноска */
+.pterm{font-size:max(30px,4.4vw);font-weight:900;line-height:1;color:#191f33;display:inline-block;background:var(--ac-chip);padding:.24em .5em .24em .4em;border-radius:8px;margin-bottom:1.5vh}
+.pdef{font-size:max(17px,1.95vw);line-height:1.42;color:#2a3250;max-width:28em;margin-bottom:1.6vh}
+.pex{font-size:max(15px,1.45vw);background:#fff;border:1px solid rgba(40,50,80,.10);border-left:.7vmin solid var(--ac);border-radius:0 18px 18px 0;padding:.9em 1.3em;line-height:1.45;color:#333d66;box-shadow:0 12px 30px rgba(25,31,51,.10);display:inline-block;max-width:34em}
+.pex b{color:var(--ac)}
+/* сетка пронумерованных карточек-советов */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.6vmin;margin:1.4vh 0;max-width:92vw}
+.card{background:#fff;border:1px solid rgba(40,50,80,.08);border-radius:18px;padding:1.35em 1.4em 1.2em;position:relative;box-shadow:0 10px 26px rgba(25,31,51,.08);display:flex;flex-direction:column;gap:.45em}
+.card .num{position:absolute;top:-1.05em;left:1em;background:var(--ac);color:#fff;font-weight:900;font-size:max(20px,1.7vw);line-height:1;padding:.5em .72em;border-radius:10px;box-shadow:0 6px 14px var(--ac-soft)}
+.card h3{font-size:max(18px,1.8vw);font-weight:900;color:#191f33;margin-top:.55em}
+.card p{font-size:max(14px,1.32vw);line-height:1.42;color:#3a4560;max-width:none}
+.card .sticky{position:absolute;top:-.95em;right:1em;background:#ffe08a;color:#5a3d00;font-weight:800;font-size:max(12px,.9vw);letter-spacing:.06em;padding:.28em .7em;border-radius:6px;transform:rotate(2deg);box-shadow:0 4px 10px rgba(90,61,0,.15)}
+/* таблица */
+.tb{border-collapse:collapse;width:auto;background:#fff;border:1px solid rgba(40,50,80,.10);border-radius:16px;overflow:hidden;box-shadow:0 12px 28px rgba(25,31,51,.08);margin:1.2vh 0}
+.tb th,.tb td{text-align:left;padding:.6em 1em;border-bottom:1px solid rgba(40,50,80,.07);font-size:max(14px,1.28vw)}
+.tb th{background:var(--ac-chip);color:var(--ac);font-size:.82em;text-transform:uppercase;letter-spacing:.04em}
+.tb td b{color:var(--ac)}
+.tb tr:last-child td{border-bottom:none}
+.tb td:first-child{white-space:nowrap;font-weight:800}
+/* стикер-заметка */
+.stick{display:inline-block;background:#ffefb3;color:#4a3a08;border-radius:8px;padding:.8em 1.2em;font-weight:800;font-size:max(15px,1.4vw);transform:rotate(-1.2deg);box-shadow:0 6px 16px rgba(90,61,0,.12);margin:.5em 0;max-width:26em;line-height:1.35}
+/* плакатная кнопка-призыв (CTA) */
+.cta{display:inline-block;background:var(--ac);color:#fff;font-weight:800;font-size:max(16px,1.5vw);padding:.7em 1.6em;border-radius:999px;box-shadow:0 10px 24px var(--ac-soft);margin-top:1.6vh;text-decoration:none}
+.slide.cover .cta{background:rgba(255,255,255,.18);color:#fff}
+/* обложка — плакат с градиентом и декором */
+.slide.cover{background:radial-gradient(130% 150% at 82% 12%,#c04576 0%,#7a3f86 36%,#2a3a6e 72%,#151d33 100%);color:#fff}
+.slide.cover::before{border-color:rgba(255,255,255,.12)}
+.slide.cover::after{background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.16),transparent 62%)}
+.slide.cover .dw-a{border-color:rgba(255,255,255,.18)}
+.slide.cover .dw-b{border-color:rgba(255,255,255,.18)}
+.slide.cover .dw-c{opacity:.25}
+.slide.cover .kicker{color:#ffb3ca}.slide.cover .kicker::before{background:#ffb3ca}
+.slide.cover h1{color:#fff}.slide.cover h1 .hl{color:#ffd9e5}
+.slide.cover h1 .hl::after{background:rgba(255,255,255,.25)}
+.slide.cover .subt{color:#fff;background:rgba(255,255,255,.14);border-radius:14px;padding:.6em 1.1em;display:inline-block;max-width:74ch;font-size:max(17px,1.6vw);font-weight:600}
+.slide.cover p{color:#e6eaf7}
+.slide.cover .foot{color:#cdd3ec;background:rgba(255,255,255,.10);border-radius:999px;padding:.35em 1em;display:inline-block;margin-top:auto}
+.btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);color:#fff;border:none;width:56px;height:56px;border-radius:50%;font-size:26px;cursor:pointer;z-index:20;backdrop-filter:blur(2px)}
+.btn:hover{background:rgba(0,0,0,.55)}#prev{left:16px}#next{right:16px}
+#count{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);color:#fff;opacity:.8;font-size:13px;background:rgba(0,0,0,.35);padding:3px 14px;border-radius:20px;z-index:20}
+@media print{body{background:#fff}.btn,#count{display:none}.slide{position:static;display:flex!important;height:auto;min-height:96vh;break-after:page}.slide::after,.slide::before,.slide .dw{display:none}}</style><meta name="description" content="Системы счисления · урок 1 — материалы урока (8 класс, ФГОС)."><meta name="keywords" content="информатика, урок, 8 класс, ИКТ, программирование, ФГОС"><meta name="robots" content="index,follow"><link rel="canonical" href="https://YOUR-DOMAIN.ru/"><meta property="og:type" content="website"><meta property="og:title" content="Системы счисления · урок 1"><meta property="og:description" content="Системы счисления · урок 1 — материалы урока (8 класс, ФГОС)."><meta name="twitter:card" content="summary"></head><body>
+<div id="deck"><section class="slide acc1 cover active"><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">1</span><div class="kicker">Информатика · ИКТ · 8 класс</div><h1><span class="hl">Системы</span> счисления · урок 1</h1><div class="subt">Система счисления · Основание системы</div><div style="max-width:520px;margin:1.4rem 0 0"><div class="ds-collage net"><div class="node" style="left:30%;top:30%"></div><div class="node" style="left:55%;top:60%"></div><div class="link" style="left:12%;top:52%;width:42%"></div><div class="ttl">Информатика</div></div></div><a class="cta" href="#start">Смотрим плакаты &#8594;</a><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc2 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">2</span><div class="kicker">Цель урока</div><h2>Чему научимся</h2><div class="cards"><div class="card"><span class="num">1</span><h3>Система счисления</h3></div><div class="card"><span class="num">2</span><h3>Основание системы</h3></div></div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc3 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">3</span><div class="kicker">Понятие 1 из 2</div><div class="pterm"><span class="hl">Система</span> счисления</div><div class="pdef">способ записи чисел с помощью цифр; позиционная, если значение цифры зависит от позиции.</div><div class="pex"><b>Например:</b> десятичная, двоичная, восьмеричная, шестнадцатеричная</div><div class="stick">&#10003; Запомни: Система счисления</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc4 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">4</span><div class="kicker">Понятие 2 из 2</div><div class="pterm"><span class="hl">Основание</span> системы</div><div class="pdef">количество цифр, используемых в системе.</div><div class="pex"><b>Например:</b> в двоичной системе основание 2 (цифры 0 и 1)</div><div class="stick">&#10003; Запомни: Основание системы</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc5 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">5</span><div class="kicker">План урока</div><h2>Что мы <span class="hl">узнаем</span></h2><ul><li>Система счисления</li><li>Основание системы</li></ul><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc1 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">6</span><div class="kicker">Пример 1</div><h2><span class="hl">Система счисления</span>: как понять</h2><div class="pex" style="max-width:46em"><b>Разбор:</b> способ записи чисел с помощью цифр; позиционная, если значение цифры зависит от позиции.<br><br><b>Пример:</b> десятичная, двоичная, восьмеричная, шестнадцатеричная</div><div class="stick">&#128161; Запомни: Система счисления — это ключевое понятие урока.</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc2 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">7</span><div class="kicker">Пример 2</div><h2><span class="hl">Основание системы</span>: как понять</h2><div class="pex" style="max-width:46em"><b>Разбор:</b> количество цифр, используемых в системе.<br><br><b>Пример:</b> в двоичной системе основание 2 (цифры 0 и 1)</div><div class="stick">&#128161; Запомни: Основание системы — это ключевое понятие урока.</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc3 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">8</span><div class="kicker">Обсудим</div><h2><span class="hl">Система счисления</span></h2><p>Как ты думаешь, где в жизни встречается понятие <b>Система счисления</b>?</p><p>Приведи пример, обсуди в классе.</p><div class="stick">&#128172; Обсуждение</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc4 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">9</span><div class="kicker">Обсудим</div><h2><span class="hl">Основание системы</span></h2><p>Как ты думаешь, где в жизни встречается понятие <b>Основание системы</b>?</p><p>Приведи пример, обсуди в классе.</p><div class="stick">&#128172; Обсуждение</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc5 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">10</span><div class="kicker">Сравним понятия</div><h2>Понятия урока</h2><div style="overflow-x:auto;max-width:90vw"><table class="tb"><thead><tr><th>Понятие</th><th>Что это</th><th>Пример</th></tr></thead><tbody><tr><td><b>Система счисления</b></td><td>способ записи чисел с помощью цифр; позиционная, если значение цифры зависит от позиции.</td><td>десятичная, двоичная, восьмеричная, шестнадцатеричная</td></tr><tr><td><b>Основание системы</b></td><td>количество цифр, используемых в системе.</td><td>в двоичной системе основание 2 (цифры 0 и 1)</td></tr></tbody></table></div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc1 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">11</span><div class="kicker">Факты</div><h2>Запомни</h2><div class="stick">Двоичная система использует только цифры 0 и 1.</div><div class="stick">Шестнадцатеричная система использует цифры 0–9 и буквы A–F.</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc2 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">12</span><div class="kicker">Факты</div><h2>Запомни</h2><div class="stick">Перевод в десятичную выполняется по степеням основания.</div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc3 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">13</span><div class="kicker">Практика</div><h2>Проверь <span class="hl">себя</span></h2><p>Открой <b>приложение</b> урока и ответь на вопросы по теме.</p><p>Перед тестом перечитай слайды.</p><a class="cta" href="../app/index.html">В приложение &#8594;</a><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc4 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">14</span><div class="kicker">Итог</div><h2><span class="hl">Главное</span></h2><div class="cards"><div class="card"><span class="num">1</span><h3>Система счисления</h3></div><div class="card"><span class="num">2</span><h3>Основание системы</h3></div></div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section><section class="slide acc5 "><span class="dw dw-a"></span><span class="dw dw-b"></span><span class="dw dw-c"></span><span class="numt">15</span><div class="kicker">Домашнее задание</div><h2>Закрепи <span class="hl">дома</span></h2><ul><li>Повтори ключевые понятия урока.</li><li>Приведи свой пример к каждому понятию.</li><li>Выполни тест в приложении, если не завершён на уроке.</li></ul><div class="stick"><b>До встречи на следующем уроке!</b></div><div class="foot">Автор: Панасюк Кристина Эрнстовна · Информатика · 8 класс · ФГОС</div></section></div>
+<button class="btn" id="prev">&#8249;</button><button class="btn" id="next">&#8250;</button><div id="count">1 / 15</div>
+<script>"use strict";
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  if(!slides.length)return;
+  var cur=0;
+  for(var k=0;k<slides.length;k++){if(slides[k].className.indexOf('active')>=0){cur=k;break;}}
+  var count=document.getElementById("count");
+  var next=document.getElementById("next");
+  var prev=document.getElementById("prev");
+  function render(){
+    for(var i=0;i<slides.length;i++){
+      if(i===cur){slides[i].classList.add("active");}else{slides[i].classList.remove("active");}
+    }
+    if(count){count.textContent=(cur+1)+" / "+slides.length;}
+  }
+  function nx(){if(cur<slides.length-1){cur++;render();}else if("../../урок-02/prezentaciya/index.html"){window.location.href="../../урок-02/prezentaciya/index.html";}}
+  function pv(){if(cur>0){cur--;render();}else if("../../../../../7 класс/ПРОГ/тема-usloviya-python/урок-04/prezentaciya/index.html"){window.location.href="../../../../../7 класс/ПРОГ/тема-usloviya-python/урок-04/prezentaciya/index.html";}}
+  if(next){next.addEventListener("click",nx);}
+  if(prev){prev.addEventListener("click",pv);}
+  document.addEventListener("keydown",function(e){
+    if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "||e.key==="Enter"){e.preventDefault();nx();}
+    else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();pv();}
+  });
+  var deckEl=document.getElementById("deck");
+  if(deckEl){
+    deckEl.addEventListener("click",function(e){
+      if(e.target){var c=e.target.closest&&e.target.closest(".btn,#count");if(c){return;}}
+      var w=deckEl.clientWidth/2 || window.innerWidth/2;
+      if(e.clientX<w){pv();}else{nx();}
+    });
+  }
+  render();
+})();</script><style>
+/* ===== Единая дизайн-система ===== */
+:root{
+  --ds-ink:#191f33;            /* основной текст */
+  --ds-mut:#5b6b83;            /* приглушённый текст */
+  --ds-paper:#fffdf6;          /* светлый фон «бумага» */
+  --ds-white:#ffffff;          /* карточки */
+  --ds-ac:#e8436f;             /* акцент розовый (референсы) */
+  --ds-ac2:#6d4fd1;            /* акцент фиолетовый */
+  --ds-ac3:#2563eb;            /* акцент синий */
+  --ds-line:rgba(40,50,80,.12);/* тонкая линия-разделитель */
+  --ds-soft:#f2eefb;           /* мягкая подложка */
+  --ds-rad:16px;               /* радиус карточек */
+  --ds-shadow:0 10px 26px rgba(25,31,51,.07);
+  --ds-menu-bg:#151d33;        /* фон меню (тёмная плашка) */
+  --ds-radius-input:12px;
+}
+body{background:var(--ds-paper);color:var(--ds-ink);}
+/* правильная типографика */
+.ds-title{font-weight:900;letter-spacing:-.01em;color:var(--ds-ink);line-height:1.05}
+.ds-sub{color:var(--ds-mut)}
+/* ===== СЕТКА: максимум 3 карточки в ряд ===== */
+.ds-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.ds-grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));max-width:820px}
+/* ВАЖНО: правило «до 3 плашек в ряд» — применяется к карточкам-фичам/тем,
+   дальше карточки идут вниз (grid-auto-flow). Никогда не разрешать 4+ в ряд. */
+@media(max-width:900px){.ds-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}}
+.ds-card{background:var(--ds-white);border:1px solid var(--ds-line);border-radius:var(--ds-rad);padding:1.1rem 1.2rem;box-shadow:var(--ds-shadow);}
+.ds-card.ds-accented{border-top:4px solid var(--ds-ac)}
+.ds-chip{display:inline-block;background:var(--ds-soft);color:var(--ds-ac2);border-radius:999px;padding:.22em .75em;font-size:.8rem;font-weight:800}
+.ds-note{background:#fff7ea;border-left:4px solid #c9a227;border-radius:0 10px 10px 0;padding:.8rem 1rem;font-size:.92rem}
+.ds-warn{background:#fdece8;border-left:4px solid #d4492f;border-radius:0 10px 10px 0;padding:.8rem 1rem;font-size:.92rem}
+.ds-ok{background:#e9f8f0;border-left:4px solid #1e7a45;border-radius:0 10px 10px 0;padding:.8rem 1rem;font-size:.92rem}
+
+.ds-menu{position:sticky;top:0;z-index:60;background:var(--ds-menu-bg);color:#fff;box-shadow:0 2px 14px rgba(0,0,0,.2);
+  display:flex;align-items:center;gap:1.2rem;padding:.65rem 1.1rem;flex-wrap:nowrap}
+.ds-menu .ds-brand{font-weight:900;color:#fff;text-decoration:none;font-size:1.02rem;letter-spacing:.01em;white-space:nowrap}
+.ds-menu .ds-nav{display:flex;gap:.2rem;flex:1;flex-wrap:wrap}
+.ds-menu .ds-nav a{color:#dfe4f5;text-decoration:none;font-weight:700;font-size:.88rem;padding:.42rem .7rem;border-radius:999px;white-space:nowrap}
+.ds-menu .ds-nav a:hover{background:rgba(255,255,255,.14);color:#fff}
+.ds-menu .ds-nav a.on{background:var(--ds-ac);color:#fff}
+.ds-menu .ds-right{display:flex;align-items:center;gap:.5rem;margin-left:auto;white-space:nowrap}
+.ds-menu .ds-cta{background:var(--ds-ac);color:#fff;font-weight:800;border-radius:999px;padding:.5rem 1rem;text-decoration:none;font-size:.88rem}
+.ds-menu .ds-burger{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;display:none;line-height:1}
+@media(max-width:720px){.ds-menu .ds-nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ds-menu-bg);
+  flex-direction:column;padding:.5rem 1rem}.ds-menu .ds-nav.open{display:flex}.ds-menu .ds-burger{display:block}}
+
+/* коллаж: контейнер с анимированными элементами */
+.ds-collage{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:18px;
+  background:radial-gradient(130% 150% at 82% 10%,#c04576 0%,#7a3f86 40%,#2a3a6e 78%,#151d33 100%);
+  display:flex;align-items:center;justify-content:center;min-height:140px}
+.ds-collage>*{position:absolute}
+/* общие анимации */
+@keyframes ds-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes ds-spin{to{transform:rotate(360deg)}}
+@keyframes ds-pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.95;transform:scale(1.08)}}
+@keyframes ds-bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px)}}
+@keyframes ds-dash{to{stroke-dashoffset:-40}}
+/* 1) НЕЙРОСЕТЬ: узлы и связи пульсируют */
+.ds-collage.net .node{width:14px;height:14px;border-radius:50%;background:#ffd9e5;box-shadow:0 0 14px #ffd9e5;animation:ds-pulse 3s infinite}
+.ds-collage.net .link{height:2px;background:rgba(255,255,255,.35);transform-origin:left center;animation:ds-pulse 4s infinite}
+.ds-collage.net .chip{position:static;align-self:center;font-weight:900;color:#fff;font-size:1.4rem;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+/* 2) КОД: строки-медузы танцуют, персонаж-«монитор» слева */
+.ds-collage.code .screen{left:8%;top:50%;transform:translateY(-50%);width:34%;height:58%;background:#0d1226;border-radius:12px;border:3px solid #ffb3ca;display:flex;align-items:center;justify-content:center;animation:ds-bounce 5s infinite}
+.ds-collage.code .screen span{color:#7ef0c8;font-family:ui-monospace,Consolas,monospace;font-weight:900;font-size:1.2rem}
+.ds-collage.code .lrow{left:48%;top:0;right:4%;height:100%;display:flex;flex-direction:column;justify-content:space-around}
+.ds-collage.code .lrow i{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--ds-ac),#ffb3ca);opacity:.85;animation:ds-float 4s infinite}
+.ds-collage.code .lrow i:nth-child(2n){animation-delay:-1s;background:linear-gradient(90deg,#6d4fd1,#a78bfa)}
+/* 3) РОБОТ/ГИД: робот-рука и сфера (человек+техника) */
+.ds-collage.robot .robotarm{left:18%;top:46%;width:40%;height:26%;background:linear-gradient(90deg,#3b5bdb,#6d4fd1);border-radius:40% 40% 10px 10px;animation:ds-float 5s infinite}
+.ds-collage.robot .sphere{right:22%;top:34%;width:26%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#ffb3ca,#e8436f 55%,#151d33);box-shadow:0 0 30px rgba(255,179,202,.6);animation:ds-pulse 3.5s infinite}
+.ds-collage.robot .ring{right:16%;top:28%;width:38%;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(255,255,255,.45);animation:ds-spin 14s linear infinite}
+/* 4) ПЛАНЕТА/ДЕКОР: вращающееся кольцо + точки-частицы */
+.ds-collage.planet .globe{bottom:-18%;right:-6%;width:64%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ffd9e5,#e8436f 50%,#6d4fd1 80%);animation:ds-pulse 6s infinite}
+.ds-collage.planet .ring{left:14%;top:24%;width:56%;aspect-ratio:1;border-radius:50%;border:3px solid rgba(255,255,255,.4);animation:ds-spin 20s linear infinite}
+.ds-collage.planet .dust{width:8px;height:8px;border-radius:50%;background:#ffb3ca;animation:ds-float 5s infinite}
+.ds-collage.planet .ttl{position:static;align-self:center;font-weight:900;color:#fff;font-size:1.5rem;letter-spacing:.02em;text-shadow:0 2px 10px rgba(0,0,0,.45);text-align:center;z-index:3}
+/* надписи коллажей могут задаваться отдельно через .ds-collage .ttl */
+</style><div class="ds-menu" data-burger><a class="ds-brand" href="#top">Информатика 3–11</a><nav class="ds-nav"><a href="../../../../../../index.html">Курс</a><a href="#" class="on">Презентация</a><a href="../lekciya/index.html">Лекция</a><a href="../app/index.html">Приложение</a><a href="../metodkarta/index.html">Карта урока</a></nav><div class="ds-right"><a class="ds-cta" href="../../../../../../index.html">Подписка</a><button class="ds-burger" aria-label="Меню">☰</button></div></div>
+<script>
+(function(){
+  /* бургер-меню (единое) */
+  var burger=document.querySelector('.ds-burger');
+  if(burger){burger.addEventListener('click',function(){var n=document.querySelector('.ds-nav');if(n)n.classList.toggle('open');});}
+  /* единая активация подписки */
+  var MASTER="DF7US-RYBAA-C3VP2";
+  function norm(s){return String(s||"").replace(/\s+/g,"").toUpperCase();}
+  function active(){try{return localStorage.getItem("inf_act")===MASTER;}catch(e){return false;}}
+  /* оверлей подписки, если есть на странице */
+  var pw=document.getElementById("pw");
+  if(pw && !active()){
+    setTimeout(function(){pw.classList.add("show");},300);
+    var ok=document.getElementById("pwok"),inp=document.getElementById("pwkey"),msg=document.getElementById("pwmsg");
+    function tryLock(){
+      if(norm(inp.value)===MASTER){try{localStorage.setItem("inf_act",MASTER);}catch(e){}
+        msg.className="msg ok";msg.textContent="Доступ открыт!";setTimeout(function(){pw.classList.remove("show");},500);}
+      else{msg.className="msg no";msg.textContent="Неверный ключ.";inp.value="";}
+    }
+    if(ok)ok.addEventListener("click",tryLock);
+    if(inp)inp.addEventListener("keydown",function(e){if(e.key==="Enter")tryLock();});
+  }
+})();
+</script>
+<div style="position:fixed;bottom:0;left:0;right:0;background:#16233b;color:#fff;padding:.45rem 1rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;justify-content:center;z-index:999;box-shadow:0 -2px 8px rgba(0,0,0,.25);font-family:system-ui,Arial,sans-serif"><a href="../../../../../7 класс/ПРОГ/тема-usloviya-python/урок-04/prezentaciya/index.html" title="Предыдущий урок" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.10);border-radius:999px;padding:.3rem .6rem;font-size:.78rem;font-weight:700">&#8249; Предыдущий урок</a> <span style="color:#fff;background:rgba(255,255,255,.25);border-radius:999px;padding:.3rem .7rem;font-weight:700;font-size:.82rem;text-decoration:none">Презентация</span> <a href="../lekciya/index.html" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.12);border-radius:999px;padding:.3rem .7rem;font-size:.82rem;font-weight:700">Лекция</a> <a href="../app/index.html" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.12);border-radius:999px;padding:.3rem .7rem;font-size:.82rem;font-weight:700">Приложение</a> <a href="../metodkarta/index.html" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.12);border-radius:999px;padding:.3rem .7rem;font-size:.82rem;font-weight:700">Карта урока</a> <a href="../../урок-02/prezentaciya/index.html" title="&amp;#8250;" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.10);border-radius:999px;padding:.3rem .6rem;font-size:.78rem;font-weight:700">Следующий урок &amp;#8250;</a><span style="opacity:.4">|</span><a href="../../../../../../index.html" style="color:#fff;text-decoration:none;opacity:.75;font-size:.8rem">← навигатор курса</a></div></body></html>

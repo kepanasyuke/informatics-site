@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Кодирование информации · 5 класс</title>
+<style>
+  :root{--bg:#f4f6fb; --ink:#1d2742; --accent:#3b5bdb; --accent-d:#2743a8; --soft:#eef1fb; --line:#dde3f1;
+        --ok:#1e7a45; --ok-soft:#e8f6ee; --bad:#b3451d; --bad-soft:#fbece4;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:1.5rem 1.25rem;}
+  .wrap{max-width:720px; margin:0 auto;}
+  .kicker{font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.4rem;}
+  header h1{font-size:1.5rem; font-weight:800;}
+  main{max-width:720px; margin:0 auto; padding:1.4rem 1.25rem 2.5rem;}
+  .hint{background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem;}
+  .card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; margin:.8rem 0;}
+  .card h2{font-size:1.05rem; margin-bottom:.5rem;}
+  .qtext{font-weight:700; margin-bottom:.5rem;}
+  .code{font-family:ui-monospace,Consolas,monospace; font-size:1.1rem; letter-spacing:.08em; background:var(--soft); border-radius:8px; padding:.5rem .7rem; margin-bottom:.6rem;}
+  .field{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;}
+  .field input{border:1px solid var(--line); border-radius:9px; padding:.6rem .8rem; font-size:1rem; flex:1; min-width:120px;}
+  .btn{border:none; border-radius:10px; padding:.6rem 1.1rem; font-weight:700; cursor:pointer;}
+  .btn.primary{background:var(--accent); color:#fff;}
+  .btn.ghost{background:#fff; border:1px solid var(--line); color:var(--ink);}
+  .fb{display:none; margin-top:.6rem; font-weight:700; border-radius:9px; padding:.5rem .8rem;}
+  .fb.show{display:block;} .fb.ok{background:var(--ok-soft); color:var(--ok);} .fb.no{background:var(--bad-soft); color:var(--bad);}
+  .actions{display:flex; gap:.6rem; margin-top:1rem; flex-wrap:wrap;}
+  .res{display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.3rem; text-align:center; margin-top:1rem;}
+  .res .big{font-size:1.7rem; font-weight:800; color:var(--accent-d);}
+  .res.show{display:block;}
+  footer{max-width:720px; margin:0 auto; padding:0 1.25rem 2rem; color:#6b7a92; font-size:.82rem;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Приложение для работы на уроке</div>
+  <h1>Кодирование информации</h1>
+  <p>5 класс · шифр «А=1, Б=2, …, Я=33»</p>
+</div></header>
+
+<main class="wrap">
+  <div class="hint">Договоримся о коде: «А=1, Б=2, В=3… Я=33». Расшифруй сообщение и закодируй своё слово.</div>
+
+  <div class="card">
+    <h2>Задание 1 · Расшифруй</h2>
+    <div class="qtext">Сообщение зашифровано числами по нашему коду:</div>
+    <div class="code" id="cipherText"></div>
+    <div class="field"><input id="decIn" placeholder="Расшифрованное слово (прописными)"><button class="btn primary" id="decBtn">Проверить</button></div>
+    <div class="fb" id="decFb"></div>
+  </div>
+
+  <div class="card">
+    <h2>Задание 2 · Закодируй слово</h2>
+    <div class="qtext">Введи слово прописными буквами — покажем, как оно зашифруется числами.</div>
+    <div class="field"><input id="encIn" placeholder="Например: кот"><button class="btn ghost" id="encBtn">Закодировать</button></div>
+    <div class="code" id="encOut" style="margin-top:.6rem;"></div>
+  </div>
+
+  <div class="res" id="res">
+    <p>Отлично! Ты умеешь и кодировать, и расшифровывать.</p>
+    <div class="big">Готово!</div>
+  </div>
+</main>
+
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС. Приложение к уроку «Кодирование информации».</footer>
+
+<script>
+"use strict";
+const ABC="абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+function letterNum(ch){const i=ABC.indexOf(ch.toLowerCase());return i>=0?String(i+1):null;}
+function encWord(w){return [...w].map(c=>letterNum(c)).join(" ");}
+// выберем случайное слово для расшифровки
+const WORDS=["кот","море","код","лис","мост","ежик"];
+const word=WORDS[Math.floor(Math.random()*WORDS.length)];
+document.getElementById("cipherText").textContent=encWord(word);
+document.getElementById("decBtn").onclick=()=>{
+  const fb=document.getElementById("decFb"); fb.classList.add("show");
+  const v=document.getElementById("decIn").value.trim().toLowerCase();
+  if(v===word){fb.className="fb show ok";fb.textContent="Верно! Это слово \""+word+"\".";
+    document.getElementById("res").classList.add("show");
+  } else {fb.className="fb show no";fb.textContent="Пока не так. Проверь соответствие чисел буквам.";}
+};
+document.getElementById("encBtn").onclick=()=>{
+  const v=document.getElementById("encIn").value.trim();
+  const bad=[...v].filter(c=>!(/^[а-яё]$/i.test(c)));
+  const out=document.getElementById("encOut");
+  if(!v||bad.length){out.textContent="Введи слово русскими буквами, например «кот».";return;}
+  out.textContent=v.toLowerCase()+" → "+encWord(v);
+};
+document.getElementById("res").onclick=()=>{location.reload();};
+document.getElementById("res").style.cursor="pointer";
+</script>
+</body>
+</html>

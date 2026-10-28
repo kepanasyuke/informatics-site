@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Информация и информационные процессы · 7 класс</title>
+<style>
+  :root{--ink:#1b2740; --accent:#3b5bdb; --accent-d:#2743a8; --line:#d8e0f0; --muted:#5b6b83;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:#161c33; font:23px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink);}
+  #deck{position:relative; width:100vw; height:100vh; overflow:hidden;}
+  .slide{position:absolute; inset:0; display:none; padding:6.5vh 7vw; flex-direction:column; justify-content:center; background:#f2f6ff;}
+  .slide.active{display:flex;}
+  .slide h1{font-size:2.4em; font-weight:800; color:var(--accent-d); line-height:1.15; margin-bottom:.5em;}
+  .slide h2{font-size:1.55em; font-weight:700; margin-bottom:.4em;}
+  .slide p,.slide li{font-size:.96em;}
+  .slide ul{margin:.4em 0 .4em 1.2em;}
+  .slide li{margin:.2em 0;}
+  .slide .kicker{font-size:.66em; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:.5em;}
+  .slide .foot{margin-top:auto; font-size:.5em; color:var(--muted); padding-top:1em;}
+  .slide.cover{background:linear-gradient(135deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff;}
+  .slide.cover .kicker{color:#c7d4fa;}
+  .slide.cover h1{color:#fff;}
+  .back{background:#fff; border:1px solid var(--line); border-radius:12px; padding:.8em 1em; margin:.3em 0;}
+  .btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); color:#fff; border:none; width:54px; height:54px; border-radius:50%; font-size:24px; cursor:pointer; z-index:10;}
+  #prev{left:14px;} #next{right:14px;}
+  #count{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:#fff; opacity:.7; font-size:13px; background:rgba(0,0,0,.3); padding:3px 12px; border-radius:20px; z-index:10;}
+  @media print{ body{background:#fff;} .btn,#count{display:none;} .slide{position:static; display:flex!important; height:auto; min-height:96vh; break-after:page;} }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <section class="slide cover active">
+    <div class="kicker">Информатика · 7 класс · урок 1</div>
+    <h1>Информация и информационные процессы</h1>
+    <p>Что такое информация, как мы её получаем и храним.</p>
+    <div class="foot">Автор: [ваше имя] · Информатика · ФГОС</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Организационный момент</div>
+    <h2>О чём урок</h2>
+    <ul>
+      <li>Что такое информация и данные.</li>
+      <li>Свойства информации.</li>
+      <li>Информационные процессы: хранение, передача, обработка.</li>
+      <li>Рецепторы — наши «датчики» сбора информации.</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Основные понятия</div>
+    <h2>Что такое информация</h2>
+    <p>Информация — это сведения об окружающем мире, которые мы получаем и которые снижают нашу неопределённость.</p>
+    <div class="back"><b>Пример.</b> Пока мы не знаем прогноз погоды, неизвестно, брать зонт. Прогноз даёт информацию и убирает неопределённость.</div>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Основные понятия</div>
+    <h2>Данные и форма представления</h2>
+    <p>Информация хранится и передаётся в виде данных — закодированных сведений.</p>
+    <p>Формы представления: текст, число, график, звук, видео, таблица, схема.</p>
+    <p>Одну и ту же информацию можно представить по-разному (например, число цифрой или словом).</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Свойства информации</div>
+    <h2>Свойства информации</h2>
+    <ul>
+      <li><b>Актуальность</b> — важна сейчас.</li>
+      <li><b>Достоверность</b> — соответствует действительности.</li>
+      <li><b>Полнота</b> — достаточно для решения.</li>
+      <li><b>Понятность</b> — доступна человеку.</li>
+    </ul>
+    <p class="back">Например, вчерашняя цена на нефть может быть неактуальной, а слухи — недостоверными.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Информационные процессы</div>
+    <h2>Три главных процесса</h2>
+    <ul>
+      <li><b>Хранение</b> — информация на носителях (книга, диск, память компьютера).</li>
+      <li><b>Передача</b> — от источника к приёмнику по каналу связи.</li>
+      <li><b>Обработка</b> — преобразование информации (поиск, расчёт, сортировка).</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Информационные процессы</div>
+    <h2>Схема передачи информации</h2>
+    <div class="back" style="text-align:center; font-size:1.05em;">
+      Источник → [кодирование] → Канал связи → [декодирование] → Приёмник
+    </div>
+    <p>Помехи (шум) могут исказить сообщение. Поэтому используют избыточность и проверку.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Практика</div>
+    <h2>Задание на уроке</h2>
+    <p>В приложении на уроке распредели примеры по процессам (хранение / передача / обработка) и проверь свойства информации на примерах.</p>
+    <p>Составь схему передачи для одного сообщения из жизни.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Рефлексия</div>
+    <h2>Итог урока</h2>
+    <ul>
+      <li>Информация снижает неопределённость и должна быть актуальной, достоверной, полной и понятной.</li>
+      <li>Информационные процессы — хранение, передача и обработка.</li>
+    </ul>
+    <p><b>Дома:</b> приведи по два примера каждого информационного процесса из своей жизни.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+</div>
+
+<button class="btn" id="prev">‹</button>
+<button class="btn" id="next">›</button>
+<div id="count">1 / 9</div>
+
+<script>
+"use strict";
+const slides=[].slice.call(document.querySelectorAll(".slide"));
+let cur=slides.findIndex(s=>s.classList.contains("active"));
+function upd(){slides.forEach((s,k)=>s.classList.toggle("active",k===cur));document.getElementById("count").textContent=(cur+1)+" / "+slides.length;}
+function next(){cur=Math.min(cur+1,slides.length-1);upd();}
+function prev(){cur=Math.max(cur-1,0);upd();}
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){next();e.preventDefault();}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){prev();e.preventDefault();}
+});
+</script>
+</body>
+</html>

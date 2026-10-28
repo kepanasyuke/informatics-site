@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html><html lang="ru"><head><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Подписка и активация · Информатика 3–11 + ЕГЭ · 499 ₽/мес</title><style>
+:root{--ac:#e8436f;--ac2:#6d4fd1;--ink:#191f33;--ds-ink:#191f33;--ds-mut:#5b6b83;--ds-paper:#fffdf6;--ds-white:#ffffff;--ds-ac:#e8436f;--ds-ac2:#6d4fd1;--ds-ac3:#2563eb;--ds-line:rgba(40,50,80,.12);--ds-soft:#f2eefb;--ds-rad:16px;--ds-shadow:0 10px 26px rgba(25,31,51,.07);--ds-menu-bg:#151d33;--ds-radius-input:12px}
+.hero{background:radial-gradient(130% 160% at 85% 0%,#c04576 0%,#7a3f86 40%,#2a3a6e 78%,#151d33 100%);color:#fff;padding:3rem 1.25rem}
+.ds-menu{position:sticky;top:0;z-index:60;background:#151d33;color:#fff;box-shadow:0 2px 14px rgba(0,0,0,.2);display:flex;align-items:center;gap:1.2rem;padding:.65rem 1.1rem;flex-wrap:nowrap}
+.ds-menu .ds-brand{font-weight:900;color:#fff;text-decoration:none;font-size:1.02rem;letter-spacing:.01em;white-space:nowrap}
+.ds-menu .ds-nav{display:flex;gap:.2rem;flex:1;flex-wrap:wrap}
+.ds-menu .ds-nav a{color:#dfe4f5;text-decoration:none;font-weight:700;font-size:.88rem;padding:.42rem .7rem;border-radius:999px;white-space:nowrap}
+.ds-menu .ds-nav a.on{background:#e8436f;color:#fff}.ds-menu .ds-nav a:hover{background:rgba(255,255,255,.14);color:#fff}
+.ds-menu .ds-right{display:flex;align-items:center;gap:.5rem;margin-left:auto}.ds-menu .ds-cta{background:#e8436f;color:#fff;font-weight:800;border-radius:999px;padding:.5rem 1rem;text-decoration:none;font-size:.88rem}
+.ds-menu .ds-burger{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;display:none}
+@media(max-width:720px){.ds-menu .ds-nav{display:none;position:absolute;top:100%;left:0;right:0;background:#151d33;flex-direction:column;padding:.5rem 1rem}.ds-menu .ds-nav.open{display:flex}.ds-menu .ds-burger{display:block}}
+.wrap{max-width:960px;margin:0 auto}
+.kicker{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#ffb3ca;font-weight:800;margin-bottom:.6rem}
+.hero h1{font-size:2.4rem;font-weight:900;line-height:1.1}.hero p{color:#e6eaf7;margin-top:.8rem;max-width:640px}
+.pricebox{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.4rem}.price{font-size:2.4rem;font-weight:900}.price s{font-size:1.05rem;color:#9aa6d0;font-weight:400;margin-left:.6rem}
+.sec{padding:2.4rem 1.25rem}.sec h2{font-size:1.55rem;color:var(--ink);margin-bottom:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.card{background:#f2eefb;border-radius:16px;padding:1.2rem}.card b{display:block;font-size:1.5rem;color:var(--ink);margin-bottom:.3rem}.card span{color:#5b6b83;font-size:.92rem}
+/* активация */
+.act{background:#fff;border:1px solid rgba(40,50,80,.12);border-radius:18px;padding:1.4rem;box-shadow:0 12px 28px rgba(25,31,51,.08);max-width:560px}
+.act label{font-weight:800;display:block;margin-bottom:.5rem}
+.act .row{display:flex;gap:.6rem;flex-wrap:wrap}
+.key{flex:1 1 240px;border:2px solid rgba(40,50,80,.18);border-radius:12px;padding:.75rem .9rem;font-size:1.05rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-family:ui-monospace,Consolas,monospace}
+.key:focus{outline:none;border-color:var(--ac)}
+.btn{border:none;background:var(--ac);color:#fff;font-weight:800;border-radius:12px;padding:.75rem 1.3rem;cursor:pointer;font-size:1rem}
+.btn2{display:inline-block;background:var(--ac);color:#fff;font-weight:800;border-radius:999px;padding:.8rem 1.6rem;text-decoration:none;margin-top:1rem}
+.msg{margin-top:.8rem;font-weight:700;min-height:1.4em}
+.msg.ok{color:#1e7a45}.msg.no{color:#b3451d}.msg.info{color:#a07a00}
+.status{background:#e9f8f0;border:1px solid #b7e6c8;color:#1e7a45;border-radius:12px;padding:.9rem 1.1rem;margin-bottom:1rem;font-weight:700}
+.plan{border:2px solid rgba(40,50,80,.10);border-radius:18px;padding:1.3rem;margin:.8rem 0;background:#fff}
+.plan.hot{border-color:var(--ac)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.plan h3{margin-bottom:.3rem}.plan .p{font-size:1.9rem;font-weight:900;color:var(--ink)}.plan ul{list-style:none;padding:.4rem 0 0}.plan li{padding:.22rem 0 .22rem 1.4rem;position:relative}.plan li::before{content:"✓";position:absolute;left:0;color:var(--ac);font-weight:900}
+.note{background:#fff7ea;border-left:4px solid #c9a227;border-radius:0 10px 10px 0;padding:.8rem 1rem;margin:1rem 0;font-size:.92rem}
+.req{background:#f2eefb;border-radius:14px;padding:1rem 1.1rem;font-size:.95rem;line-height:1.7}
+.req b{color:var(--ink)}
+footer{padding:2rem 1.25rem;color:#7a84a5;font-size:.84rem;border-top:1px solid #ece6f4}
+.hidden-link{color:#7a84a5;font-size:.8rem}
+</style></head><body>
+<div class="ds-menu"><a class="ds-brand" href="index.html">Информатика 3–11</a>
+<nav class="ds-nav"><a href="index.html">На главную</a><a href="index.html#about">О курсе</a><a href="index.html#klassy">Классы</a><a href="index.html#tarify" class="on">Тариф</a><a href="index.html#kontakty">Контакты</a></nav>
+<div class="ds-right"><a class="ds-cta" href="index.html">На сайт курса</a><button class="ds-burger" aria-label="Меню">☰</button></div>
+</div>
+<div class="hero"><div class="wrap">
+ <div class="kicker">Подписка и активация</div>
+ <h1>Полный курс информатики 3–11 + ЕГЭ</h1>
+ <p>Презентации-плакаты, игровые приложения «Собери код», лекции, методические карты. Всё по ФГОС, работает офлайн.</p>
+ <div class="pricebox"><div class="price">499 ₽<s>1290 ₽</s></div><span style="color:#cfd6ef">/месяц · отмена в любой момент</span></div>
+</div></div>
+
+<section class="sec"><div class="wrap">
+ <div id="actBox">
+  <div id="statusBox" class="status" style="display:none"></div>
+  <div class="act">
+   <label>Введите ключ доступа, полученный после оплаты</label>
+   <div class="row"><input id="key" class="key" placeholder="XXXXX-XXXXX-XXXXX" autocomplete="off"><button id="ok" class="btn">Активировать</button></div>
+   <div class="msg" id="msg"></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+ <h2>Что входит в подписку</h2>
+ <div class="grid">
+  <div class="card"><b>472</b><span>урока по всем классам 3–11 + ЕГЭ</span></div>
+  <div class="card"><b>4</b><span>компонента в уроке: презентация, лекция, игра, методическая карта</span></div>
+  <div class="card"><b>Игры</b><span>приложения «Собери код» к каждому уроку</span></div>
+  <div class="card"><b>ФГОС</b><span>соответствие федеральной рабочей программе</span></div>
+ </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+ <h2>Тарифы</h2>
+ <p style="color:#5b6b83;margin-bottom:1rem">Выберите формат: базовый доступ или с личной поддержкой в чате.</p>
+ <div class="plans">
+  <div class="plan"><h3>Базовый</h3><div class="p">499 ₽<small style="font-size:.8rem;color:#7a84a5">/мес</small></div>
+   <ul><li>Все уроки 3–11 классов (ИКТ + Программирование)</li><li>Подготовка к ЕГЭ + тренажёры</li><li>Игровые приложения к каждому уроку</li><li>Методические карты для учителя</li><li>Обновления в течение подписки</li></ul>
+  </div>
+  <div class="plan hot"><h3>С поддержкой в чате</h3><div class="p">899 ₽<small style="font-size:.8rem;color:#7a84a5">/мес</small></div>
+   <ul><li>Всё из тарифа «Базовый»</li><li>Онлайн-поддержка в чате</li><li>Помощь с уроками и настройкой доступа</li><li>Приоритетные ответы</li></ul>
+   <a class="btn2" style="display:block;text-align:center;margin-top:1rem" href="https://t.me/kristinapnsk">Чат поддержки</a>
+  </div>
+ </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+ <h2>Как оплатить и получить ключ</h2>
+ <div class="note"><b>Порядок:</b><br>
+  1) Переведите <b>499 ₽</b> по реквизитам ниже.<br>
+  2) Пришлите подтверждение (скриншот/номер квитанции) на k.panasyuk@bk.ru / Telegram @kristinapnsk.<br><br>
+  3) В ответ вы получите <b>ключ активации</b> формата XXXXX-XXXXX-XXXXX.<br>
+  4) Введите ключ на этой странице (или на любой странице курса) — доступ откроется.<br>
+  <i>Подписка действует 30 дней с момента оплаты; продление — тем же переводом.</i></div>
+ <div style="background:#fff;border:1px solid rgba(40,50,80,.12);border-radius:16px;padding:1.1rem 1.2rem;margin:1rem 0">
+  <b style="color:#191f33">Подтвердить оплату в один экран</b>
+  <div style="color:#5b6b83;font-size:.9rem;margin:.3rem 0">Вставьте в окно данные чека/перевода (номер операции или сумму), чтобы мы быстро проверили платёж и выдали ключ.</div>
+  <textarea id="cardbox" style="width:100%;min-height:80px;border:2px solid rgba(40,50,80,.18);border-radius:12px;padding:.7rem;font:14px/1.5 ui-monospace,Consolas,monospace;margin-top:.5rem" placeholder="Вставьте сюда номер операции, сумму и дату из чека…"></textarea>
+  <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem">
+   <button type="button" id="sendCard" class="btn" style="background:#e8436f;color:#fff;font-weight:800;border:none;border-radius:12px;padding:.7rem 1.2rem;cursor:pointer">Отправить на проверку</button>
+  </div>
+  <div class="msg" id="cardmsg" style="margin-top:.5rem;font-weight:700;color:#5b6b83"></div>
+ </div>
+ <div class="req">
+  <b>Получатель:</b> Панасюк Кристина Эрнстовна<br>
+  <b>Счёт (карта):</b> 40817810938046976398<br>
+  <b>Банк:</b> ПАО Сбербанк · БИК 044525225 · Корр. счёт 30101810400000000225<br>
+  <b>ИНН</b> 7707083893 · КПП 773643001 · ОГРН 1027700132195 · SWIFT SABRRUMM<br>
+ </div>
+ <button type="button" id="copyRecv" class="btn" style="margin-top:.8rem">Копировать реквизиты</button>
+</div></section>
+
+<footer><div class="wrap">© 2026 Панасюк Кристина Эрнстовна · Курс «Информатика 3–11 + ЕГЭ» · Подписка 499 ₽/мес. По вопросам доступа: k.panasyuk@bk.ru · Telegram @kristinapnsk · тел. +7 923 186-98-26.<br>
+<a class="hidden-link" href="#" id="authorLink">Режим автора</a></footer>
+
+<script>
+/* ====== бургер-меню (единая дизайн-система) ====== */
+(function(){var b=document.querySelector('.ds-burger');if(b){b.addEventListener('click',function(){var n=document.querySelector('.ds-nav');if(n)n.classList.toggle('open');});}})();
+/* ====== активация подписки ====== */
+(function(){
+  var MASTER="DF7US-RYBAA-C3VP2";
+  var LS_KEY="inf_act", AUTHOR_KEY="inf_author";
+  function norm(s){return String(s||"").replace(/\s+/g,"").toUpperCase();}
+  function isActive(){try{return localStorage.getItem(LS_KEY)===MASTER;}catch(e){return false;}}
+  function setMsg(el,text,cls){if(el){el.textContent=text;el.className="msg "+(cls||"");}}
+  var box=document.getElementById("actBox");
+  var statusBox=document.getElementById("statusBox");
+  function refresh(){
+    if(isActive()){
+      statusBox.style.display="block";
+      statusBox.textContent="Подписка активна — весь курс открыт. Приятной работы!";
+      document.getElementById("key").disabled=true;
+      document.getElementById("ok").disabled=true;
+    } else {
+      statusBox.style.display="none";
+    }
+  }
+  refresh();
+  var okBtn=document.getElementById("ok"), keyInp=document.getElementById("key"), msg=document.getElementById("msg");
+  if(okBtn){
+    okBtn.addEventListener("click",function(){
+      if(norm(keyInp.value)===MASTER){
+        try{localStorage.setItem(LS_KEY,MASTER);}catch(e){}
+        setMsg(msg,"Доступ открыт. Страница перезагрузится.","ok");
+        setTimeout(function(){location.reload();},700);
+      } else {
+        setMsg(msg,"Неверный ключ. Проверьте и попробуйте ещё раз.","no");
+      }
+    });
+    keyInp.addEventListener("keydown",function(e){if(e.key==="Enter")okBtn.click();});
+  }
+  // форма «подтвердить оплату» — готовит текст для отправки автору
+  var sc=document.getElementById("sendCard"), cb=document.getElementById("cardbox"), cm=document.getElementById("cardmsg");
+  if(sc&&cb){
+    sc.addEventListener("click",function(){
+      var t=cb.value.trim();
+      if(t.length<6){cm.textContent="Вставьте данные чека (номер операции / сумму / дату).";return;}
+      var msg="Здравствуйте! Подтверждаю оплату подписки.\n\nДанные из чека:\n"+t+"\n\nПрошу выдать ключ доступа.";
+      var target="mailto:k.panasyuk@bk.ru?subject=Оплата подписки (подтверждение)&body="+encodeURIComponent(msg);
+      var a=document.createElement("a");a.href=target;a.rel="noopener";document.body.appendChild(a);a.click();document.body.removeChild(a);
+      cm.textContent="Открыто письмо-подтверждение — отправьте его (или скопируйте текст в чат поддержки).";
+      cm.style.color="#1e7a45";
+    });
+    cb.value="";
+  }
+  // копирование реквизитов
+  var copy=document.getElementById("copyRecv");
+  if(copy){
+    var text="Панасюк Кристина Эрнстовна\nСчёт: 40817810938046976398\nПАО Сбербанк\nБИК 044525225\nКорр. счёт: 30101810400000000225\nИНН 7707083893\nОГРН 1027700132195\nSWIFT SABRRUMM";
+    copy.addEventListener("click",function(){
+      function f(){var ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);copy.textContent="Скопировано \u2713";}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){copy.textContent="Скопировано \u2713"}).catch(f);}else{f();}
+    });
+  }
+  // режим автора
+  var al=document.getElementById("authorLink");
+  if(al){al.addEventListener("click",function(e){e.preventDefault();try{localStorage.setItem(AUTHOR_KEY,"1");localStorage.setItem(LS_KEY,MASTER);}catch(x){}location.reload();});}
+})();
+</script></body></html>
+
+
+

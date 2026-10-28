@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Информация и процессы · 7 класс</title>
+<style>
+  :root{--bg:#f4f6fb; --ink:#1d2742; --accent:#3b5bdb; --accent-d:#2743a8; --soft:#eef1fb; --line:#dde3f1;
+        --ok:#1e7a45; --ok-soft:#e8f6ee; --bad:#b3451d; --bad-soft:#fbece4;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:1.5rem 1.25rem;}
+  .wrap{max-width:740px; margin:0 auto;}
+  .kicker{font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.4rem;}
+  header h1{font-size:1.55rem; font-weight:800;}
+  header p{color:#dbe4fb; font-size:.95rem; margin-top:.2rem;}
+  main{max-width:740px; margin:0 auto; padding:1.4rem 1.25rem 2.5rem;}
+  .tabs{display:flex; gap:.5rem; margin:1rem 0;}
+  .tab{border:1px solid var(--line); background:#fff; padding:.5rem 1rem; border-radius:999px; cursor:pointer; font-weight:600; font-size:.9rem;}
+  .tab.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .panel{display:none;} .panel.on{display:block;}
+  .hint{background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem;}
+  .q{background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; margin:.8rem 0;}
+  .q h3{font-size:1.02rem; margin-bottom:.6rem;}
+  .opt{border:1px solid var(--line); background:#fbfcff; border-radius:9px; padding:.6rem .85rem; margin:.4rem 0; cursor:pointer;}
+  .opt.selected{border-color:var(--accent); background:var(--soft);}
+  .opt.right{background:var(--ok-soft); border-color:var(--ok);}
+  .opt.wrong{background:var(--bad-soft); border-color:var(--bad);}
+  .actions{display:flex; gap:.6rem; margin-top:1rem; flex-wrap:wrap;}
+  .btn{border:none; border-radius:10px; padding:.7rem 1.2rem; font-weight:700; cursor:pointer;}
+  .btn.primary{background:var(--accent); color:#fff;}
+  .btn.ghost{background:#fff; border:1px solid var(--line); color:var(--ink);}
+  .score{display:inline-flex; gap:.4rem; background:#fff; border:1px solid var(--line); border-radius:999px; padding:.42rem .9rem; font-weight:800; color:var(--accent-d);}
+  .result{display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.3rem; text-align:center; margin-top:1rem;}
+  .result .big{font-size:1.9rem; font-weight:800; color:var(--accent-d);}
+  .result.show{display:block;}
+  footer{max-width:740px; margin:0 auto; padding:0 1.25rem 2rem; color:#6b7a92; font-size:.82rem;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Приложение для работы на уроке</div>
+  <h1>Информация и информационные процессы</h1>
+  <p>7 класс · два тренажёра: процессы и свойства</p>
+</div></header>
+
+<main class="wrap">
+  <div class="tabs">
+    <div class="tab on" data-tab="proc">1 · Процессы</div>
+    <div class="tab" data-tab="prop">2 · Свойства</div>
+  </div>
+
+  <div id="panel-proc" class="panel on">
+    <div class="hint">Определи, к какому процессу относится действие: <b>хранение</b>, <b>передача</b> или <b>обработка</b>.</div>
+    <div id="procQ"></div>
+    <div class="actions"><button class="btn primary" id="checkProc">Проверить</button></div>
+    <div class="result" id="resProc"><p>Результат</p><div class="big" id="resProcScore">0</div></div>
+  </div>
+
+  <div id="panel-prop" class="panel">
+    <div class="hint">Какого свойства информации не хватает в ситуации?</div>
+    <div id="propQ"></div>
+    <div class="actions"><button class="btn primary" id="checkProp">Проверить</button></div>
+    <div class="result" id="resProp"><p>Результат</p><div class="big" id="resPropScore">0</div></div>
+  </div>
+</main>
+
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС. Приложение к уроку «Информация и информационные процессы».</footer>
+
+<script>
+"use strict";
+const PROC=[
+  {q:"Ученик записал расписание звонков в дневник.", opts:["Хранение","Передача","Обработка"],a:0},
+  {q:"Мама пересказала по телефону новости с работы.", opts:["Хранение","Передача","Обработка"],a:1},
+  {q:"Калькулятор посчитал сумму покупок в корзине.", opts:["Хранение","Передача","Обработка"],a:2},
+  {q:"Фото сохранили на флешку.", opts:["Хранение","Передача","Обработка"],a:0},
+  {q:"Учитель отправил файл с заданием в чат класса.", opts:["Хранение","Передача","Обработка"],a:1},
+  {q:"Поисковик отсортировал найденные сайты по релевантности.", opts:["Хранение","Передача","Обработка"],a:2}
+];
+const PROP={
+  hint:["Свойство","Пример/ситуация","Верно"],
+  items:[
+    {q:"Вчерашний прогноз «дождь с вероятностью 90%» сообщили сегодня утром.", opts:["Актуальность","Достоверность","Полнота","Понятность"],a:0},
+    {q:"Друг рассказал, что «завтра отменят занятия», но это не подтвердилось.", opts:["Актуальность","Достоверность","Полнота","Понятность"],a:1},
+    {q:"В ответе сказали только «да», но не объяснили, к чему это относится.", opts:["Актуальность","Достоверность","Полнота","Понятность"],a:2},
+    {q:"Инструкция к прибору написана на языке, который детям незнаком.", opts:["Актуальность","Достоверность","Полнота","Понятность"],a:3}
+  ]
+};
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));t.classList.add("on");
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+  document.getElementById("panel-"+t.dataset.tab).classList.add("on");
+});
+function buildQuiz(list,containerId){
+  const box=document.getElementById(containerId); box.innerHTML="";
+  list.forEach((item,qi)=>{
+    const q=document.createElement("div"); q.className="q";
+    const h=document.createElement("h3"); h.textContent=(qi+1)+". "+item.q; q.appendChild(h);
+    const opts=[item.opts].length?item.opts:[]; // совместимость
+    item.opts.forEach((o,oi)=>{
+      const opt=document.createElement("div"); opt.className="opt"; opt.textContent=o;
+      opt.dataset.q=qi; opt.dataset.o=oi;
+      opt.onclick=()=>{
+        box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(x=>x.classList.remove("selected"));
+        opt.classList.add("selected");
+      };
+      q.appendChild(opt);
+    });
+    box.appendChild(q);
+  });
+}
+function check(list,containerId,resId,resScoreId){
+  const box=document.getElementById(containerId);
+  let all=true; list.forEach((item,qi)=>{
+    const sel=box.querySelector('.opt[data-q="'+qi+'"].selected');
+    if(!sel) all=false;
+  });
+  if(!all){alert("Ответь на все вопросы.");return;}
+  let ok=0;
+  list.forEach((item,qi)=>{
+    const sel=box.querySelector('.opt[data-q="'+qi+'"].selected');
+    const chosen=+sel.dataset.o;
+    if(chosen===item.a) ok++;
+    box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(o=>o.classList.remove("right","wrong"));
+    box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(o=>{
+      if(+o.dataset.o===item.a)o.classList.add("right");
+      else if(+o.dataset.o===chosen)o.classList.add("wrong");
+    });
+  });
+  document.getElementById(resScoreId).textContent=ok+" из "+list.length;
+  document.getElementById(resId).classList.add("show");
+}
+buildQuiz(PROC,"procQ");
+buildQuiz(PROP.items,"propQ");
+document.getElementById("checkProc").onclick=()=>check(PROC,"procQ","resProc","resProcScore");
+document.getElementById("checkProp").onclick=()=>check(PROP.items,"propQ","resProp","resPropScore");
+</script>
+</body>
+</html>

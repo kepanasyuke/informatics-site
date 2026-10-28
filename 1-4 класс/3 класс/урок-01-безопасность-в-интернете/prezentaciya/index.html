@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Компьютер и безопасность в интернете · 3 класс</title>
+<style>
+  :root{--ink:#1b2740; --accent:#3b5bdb; --accent-d:#2743a8; --line:#d8e0f0; --muted:#5b6b83;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:#161c33; font:24px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink);}
+  #deck{position:relative; width:100vw; height:100vh; overflow:hidden;}
+  .slide{position:absolute; inset:0; display:none; padding:6vh 6vw; flex-direction:column; justify-content:center;
+    background:#f2f6ff; color:var(--ink);}
+  .slide.active{display:flex;}
+  .slide h1{font-size:2.6em; font-weight:800; color:var(--accent-d); line-height:1.15; margin-bottom:.5em;}
+  .slide h2{font-size:1.6em; font-weight:700; margin-bottom:.4em;}
+  .slide p,.slide li{font-size:1em;}
+  .slide ul{margin:.4em 0 .4em 1.2em;}
+  .slide li{margin:.18em 0;}
+  .slide .kicker{font-size:.68em; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:.5em;}
+  .slide .foot{margin-top:auto; font-size:.5em; color:var(--muted); padding-top:1em;}
+  .slide.cover{background:linear-gradient(135deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff;}
+  .slide.cover .kicker{color:#c7d4fa;}
+  .slide.cover h1{color:#fff;}
+  .btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); color:#fff; border:none;
+    width:56px; height:56px; border-radius:50%; font-size:24px; cursor:pointer; z-index:10;}
+  .btn:hover{background:rgba(255,255,255,.3);}
+  #prev{left:14px;} #next{right:14px;}
+  #count{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:#fff; opacity:.7; font-size:13px;
+    background:rgba(0,0,0,.3); padding:3px 12px; border-radius:20px; z-index:10;}
+  .icon-big{font-size:2.2em; margin-bottom:.2em;}
+  .card{display:flex; gap:.8em; align-items:center; background:#fff; border:1px solid var(--line); border-radius:14px; padding:.8em 1em; margin:.3em 0;}
+  .card.bad{border-left:5px solid #c2542f;}
+  .card.good{border-left:5px solid #2f9e6b;}
+  @media print{ body{background:#fff;} .btn,#count{display:none;} .slide{position:static; display:flex!important; height:auto; min-height:96vh; break-after:page;} }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <section class="slide cover active">
+    <div class="kicker">Информатика · 3 класс · урок 1</div>
+    <h1>Компьютер и безопасность в интернете</h1>
+    <p>Учимся пользоваться компьютером и интернетом без страха и без ошибок.</p>
+    <div class="foot">Автор: [ваше имя] · Информатика · ФГОС</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Организационный момент</div>
+    <h2>О чём поговорим</h2>
+    <ul>
+      <li>Что умеет компьютер и для чего он нужен.</li>
+      <li>Что такое интернет.</li>
+      <li>Правила безопасного поведения в сети.</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Новый материал</div>
+    <h2>Зачем нужен компьютер?</h2>
+    <p>Компьютер помогает нам: учиться, искать ответы, рисовать, печатать, играть и общаться.</p>
+    <p>Но за компьютером работает человек — и именно он решает, что делать правильно.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Новый материал</div>
+    <h2>Что такое интернет?</h2>
+    <p>Интернет — это огромная сеть, которая соединяет компьютеры по всему миру.</p>
+    <p>В интернете можно найти информацию, но бывает и так, что она неверная или даже опасная.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Правила безопасности</div>
+    <h2>Как вести себя в интернете</h2>
+    <div class="card good"><span class="icon-big">✓</span><span>Не называй своё имя, адрес и телефон незнакомым людям.</span></div>
+    <div class="card good"><span class="icon-big">✓</span><span>Если что-то пугает или непонятно — сразу скажи взрослому.</span></div>
+    <div class="card good"><span class="icon-big">✓</span><span>Не открывай подозрительные ссылки и вложения.</span></div>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Правила безопасности</div>
+    <h2>Чего нельзя делать</h2>
+    <div class="card bad"><span class="icon-big">✕</span><span>Не сообщай пароли другим людям.</span></div>
+    <div class="card bad"><span class="icon-big">✕</span><span>Не соглашайся встречаться с теми, кого встретил в интернете.</span></div>
+    <div class="card bad"><span class="icon-big">✕</span><span>Не переходи по ссылкам, которые обещают слишком лёгкую выгоду.</span></div>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Практика</div>
+    <h2>Задание на уроке</h2>
+    <p>Открой приложение на уроке и ответь: что делать можно, а что нельзя?</p>
+    <p>Собери правила безопасного пользователя и придумай один свой пример.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Рефлексия</div>
+    <h2>Итог урока</h2>
+    <ul>
+      <li>Компьютер и интернет — полезные помощники.</li>
+      <li>Важно соблюдать правила безопасности.</li>
+      <li>При опасности — сразу звать взрослого.</li>
+    </ul>
+    <p><b>Дома:</b> расскажи родителям три правила из урока.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+</div>
+
+<button class="btn" id="prev">‹</button>
+<button class="btn" id="next">›</button>
+<div id="count">1 / 8</div>
+
+<script>
+"use strict";
+const slides=[].slice.call(document.querySelectorAll(".slide"));
+let cur=slides.findIndex(s=>s.classList.contains("active"));
+function upd(){slides.forEach((s,k)=>s.classList.toggle("active",k===cur));document.getElementById("count").textContent=(cur+1)+" / "+slides.length;}
+function next(){cur=Math.min(cur+1,slides.length-1);upd();}
+function prev(){cur=Math.max(cur-1,0);upd();}
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){next();e.preventDefault();}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){prev();e.preventDefault();}
+});
+</script>
+</body>
+</html>

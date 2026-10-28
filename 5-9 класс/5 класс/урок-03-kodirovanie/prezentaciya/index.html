@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Кодирование информации · 5 класс</title>
+<style>
+  :root{--ink:#1b2740; --accent:#3b5bdb; --accent-d:#2743a8; --line:#d8e0f0; --muted:#5b6b83;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:#161c33; font:23px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink);}
+  #deck{position:relative; width:100vw; height:100vh; overflow:hidden;}
+  .slide{position:absolute; inset:0; display:none; padding:6.5vh 7vw; flex-direction:column; justify-content:center; background:#f2f6ff;}
+  .slide.active{display:flex;}
+  .slide h1{font-size:2.4em; font-weight:800; color:var(--accent-d); line-height:1.15; margin-bottom:.5em;}
+  .slide h2{font-size:1.55em; font-weight:700; margin-bottom:.4em;}
+  .slide p,.slide li{font-size:.97em;}
+  .slide ul{margin:.4em 0 .4em 1.2em;}
+  .slide li{margin:.2em 0;}
+  .slide .kicker{font-size:.64em; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:.5em;}
+  .slide .foot{margin-top:auto; font-size:.5em; color:var(--muted); padding-top:1em;}
+  .slide.cover{background:linear-gradient(135deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff;}
+  .slide.cover .kicker{color:#c7d4fa;}
+  .slide.cover h1{color:#fff;}
+  .code{background:#fff; border:1px solid var(--line); border-radius:12px; padding:.8em 1em; margin:.4em 0; font-size:.98em;}
+  .demo{display:flex; flex-wrap:wrap; gap:1em; font-size:1.4em;}
+  .demo span{border:1px solid var(--line); border-radius:10px; padding:.3em .6em; background:#fff;}
+  .btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); color:#fff; border:none; width:54px; height:54px; border-radius:50%; font-size:24px; cursor:pointer; z-index:10;}
+  #prev{left:12px;} #next{right:12px;}
+  #count{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:#fff; opacity:.7; font-size:13px; background:rgba(0,0,0,.3); padding:3px 12px; border-radius:20px; z-index:10;}
+  @media print{ body{background:#fff;} .btn,#count{display:none;} .slide{position:static; display:flex!important; height:auto; min-height:96vh; break-after:page;} }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <section class="slide cover active">
+    <div class="kicker">Информатика · 5 класс</div>
+    <h1>Кодирование информации</h1>
+    <p>Как одна и та же информация может выглядеть по-разному.</p>
+    <div class="foot">Автор: [ваше имя] · Информатика · ФГОС</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Организационный момент</div>
+    <h2>О чём урок</h2>
+    <ul>
+      <li>Что такое код и кодирование.</li>
+      <li>Примеры кодов вокруг нас.</li>
+      <li>Зачем кодировать информацию.</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Основное понятие</div>
+    <h2>Что такое код</h2>
+    <p>Код — это способ записать информацию с помощью условных знаков.</p>
+    <p>Кодирование — превращение информации в такую форму, которую можно понять и передать.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Примеры</div>
+    <h2>Коды вокруг нас</h2>
+    <div class="demo"><span>А Б В</span><span>1 2 3</span><span>М А Й</span></div>
+    <p>Буквы, цифры, дорожные знаки, азбука Морзе, QR-код — всё это способы кодирования информации.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Ключевая идея</div>
+    <h2>Одна информация — разный код</h2>
+    <p>Число «10» по-разному закодировано: цифрами, словом «десять», римским «X», двоичным кодом компьютера.</p>
+    <div class="code">10 (десятичная) = 1010<sub>2</sub> (двоичная)</div>
+    <p>Смысл один, а форма записи разная.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Код и знаки</div>
+    <h2>Правила кодирования</h2>
+    <ul>
+      <li>Каждый знак имеет один смысл (однозначность).</li>
+      <li>Код должен быть <b>понятен</b> получателю.</li>
+      <li>Кодирование помогает хранить и передавать информацию.</li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Практика</div>
+    <h2>Задание на уроке</h2>
+    <p>В приложении расшифруй сообщения, зашифрованные простым кодом.</p>
+    <p>Составь свой код для слова и предложи другу расшифровать.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Рефлексия</div>
+    <h2>Итог урока</h2>
+    <ul>
+      <li>Код — способ записи информации знаками.</li>
+      <li>Одну информацию можно представить разными кодами.</li>
+      <li>Кодирование нужно для хранения и передачи.</li>
+    </ul>
+    <p><b>Дома:</b> закодируй своё имя с помощью алфавита «А=1, Б=2…».</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+</div>
+
+<button class="btn" id="prev">‹</button>
+<button class="btn" id="next">›</button>
+<div id="count">1 / 9</div>
+
+<script>
+"use strict";
+const slides=[].slice.call(document.querySelectorAll(".slide"));
+let cur=slides.findIndex(s=>s.classList.contains("active"));
+function upd(){slides.forEach((s,k)=>s.classList.toggle("active",k===cur));document.getElementById("count").textContent=(cur+1)+" / "+slides.length;}
+function next(){cur=Math.min(cur+1,slides.length-1);upd();}
+function prev(){cur=Math.max(cur-1,0);upd();}
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){next();e.preventDefault();}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){prev();e.preventDefault();}
+});
+</script>
+</body>
+</html>

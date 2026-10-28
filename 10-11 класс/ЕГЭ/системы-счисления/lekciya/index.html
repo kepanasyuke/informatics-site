@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лекция · Системы счисления · ЕГЭ</title>
+<style>
+  :root{--bg:#fbfaf7; --ink:#26241f; --accent:#3b5bdb; --accent-d:#2743a8; --muted:#6a6255; --line:#e7e1d5;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:17px/1.7 Georgia,serif;}
+  .wi{max-width:840px; margin:0 auto; padding:0 1.4rem;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:2rem 1.4rem;}
+  .kicker{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.5rem;}
+  header h1{font-size:1.9rem; font-weight:800;}
+  header p{color:#dbe4fb; margin-top:.4rem;}
+  main{max-width:840px; margin:0 auto; padding:1.6rem 1.4rem 3rem;}
+  h2{font-size:1.35rem; color:var(--accent-d); margin:1.5rem 0 .5rem; border-top:1px solid var(--line); padding-top:.5rem;}
+  h3{font-size:1.06rem; margin:.9rem 0 .3rem;}
+  p{margin:.5rem 0;}
+  ul,ol{margin:.4rem 0 .6rem 1.2rem;}
+  li{margin:.2rem 0;}
+  code{background:#f1f4fd; border:1px solid var(--line); border-radius:5px; padding:.05em .3em; font-family:ui-monospace,Consolas,monospace; font-size:.92em;}
+  .term{background:#f1f4fd; border-left:3px solid var(--accent); padding:.6rem .9rem; margin:.7rem 0; border-radius:0 8px 8px 0;}
+  .term b{color:var(--accent-d);}
+  .ex{background:#f6faf6; border-left:3px solid #2f9e6b; padding:.6rem .9rem; margin:.7rem 0; border-radius:0 8px 8px 0;}
+  .ex b{color:#1e7a45;}
+  .qa{background:#fff7ea; border-radius:10px; padding:.8rem 1rem; margin:.7rem 0;}
+  .qa b{color:#a07a00;}
+  table{border-collapse:collapse; width:100%; margin:.6rem 0;}
+  th,td{border:1px solid var(--line); padding:.5rem .7rem; text-align:left; font-size:.95rem;}
+  th{background:#f1f4fd;}
+  .action{display:flex; justify-content:flex-end; margin-bottom:1rem;}
+  .btn{border:none; background:var(--accent); color:#fff; font-weight:700; padding:.6rem 1.2rem; border-radius:9px; cursor:pointer;}
+  .foot{max-width:840px; margin:0 auto; padding:0 1.4rem 2rem; color:var(--muted); font-size:.85rem;}
+  @media print{ .action{display:none;} }
+</style>
+</head>
+<body>
+<header><div class="wi">
+  <div class="kicker">Лекция · материал для вычитки · ЕГЭ</div>
+  <h1>Системы счисления</h1>
+  <p>10–11 классы · подготовка к ЕГЭ по информатике</p>
+</div></header>
+
+<main>
+  <div class="action"><button class="btn" onclick="window.print()">Печать лекции</button></div>
+
+  <h2>1. Организация урока</h2>
+  <p><b>Цель урока:</b> систематизировать знания о позиционных системах счисления и отработать приёмы перевода и арифметики, необходимые для ЕГЭ.</p>
+  <p><b>Задачи:</b></p>
+  <ul>
+    <li>повторить развёрнутую запись числа и понятие основания;</li>
+    <li>отработать перевод в десятичную и из десятичной;</li>
+    <li>освоить переводы двоичная ↔ восьмеричная/шестнадцатеричная через группы;</li>
+    <li>разобрать типовые задачи ЕГЭ на системы счисления.</li>
+  </ul>
+
+  <h2>2. Теория. Позиционные системы счисления</h2>
+  <p>В позиционной системе значение цифры зависит от её позиции (разряда). Число в системе с основанием <code>p</code>, состоящее из цифр <code>a<sub>n</sub>…a<sub>0</sub></code>, равно:</p>
+  <div class="term"><b>Развёрнутая форма:</b> <code>a<sub>n</sub>·p<sup>n</sup> + … + a<sub>1</sub>·p<sup>1</sup> + a<sub>0</sub>·p<sup>0</sup></code></div>
+  <p>Основание <code>p</code> — количество допустимых цифр. В шестнадцатеричной системе цифры обозначают буквами: <code>A=10, B=11, C=12, D=13, E=14, F=15</code>.</p>
+
+  <h3>2.1. Таблица систем</h3>
+  <table>
+    <tr><th>Система</th><th>Основание</th><th>Цифры</th></tr>
+    <tr><td>Двоичная</td><td>2</td><td>0, 1</td></tr>
+    <tr><td>Восьмеричная</td><td>8</td><td>0–7</td></tr>
+    <tr><td>Десятичная</td><td>10</td><td>0–9</td></tr>
+    <tr><td>Шестнадцатеричная</td><td>16</td><td>0–9, A–F</td></tr>
+  </table>
+
+  <h2>3. Переводы</h2>
+  <h3>3.1. Из любой системы в десятичную</h3>
+  <p>Раскрываем число по развёрнутой форме и вычисляем.</p>
+  <div class="ex"><b>Пример 1.</b> <code>1011<sub>2</sub></code> = 1·2³+0·2²+1·2¹+1·2⁰ = 8+0+2+1 = <b>11</b>.</div>
+  <div class="ex"><b>Пример 2.</b> <code>2F<sub>16</sub></code> = 2·16¹+15·16⁰ = 32+15 = <b>47</b>.</div>
+
+  <h3>3.2. Из десятичной в другую систему</h3>
+  <p>Метод последовательного деления на основание: делим число, записываем остаток, пока не получим частное меньше основания. Результат — остатки, прочитанные снизу вверх.</p>
+  <div class="ex"><b>Пример 3.</b> 27 в двоичную: 27→13 ост.1; 13→6 ост.1; 6→3 ост.0; 3→1 ост.1; 1→0 ост.1. Остатки снизу вверх: <code>11011<sub>2</sub></code>.</div>
+
+  <h3>3.3. Двоичная ↔ восьмеричная / шестнадцатеричная</h3>
+  <p>Так как 8=2³ и 16=2⁴, перевод делается группировкой двоичных разрядов (от конца числа):</p>
+  <ul>
+    <li>в восьмеричную — по 3 разряда;</li>
+    <li>в шестнадцатеричную — по 4 разряда;</li>
+    <li>недостающие старшие разряды дополняются нулями.</li>
+  </ul>
+  <div class="ex"><b>Пример 4.</b> <code>110101<sub>2</sub></code> → группы по 3: <code>110</code> и <code>101</code> → <code>65<sub>8</sub></code>. По 4: <code>0011</code> и <code>0101</code> → <code>35<sub>16</sub></code>.</div>
+
+  <h2>4. Арифметика в двоичной системе</h2>
+  <p>Сложение выполняется поразрядно с переносом в старший разряд, когда сумма разрядов ≥ 2:</p>
+  <ul>
+    <li>0+0=0; 0+1=1; 1+1=10 (перенос); 1+1+1=11.</li>
+  </ul>
+  <div class="ex"><b>Пример 5.</b> <code>1101<sub>2</sub> + 1011<sub>2</sub></code> = <code>11000<sub>2</sub></code>.</div>
+
+  <h2>5. Типовые задачи ЕГЭ</h2>
+  <div class="qa"><b>Задача 1.</b> Сколько значащих нулей в двоичной записи числа 40?
+    <p><b>Решение:</b> 40 = <code>101000<sub>2</sub></code>. Значащие нули — между/после единиц, кроме ведущих: их три (0·1·0·0·0). Ответ: <b>3</b>.</p>
+  </div>
+  <div class="qa"><b>Задача 2.</b> Чему равно <code>111<sub>2</sub> + 111<sub>8</sub></code> (ответ в десятичной)?
+    <p><b>Решение:</b> <code>111<sub>2</sub></code>=7; <code>111<sub>8</sub></code>=1·64+1·8+1=73. Сумма = 80.</p>
+  </div>
+  <p>Разберите обе задачи  вслух, проверяя каждый шаг с учениками.</p>
+
+  <h2>6. Практическая часть</h2>
+  <p>В приложении на уроке: тренажёр переводов (автопроверка), сравнение значений и сложение в двоичной системе. После тренажёра — самостоятельное решение 5 примеров в тетради.</p>
+
+  <h2>7. Рефлексия и домашнее задание</h2>
+  <div class="qa"><b>Вопросы для проверки:</b>
+    <ol>
+      <li>Как перевести число в десятичную систему?</li>
+      <li>Как перевести число из десятичной в восьмеричную?</li>
+      <li>Почему двоичная ↔ шестнадцатеричная переводится по группам из 4?</li>
+    </ol>
+  </div>
+  <p><b>Дома:</b> 5 переводов (по одному на систему), сложить 3 пары двоичных чисел, решить типовую задачу «значащие нули» для трёх чисел.</p>
+</main>
+
+<div class="foot">Автор: [ваше имя] · Информатика · ФГОС. Материал для вычитки к уроку «Системы счисления» (ЕГЭ).</div>
+</body>
+</html>

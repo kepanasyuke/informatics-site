@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html><html lang="ru"><head><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VK подписка · Информатика 3–11 + ЕГЭ</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ac:#e8436f;--ac2:#6d4fd1;--ink:#191f33;--line:rgba(40,50,80,.12);--paper:#fffdf6}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,Arial,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:0 1.25rem}
+.hero{background:radial-gradient(130% 160% at 82% 12%,#c04576 0%,#7a3f86 40%,#2a3a6e 78%,#151d33 100%);color:#fff;padding:2.6rem 1.25rem}
+.kicker{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#ffb3ca;font-weight:800;margin-bottom:.5rem}
+.hero h1{font-size:2rem;font-weight:900}
+.hero p{color:#e6eaf7;margin-top:.6rem;max-width:640px}
+main{padding:2rem 1.25rem 3rem}
+h2{font-size:1.4rem;color:var(--ink);margin:2rem 0 .7rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:1.2rem 1.3rem;box-shadow:0 10px 26px rgba(25,31,51,.07);margin:.6rem 0}
+.card b{color:var(--ink)}
+.steps{counter-reset:st}.steps .card{counter-increment:st;position:relative;padding-left:3.4rem}
+.steps .card::before{content:counter(st);position:absolute;left:1rem;top:1.2rem;background:var(--ac);color:#fff;font-weight:900;border-radius:999px;width:1.7rem;height:1.7rem;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.btn{display:inline-block;background:var(--ac);color:#fff;font-weight:900;border-radius:999px;padding:.85rem 1.6rem;text-decoration:none;margin-top:1rem}
+.btn.ghost{background:#f2eefb;color:var(--ac2)}
+.note{background:#fff7ea;border-left:4px solid #c9a227;border-radius:0 10px 10px 0;padding:.8rem 1rem;margin:1rem 0;font-size:.92rem}
+a{color:var(--ac)}
+footer{padding:2.2rem 1.25rem;color:#7a84a5;font-size:.85rem;border-top:1px solid #ece6f4}
+</style></head><body>
+<div class="hero"><div class="wrap">
+ <div class="kicker">Через сервисы VK</div>
+ <h1>Подписка на курс через VK</h1>
+ <p>Оформите доступ к курсу «Информатика 3–11 + ЕГЭ» через сервисы ВКонтакте и получайте карточки-баннеры, новости и рассылку.</p>
+</div></div>
+<main class="wrap">
+ <h2>Как это работает</h2>
+ <div class="steps">
+  <div class="card"><b>Откройте сервисы VK</b><br>Переходите в раздел сервисов — там публикуются карточки курса, ссылки на демо-уроки и тарифы.</div>
+  <div class="card"><b>Выберите тариф</b><br>499 ₽/мес (базовый) или 899 ₽/мес (с онлайн-поддержкой в чате).</div>
+  <div class="card"><b>Оплатите</b><br>После оплаты пришлите подтверждение — получите персональный ключ доступа на вашу почту.</div>
+ </div>
+ <a class="btn" href="https://vk.ru/services" target="_blank" rel="noopener">Открыть сервисы VK →</a>
+ <a class="btn ghost" style="margin-left:.5rem" href="index.html">← На сайт курса</a>
+
+ <div class="note"><b>Карточки для воронки:</b> готовый набор баннеров для публикации в VK находится в файле <b>docs/воронка-vk.html</b> (на сайт / демо / тарифы / чат). Скопируйте карточку в пост или используйте как изображение.</div>
+
+ <h2>Подключение VK-подписки (для автора)</h2>
+ <div class="card"><b>1.</b> Создайте сообщество VK (если ещё нет).<br>
+ <b>2.</b> В разделе управления сообществом подключите «Товары/Услуги» и настройте монетизацию — для публикации карточек курса.<br>
+ <b>3.</b> Заполните контакты: добавьте email k.panasyuk@bk.ru, Telegram @kristinapnsk и телефон +7 923 186-98-26.<br>
+ <b>4.</b> Кнопку «Чат поддержки» (тариф 899 ₽) укажите на адрес диалога сообщества — замените <b>CHAT_VK_PLACEHOLDER</b> на <b>vk.me/...</b> в файлах сайта.</div>
+</main>
+<footer class="wrap">© 2026 Панасюк Кристина Эрнстовна · Информатика 3–11 + ЕГЭ · Подписка через VK.</footer>
+</body></html>
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лекция · Основы Python · 8 класс</title>
+<style>
+  :root{--bg:#fbfaf7; --ink:#26241f; --accent:#3b5bdb; --accent-d:#2743a8; --muted:#6a6255; --line:#e7e1d5;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:16px/1.7 Georgia,serif;}
+  .wi{max-width:840px; margin:0 auto; padding:0 1.4rem;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:2rem 1.4rem;}
+  .kicker{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.5rem;}
+  header h1{font-size:1.9rem; font-weight:800;}
+  header p{color:#dbe4fb; margin-top:.4rem;}
+  main{max-width:840px; margin:0 auto; padding:1.6rem 1.4rem 3rem;}
+  h2{font-size:1.35rem; color:var(--accent-d); margin:1.5rem 0 .5rem; border-top:1px solid var(--line); padding-top:.5rem;}
+  h3{font-size:1.05rem; margin:.9rem 0 .3rem;}
+  p{margin:.5rem 0;}
+  ul,ol{margin:.4rem 0 .6rem 1.2rem;}
+  li{margin:.2rem 0;}
+  code,pre{font-family:ui-monospace,Consolas,monospace;}
+  p code{background:#f1f4fd; border:1px solid var(--line); border-radius:5px; padding:.05em .3em;}
+  pre{background:#0f1b33; color:#d7e3ff; border-radius:12px; padding:1em 1.2em; font-size:.9em; line-height:1.5; overflow-x:auto; margin:.6rem 0;}
+  .term{background:#f1f4fd; border-left:3px solid var(--accent); padding:.6rem .9rem; margin:.7rem 0; border-radius:0 8px 8px 0;}
+  .term b{color:var(--accent-d);}
+  .out{background:#fff; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; padding:.5em .9em; margin:.5rem 0; font-size:.9em; font-family:ui-monospace,Consolas,monospace;}
+  .ex{background:#f6faf6; border-left:3px solid #2f9e6b; padding:.6rem .9rem; margin:.7rem 0; border-radius:0 8px 8px 0;}
+  .ex b{color:#1e7a45;}
+  .qa{background:#fff7ea; border-radius:10px; padding:.8rem 1rem; margin:.7rem 0;}
+  .qa b{color:#a07a00;}
+  .action{display:flex; justify-content:flex-end; margin-bottom:1rem;}
+  .btn{border:none; background:var(--accent); color:#fff; font-weight:700; padding:.6rem 1.2rem; border-radius:9px; cursor:pointer;}
+  .foot{max-width:840px; margin:0 auto; padding:0 1.4rem 2rem; color:var(--muted); font-size:.85rem;}
+  @media print{ .action{display:none;} }
+</style>
+</head>
+<body>
+<header><div class="wi">
+  <div class="kicker">Лекция · материал для вычитки</div>
+  <h1>Основы программирования на Python</h1>
+  <p>8 класс · Раздел «Основы алгоритмизации и программирования»</p>
+</div></header>
+
+<main>
+  <div class="action"><button class="btn" onclick="window.print()">Печать лекции</button></div>
+
+  <h2>1. Организация урока</h2>
+  <p><b>Цель урока:</b> познакомить с базовыми конструкциями языка Python и научить читать и предсказывать работу простых программ.</p>
+  <p><b>Задачи:</b></p>
+  <ul>
+    <li>сформировать понятия «переменная», «ветвление», «цикл»;</li>
+    <li>научить выполнять простые программы «вручную» (трассировка);</li>
+    <li>закрепить понимание трёх базовых конструкций алгоритма.</li>
+  </ul>
+
+  <h2>2. Вводная часть</h2>
+  <p>Спросите: «Может ли компьютер сам придумать программу?». Нет — программу пишет человек, а компьютер только её выполняет. Программа — это алгоритм, записанный на понятном компьютеру языке.</p>
+
+  <h2>3. Основной материал</h2>
+
+  <h3>3.1. Вывод и вычисления</h3>
+  <p>Команда <code>print</code> выводит значения на экран. Python соблюдает обычные правила арифметики.</p>
+  <pre>print("Привет, мир!")
+print(2 + 3 * 4)</pre>
+  <div class="out">Привет, мир!<br>14</div>
+
+  <h3>3.2. Переменные</h3>
+  <p>Переменная — именованное хранилище значения. Оператор <code>=</code> записывает значение; справа — выражение, которое вычисляется.</p>
+  <pre>age = 12
+age = age + 1   # теперь age == 13
+print(age)</pre>
+  <div class="out">13</div>
+  <div class="term"><b>Термин:</b> переменная — именованная область памяти, в которой хранится значение; значение может меняться в ходе выполнения программы.</div>
+
+  <h3>3.3. Ветвление (if / else)</h3>
+  <p>Условная команда даёт программе выбрать один из путей в зависимости от логического условия.</p>
+  <pre>score = 85
+if score >= 60:
+    print("Зачёт")
+else:
+    print("Не зачёт")</pre>
+  <div class="out">Зачёт</div>
+  <p>Обратите внимание на отступы: блок под <code>if</code> и <code>else</code> выделяется 4 пробелами. Операторы сравнения: <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>.</p>
+
+  <h3>3.4. Цикл while</h3>
+  <p>Цикл повторяет блок, пока условие истинно. Ключевое требование — переменная в условии должна меняться, иначе цикл не завершится.</p>
+  <pre>n = 1
+while n <= 3:
+    print(n)
+    n = n + 1</pre>
+  <div class="out">1<br>2<br>3</div>
+  <div class="ex"><b>Важно.</b> Без строки <code>n = n + 1</code> цикл был бы бесконечным. Выполняя цикл вручную, записывайте, как меняется <code>n</code> на каждом шаге.</div>
+
+  <h2>4. Три базовые конструкции</h2>
+  <ul>
+    <li><b>Последовательность</b> — команды выполняются по порядку;</li>
+    <li><b>Ветвление</b> — выбор пути по условию;</li>
+    <li><b>Повторение</b> — цикл.</li>
+  </ul>
+  <p>Из них собирается любая программа, какой бы сложной она ни была.</p>
+
+  <h2>5. Практическая часть</h2>
+  <p>Ученики в приложении «прокручивают» выполнение кода по шагам и выбирают, что выведет программа. Это развивает навык трассировки (выполнения кода вручную), важный для ОГЭ/ЕГЭ.</p>
+
+  <h2>6. Закрепление и рефлексия</h2>
+  <div class="qa"><b>Вопросы для проверки:</b>
+    <ol>
+      <li>Что делает команда print?</li>
+      <li>Что такое переменная и как её значение меняется?</li>
+      <li>Зачем в цикле while менять переменную условия?</li>
+      <li>Назови три базовые конструкции алгоритма.</li>
+    </ol>
+  </div>
+
+  <h2>7. Домашнее задание</h2>
+  <p>Подобрать начальное значение <code>n</code> и условие цикла <code>while</code> так, чтобы программа вывела числа 5, 4, 3 (три шага). Записать решение и проверить трассировкой.</p>
+</main>
+
+<div class="foot">Автор: [ваше имя] · Информатика · ФГОС. Материал для вычитки к уроку «Основы программирования на Python».</div>
+</body>
+</html>

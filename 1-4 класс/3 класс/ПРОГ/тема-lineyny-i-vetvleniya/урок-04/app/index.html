@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Линейные алгоритмы и ветвления · урок 4 · игра «Собери код»</title><style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#fffdf6;color:#222a3a;font:16px/1.55 system-ui,Arial,sans-serif}
+:root{--ac:#e8436f;--ac2:#6d4fd1}
+header{background:radial-gradient(130% 160% at 85% 0%,#c04576 0%,#7a3f86 40%,#2a3a6e 78%,#151d33 100%);color:#fff;padding:1.7rem 1.25rem}
+.wrap{max-width:760px;margin:0 auto}.kicker{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:#ffb3ca;font-weight:800;margin-bottom:.4rem}header h1{font-size:1.45rem;font-weight:900}
+.progress{display:flex;gap:.4rem;margin:1rem 0}
+.step{height:.5rem;border-radius:3px;background:rgba(40,50,80,.12);flex:1}
+.step.on{background:var(--ac)}
+main{max-width:760px;margin:0 auto;padding:1.2rem 1.25rem 2.5rem}
+.panel{background:#fff;border:1px solid rgba(40,50,80,.10);border-radius:18px;padding:1.3rem 1.4rem;box-shadow:0 10px 26px rgba(25,31,51,.07)}
+.panel h2{font-size:1.15rem;font-weight:900;color:#191f33;margin-bottom:.2rem}
+.panel .hint{color:#8a93ad;font-size:.86rem;margin-bottom:.9rem}
+.pnote{display:inline-block;background:#f2eefb;color:var(--ac2);font-weight:800;font-size:.74rem;letter-spacing:.06em;border-radius:999px;padding:.22em .8em;margin-bottom:.7rem}
+/* блоки «кода» */
+.code{display:flex;flex-direction:column;gap:.55rem;margin:.7rem 0}
+.row{background:#ece7fb;border:1px solid rgba(109,79,209,.25);border-radius:10px;padding:.6em .9em;font-family:ui-monospace,Consolas,Menlo,monospace;font-weight:600;font-size:.98rem;cursor:grab;user-select:none;box-shadow:0 2px 6px rgba(25,31,51,.06)}
+.row.drag{opacity:.45}
+.slot{min-height:2.6em;border:2px dashed rgba(109,79,209,.35);border-radius:10px;padding:.5em .8em;font-family:ui-monospace,Consolas,Menlo,monospace;font-weight:600;font-size:.98rem;background:#fbfaff}
+.slot.drop{border-color:var(--ac);background:#fff}
+.rows{display:flex;flex-direction:column;gap:.55rem}
+/* варианты */
+.opts{display:flex;flex-direction:column;gap:.5rem;margin:.6rem 0}
+.opt{border:1px solid rgba(40,50,80,.12);background:#fbfcff;border-radius:12px;padding:.7em .95em;cursor:pointer;font-weight:600}
+.opt:hover{border-color:var(--ac)}
+.opt.sel{border-color:var(--ac);background:#ffe4ec}
+.opt.ok{background:#e9f8 f0;border-color:#20a05a}
+.opt.ok{background:#e9f8f0;border-color:#20a05a}
+.opt.no{background:#fdece8;border-color:#d4492f}
+/* сопоставление */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.6rem 0}
+.ml,.mr{display:flex;flex-direction:column;gap:.5rem}
+.mpanel{border:1px solid rgba(40,50,80,.12);background:#fbfcff;border-radius:12px;padding:.55em .8em;font-size:.9rem;cursor:pointer;font-weight:600}
+.mpanel.sel{border-color:var(--ac);background:#ffe4ec}
+.mpanel.done{border-color:#20a05a;background:#e9f8f0}
+.mpanel.bad{border-color:#d4492f;background:#fdece8}
+/* перетаскивание-порядок */
+.dropzones{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0}
+.dz{flex:1 1 40%;min-height:2.6em;border:2px dashed rgba(109,79,209,.35);border-radius:10px;padding:.45em;background:#fbfaff}
+.dz.filled{border-style:solid;border-color:var(--ac2);background:#f2eefb}
+/* память-пары */
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.6rem;margin:.6rem 0}
+.tile{aspect-ratio:1/1;border:1px solid rgba(40,50,80,.12);border-radius:12px;background:linear-gradient(135deg,#f2eefb,#fbfbfe);display:flex;align-items:center;justify-content:center;text-align:center;padding:.5em;font-weight:800;cursor:pointer;font-size:.88rem}
+.tile.open{background:#fff;border-color:var(--ac);color:#191f33}
+.tile.found{background:#e9f8f0;border-color:#20a05a;color:#1e7a45}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.btn{border:none;border-radius:12px;padding:.7rem 1.3rem;font-weight:800;cursor:pointer;font-size:.95rem}
+.btn.primary{background:var(--ac);color:#fff}
+.btn.ghost{background:#fff;border:1px solid rgba(40,50,80,.16);color:#222a3a}
+.btn:disabled{opacity:.45;cursor:default}
+.fdb{margin-top:.8rem;padding:.7em 1em;border-radius:10px;font-weight:700;font-size:.95rem}
+.fdb.ok{background:#e9f8f0;color:#1e7a45}
+.fdb.no{background:#fdece8;color:#b3451d}
+.fdb.info{background:#eef1fb;color:#2743a8}
+.score{display:flex;align-items:center;gap:.5rem;justify-content:flex-end;color:#6a5570;font-weight:800;font-size:.9rem}
+.end{text-align:center;padding:1rem 0}
+.end .big{font-size:2.2rem;font-weight:900;color:var(--ac)}
+footer{max-width:760px;margin:0 auto;padding:0 1.25rem 2rem;color:#8a93ad;font-size:.82rem}
+@media(max-width:560px){.match{grid-template-columns:1fr}}
+</style><meta name="description" content="Линейные алгоритмы и ветвления · урок 4 — материалы урока (3 класс, ФГОС)."><meta name="keywords" content="информатика, урок, 3 класс, ИКТ, программирование, ФГОС"><meta name="robots" content="noindex,nofollow"><link rel="canonical" href="https://YOUR-DOMAIN.ru/"><meta property="og:type" content="website"><meta property="og:title" content="Линейные алгоритмы и ветвления · урок 4"><meta property="og:description" content="Линейные алгоритмы и ветвления · урок 4 — материалы урока (3 класс, ФГОС)."><meta name="twitter:card" content="summary"></head><body>
+<header><div class="wrap"><div class="kicker">Игровое приложение · «Собери код»</div><h1>Линейные алгоритмы и ветвления · урок 4</h1></div></header>
+<main class="wrap"><div class="progress" id="prog"></div><div id="stage"></div></main>
+<footer class="wrap">Автор: Панасюк Кристина Эрнстовна · Информатика · ФГОС · Игра-конструктор к уроку «Линейные алгоритмы и ветвления · урок 4».</footer>
+<script>"use strict";
+var G=[{"type": "order", "title": "Собери блоки по порядку", "hint": "Перетащи блоки-команды в правильный порядок.", "lines": ["Выбор делает алгоритм более гибким.", "При ветвлении выполняется одно действие.", "Линейные и ветвления сочетаются."], "solution": ["При ветвлении выполняется одно действие.", "Линейные и ветвления сочетаются.", "Выбор делает алгоритм более гибким."]}, {"type": "term", "title": "Терминал: где я?", "hint": "Покажи текущую папку.", "shell": "Git Bash / bash", "prompt": "user@pc:~$ _\n(покажи, в какой папке ты находишься)", "expect": "pwd", "correct": "pwd"}, {"type": "term", "title": "Терминал: посмотри папку", "hint": "Выведи список файлов и папок.", "shell": "Git Bash / bash", "prompt": "user@pc:~$ _\n(посмотри, что лежит в папке)", "expect": "ls", "correct": "ls"}, {"type": "order", "title": "Собери последовательность понятий", "hint": "Расставь понятия урока в удобном порядке изучения.", "lines": ["Линейные и ветвление", "Две ветви"], "solution": ["Две ветви", "Линейные и ветвление"]}, {"type": "fill", "title": "Вставь недостающее понятие", "hint": "Какой термин соответствует определению?", "base": "при ветвлении выбирают одно из двух действий.", "options": ["Две ветви", "Линейные и ветвление"], "correct": "Две ветви"}, {"type": "odd", "title": "Найди лишний факт", "hint": "Убери блок, который не по теме.", "lines": ["При ветвлении выполняется одно действие.", "Линейные и ветвления сочетаются.", "Выбор делает алгоритм более гибким."], "extra": "Выбор делает алгоритм более гибким."}, {"type": "tf", "title": "Верно или неверно?", "hint": "Оцени утверждение по теме урока.", "stmt": "При ветвлении выполняется одно действие.", "answer": true}, {"type": "seq", "title": "Выстрой шаги по порядку", "hint": "Расположи шаги в правильной последовательности.", "lines": ["Выбор делает алгоритм более гибким.", "При ветвлении выполняется одно действие.", "Линейные и ветвления сочетаются."], "solution": ["При ветвлении выполняется одно действие.", "Линейные и ветвления сочетаются.", "Выбор делает алгоритм более гибким."]}, {"type": "code_order", "title": "Собери код из кусочков", "hint": "Расставь фрагменты так, чтобы получился верный блок.", "lines": ["Две ветви"], "solution": ["Две ветви"]}, {"type": "what", "title": "Что делает этот блок?", "hint": "Выбери верное описание действия.", "code": "\"Две ветви\"", "options": ["при ветвлении выбирают одно из двух действий.", "в жизни сочетаются два вида алгоритмов."], "correct": "при ветвлении выбирают одно из двух действий."}, {"type": "code_fill", "title": "Восстанови строку кода", "hint": "Вставь пропущенный фрагмент.", "base": "при ветвлении выбирают одно из двух действий.", "options": ["Две ветви", "Линейные и ветвление"], "correct": "Две ветви"}, {"type": "bug", "title": "Найди ошибку", "hint": "Строка содержит ошибку. Выбери вариант.", "code": "повтори по теме: \"При ветвлении выполняется одно действие.\"", "options": ["Линейные и ветвления сочетаются.", "При ветвлении выполняется одно действие.", "верного варианта нет"], "correct": "Линейные и ветвления сочетаются."}, {"type": "sort", "title": "Отсортируй по алфавиту", "hint": "Расположи понятия в алфавитном порядке.", "lines": ["Линейные и ветвление", "Две ветви"], "solution": ["Две ветви", "Линейные и ветвление"]}, {"type": "choose", "title": "Что вернёт этот блок?", "hint": "Представь, что команда выполнилась. Что она вернёт?", "code": "\"Две ветви\" → результат", "options": ["при ветвлении выбирают одно из двух действий.", "в жизни сочетаются два вида алгоритмов."], "correct": "при ветвлении выбирают одно из двух действий."}];
+var cur=0,pts=0,fdb=null,selL=null,selR={},found=[],openA=null,openB=null,dz=[];
+var stage=document.getElementById("stage");
+function bar(){var p=document.getElementById("prog");p.innerHTML="";G.forEach(function(_,i){var s=document.createElement("div");s.className="step"+(i<cur?" on":"");p.appendChild(s)});}
+function escT(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function rowsOf(arr,cls){return '<div class="rows">'+arr.map(function(x){return '<div class="'+(cls||"row")+'">'+escT(x)+'</div>'}).join("")+'</div>';}
+function checkOk(ok){fdb={ok:ok};
+  if(ok){pts++;}
+  var d=document.createElement("div");d.className="fdb "+(ok?"ok":"no");
+  d.textContent=ok?"Верно! +1":"Неверно. Правильно: «"+(G[cur].solution||G[cur].correct||"")+"».";
+  var old=stage.querySelector(".fdb");if(old)old.remove();stage.appendChild(d);
+  document.querySelector(".btn.primary").disabled=false;}
+function render(t){
+  document.querySelectorAll(".fdb").forEach(function(x){x.remove()});
+  var it=G[t];var h=document.createElement("div");
+  h.className="panel";
+  var body="";
+  function fmtOK(){var b=document.createElement("button");b.className="btn primary";b.textContent="Дальше →";b.disabled=true;b.onclick=function(){cur++;if(cur>=G.length){end();}else{render(cur);}};return b.outerHTML;}
+  if(it.type==="order"||it.type==="seq"||it.type==="code_order"||it.type==="py_order"){
+    body='<span class="pnote">Расставь по порядку</span><div class="code">'+it.lines.map(function(x,i){return '<div class="row" data-i="'+i+'">'+escT(x)+'</div>'}).join("")+'</div><div class="actions">'+fmtOK()+'</div>';
+  } else if(it.type==="py_out"){
+    body='<span class="pnote">Что выведет программа?</span><div style="background:#131a30;border-radius:12px;padding:.9em 1.1em;font-family:ui-monospace,Consolas,monospace;color:#7ef0c8;font-weight:600;white-space:pre">'+escT(it.code)+'</div>'
+        +'<div class="opts">'+it.options.map(function(o,i){return '<div class="opt" data-i="'+i+'" data-v="'+escT(o)+'">'+escT(o)+'</div>'}).join("")+'</div>'
+        +'<div class="actions"><button class="btn primary" id="checkbtn">Проверить</button></div>';
+  } else if(it.type==="odd"){
+    body='<span class="pnote">Поймай лишний блок</span>'+rowsOf(it.lines.concat([it.extra]))+'<div class="actions"><button class="btn primary" id="oddb">Убрать лишний</button></div>';
+  } else if(it.type==="fill"||it.type==="code_fill"||it.type==="what"||it.type==="choose"){
+    body='<span class="pnote">Выбери вариант</span><div style="background:#f2eefb;border-radius:12px;padding:.9em;font-family:ui-monospace,Consolas,monospace;font-weight:600">'+(it.code?escT(it.code):escT(it.base))+'</div>'
+        +'<div class="opts">'+it.options.map(function(o,i){return '<div class="opt" data-i="'+i+'" data-v="'+escT(o)+'">'+escT(o)+'</div>'}).join("")+'</div>'
+        +'<div class="actions"><button class="btn primary" id="checkbtn">Проверить</button></div>';
+  } else if(it.type==="chain"){
+    body='<span class="pnote">Квест-цепочка</span><div id="chainbox"><div class="hint" id="chin"></div>'
+        +'<div style="background:#f2eefb;border-radius:12px;padding:.9em;font-family:ui-monospace,Consolas,monospace;font-weight:600" id="chq"></div>'
+        +'<div class="opts" id="chopts"></div>'
+        +'<div class="actions"><button class="btn primary" id="chainbtn" disabled>Дальше</button></div></div>';
+  } else if(it.type==="tf"){
+    body='<span class="pnote">Верно / неверно</span><div style="background:#f2eefb;border-radius:12px;padding:.9em;font-weight:600">'+escT(it.stmt)+'</div>'
+        +'<div class="opts"><div class="opt" data-v="1">Верно</div><div class="opt" data-v="0">Неверно</div></div>'
+        +'<div class="actions"><button class="btn primary" id="checkbtn">Проверить</button></div>';
+  } else if(it.type==="term"){
+    // терминал (bash/Git Bash / PowerShell): введи правильную команду
+    body='<span class="pnote">Терминал · '+escT(it.shell||"bash")+'</span>'
+        +'<div style="background:#0d1226;border-radius:12px;padding:1em 1.1em;color:#7ef0c8;font-family:ui-monospace,Consolas,monospace;white-space:pre;min-height:60px;margin-bottom:.8rem">'+escT(it.prompt)+'</div>'
+        +'<div class="code"><div style="display:flex;gap:.4rem;align-items:center;background:#131a30;border-radius:10px;padding:.5em .8em;font-family:ui-monospace,Consolas,monospace;color:#dfe4f5"><span>$</span>'
+        +'<input id="termcmd" style="flex:1;background:none;border:none;color:#7ef0c8;font-family:ui-monospace,Consolas,monospace;font-size:1rem;outline:none;padding:.2em" autocomplete="off" spellcheck="false"></div></div>'
+        +'<div class="actions"><button class="btn primary" id="termok">Выполнить</button></div>'
+        +'<div class="hint" style="color:#8a93ad;font-size:.8rem;margin-top:.5rem">Ожидается команда: '+escT(it.expect)+'</div>';
+  } else if(it.type==="sim_app"){
+    // симуляция работы в программе: «экран» программы + панель инструментов,
+    // нужно выбрать правильное действие/инструмент для текущего шага
+    body='<span class="pnote">Работа в программе · '+escT(it.app||"")+'</span>'
+        +'<div style="background:#0d1226;border-radius:12px;padding:1em 1.1em;color:#dfe4f5;font-family:ui-monospace,Consolas,monospace;font-weight:700;min-height:60px;margin-bottom:.8rem">'+escT(it.prompt)+'</div>'
+        +'<div class="opts">'+it.options.map(function(o,i){return '<div class="opt" data-i="'+i+'" data-v="'+escT(o)+'">'+escT(o)+'</div>'}).join("")+'</div>'
+        +'<div class="actions"><button class="btn primary" id="checkbtn">Выполнить</button></div>';
+  } else if(it.type==="match"){
+    body='<span class="pnote">Соедини пары</span><div class="match"><div class="ml">'+it.left.map(function(x){return '<div class="mpanel l" data-k="'+escT(x)+'">'+escT(x)+'</div>'}).join("")+'</div>'
+        +'<div class="mr">'+it.right.map(function(x,ri){return '<div class="mpanel r" data-v="'+escT(x)+'" data-i="'+ri+'">'+escT(x)+'</div>'}).join("")+'</div></div>'
+        +'<div class="actions"><button class="btn primary" id="matchbtn">Проверить</button></div>';
+  } else if(it.type==="bug"){
+    body='<span class="pnote">Найди ошибку</span><div class="code"><div class="row">'+escT(it.code)+'</div></div>'
+        +'<div class="opts">'+it.options.map(function(o,i){return '<div class="opt" data-i="'+i+'" data-v="'+escT(o)+'">'+escT(o)+'</div>'}).join("")+'</div>'
+        +'<div class="actions"><button class="btn primary" id="checkbtn">Проверить</button></div>';
+  } else if(it.type==="sort"){
+    body='<span class="pnote">Отсортируй</span><div class="code">'+it.lines.map(function(x,i){return '<div class="row" data-i="'+i+'">'+escT(x)+'</div>'}).join("")+'</div><div class="actions">'+fmtOK()+'</div>';
+  } else if(it.type==="memory"){
+    var tiles=it.a.map(function(x,i){return {g:"a",i:i,v:x}}).concat(it.b.map(function(x,i){return {g:"b",i:i,v:x}}));
+    for(var q=tiles.length-1;q>0;q--){var w=Math.floor(Math.random()*(q+1));var tv=tiles[q];tiles[q]=tiles[w];tiles[w]=tv;}
+    body='<span class="pnote">Открой пары</span><div class="grid2">'+tiles.map(function(x,i){return '<div class="tile" data-t="'+i+'" data-g="'+x.g+'" data-i="'+x.i+'">?</div>'}).join("")+'</div>'
+        +'<div class="actions"><button class="btn primary" id="membtn" disabled>Пары найдены</button></div>';
+  }
+  h.innerHTML='<h2>'+escT(it.title)+'</h2><div class="hint">'+escT(it.hint||"")+'</div>'+body
+    +'<div class="score">Очки: <b>'+pts+'</b></div>';
+  stage.innerHTML="";
+  stage.appendChild(h);
+  // кнопка «проверить» для форматов с выбором
+  var cb=h.querySelector("#checkbtn");
+  if(cb){var chosen=null; [].forEach.call(h.querySelectorAll(".opt"),function(o){
+    o.onclick=function(){chosen=o;h.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel")});o.classList.add("sel");cb.disabled=false;};
+  });
+  cb.disabled=true;
+  cb.onclick=function(){
+    if(chosen==null)return;
+    var val=chosen.getAttribute("data-v");
+    var ok=null;
+    if(it.type==="tf"){ok=(it.answer? "1":"0")===val;}
+    else if(it.type==="fill"||it.type==="code_fill"||it.type==="what"||it.type==="bug"||it.type==="choose"||it.type==="py_out"||it.type==="py_fill"||it.type==="sim_app"){ok=val===escT(it.correct);}
+    h.querySelectorAll(".opt").forEach(function(x){x.classList.add(x===chosen?(ok?"ok":"no"):(x.getAttribute("data-v")===escT(it.correct)?"ok":""))});
+    checkOk(ok);
+  };}
+  // терминал: проверка введённой команды
+  var termOk=h.querySelector("#termok");
+  if(termOk){
+    var termIn=h.querySelector("#termcmd");
+    function termCheck(){
+      var v=(termIn.value||"").trim();
+      if(!v)return;
+      var ok=v.toLowerCase()===String(it.correct).toLowerCase()
+             || String(it.correct).toLowerCase().indexOf(v.toLowerCase())===0;
+      var d=document.createElement("div");d.className="fdb "+(ok?"ok":"no");
+      d.textContent=ok?"Верно! Команда выполнена.":"Неверно. Попробуй команду: "+it.correct;
+      var old=stage.querySelector(".fdb");if(old)old.remove();stage.appendChild(d);
+      if(ok){termIn.disabled=true;termOk.disabled=true;checkOk(true);}
+    }
+    termOk.addEventListener("click",termCheck);
+    if(termIn)termIn.addEventListener("keydown",function(e){if(e.key==="Enter")termCheck();});
+  }
+  // перетаскивание для sort/seq/order/code_order/py_order
+  if(it.type==="order"||it.type==="seq"||it.type==="code_order"||it.type==="sort"||it.type==="py_order"){
+    var zone=h.querySelector(".code");
+    var nextBtn=h.querySelector(".btn.primary");
+    var order=it.lines.map(function(_,i){return i;});
+    function paint(){
+      var rows=zone.querySelectorAll(".row");
+      rows.forEach(function(r,i){r.style.order=(Math.random()<0.5? i:i);r.dataset.idx=i;});
+    }
+    // используем обычный выбор порядка: кликом переключаем пузырьковой сортировкой соседей
+    var elm=zone.querySelectorAll(".row");
+    function swapMode(){/* простой: клик по паре меняет — нет, сделаем кнопки ↑/↓ вместо драга для надёжности */}
+    [].forEach.call(elm,function(r,i){
+      r.style.display="flex";r.style.justifyContent="space-between";r.style.alignItems="center";
+      r.innerHTML=escT(it.lines[i])+' <span style="opacity:.5;font-family:system-ui;font-size:.8rem">▲▼</span>';
+      r.onclick=function(){
+        // нажать на элемент = поменять с предыдущим (пузырёк вверх)
+        var arr=zone.querySelectorAll(".row");
+        var idx=[].indexOf.call(arr,r);
+        if(idx>0){
+          var prev=arr[idx-1];var curTxt=r.textContent;r.textContent=prev.textContent;prev.textContent=curTxt;
+          var c1=it.lines[idx];it.lines[idx]=it.lines[idx-1];it.lines[idx-1]=c1;
+        }
+      };
+    });
+    nextBtn.onclick=function(){
+      var same=true;for(var m=0;m<it.lines.length;m++){if(it.lines[m]!==it.solution[m]){same=false;break;}}
+      if(same){checkOk(true);}else{fdb="no";var d=document.createElement("div");d.className="fdb no";d.textContent="Порядок неверный. Попробуй ещё раз.";stage.appendChild(d);}
+    };
+  }
+  // лишний блок
+  var oddb=h.querySelector("#oddb");
+  if(oddb){
+    var extraEls=[].filter.call(h.querySelectorAll(".row"),function(r){return r.textContent===escT(it.extra);});
+    var removed=false;
+    [].forEach.call(h.querySelectorAll(".row"),function(r){
+      r.onclick=function(){
+        var isExtra=(r.textContent===escT(it.extra));
+        r.style.background=isExtra?"#e9f8f0":"#fdece8";
+        if(isExtra&&!removed){removed=true;checkOk(true);r.style.opacity=.35;}
+        else if(!isExtra&&!removed){fdb={ok:false};checkOk(false);}
+      };
+    });
+  }
+  // сопоставление
+  var mb=h.querySelector("#matchbtn");
+  if(mb){
+    var leftEls=h.querySelectorAll(".mpanel.l");var rightEls=h.querySelectorAll(".mpanel.r");
+    var lsel=null;
+    [].forEach.call(leftEls,function(el){el.onclick=function(){lsel=el;leftEls.forEach(function(x){x.classList.remove("sel")});el.classList.add("sel");};});
+    [].forEach.call(rightEls,function(el){el.onclick=function(){el.classList.remove("sel");if(lsel){if((it.solution[escT(lsel.getAttribute("data-k"))]||"")===escT(el.textContent)){lsel.classList.add("done");el.classList.add("done");lsel=null;}else{lsel.classList.add("bad");el.classList.add("bad");}}};});
+    mb.onclick=function(){var done=leftEls.length&&[].every.call(leftEls,function(x){return x.className.indexOf("done")>=0;});checkOk(done);};
+  }
+  // память-пары
+  var mem=h.querySelector("#membtn");
+  if(mem){
+    var matched=[];
+    function flipAll(val){[].forEach.call(h.querySelectorAll(".tile.open"),function(x){x.textContent="?";x.classList.remove("open");});}
+    [].forEach.call(h.querySelectorAll(".tile"),function(tile){
+      tile.onclick=function(){
+        if(tile.className.indexOf("found")>=0||tile.className.indexOf("open")>=0)return;
+        tile.textContent=escT(it[tile.getAttribute("data-g")==="a"?"a":"b"][+tile.getAttribute("data-i")]);
+        tile.classList.add("open");
+        var op=h.querySelectorAll(".tile.open");
+        if(op.length===2){
+          var x=op[0],y=op[1];
+          var pairA=(it.solution[escT(x.textContent)]||"")===escT(y.textContent)||(it.solution[escT(y.textContent)]||"")===escT(x.textContent);
+          setTimeout(function(){if(pairA){x.classList.add("found");y.classList.add("found");x.classList.remove("open");y.classList.remove("open");matched.push(1);if(matched.length===it.a.length){mem.disabled=false;}}else{x.textContent="?";y.textContent="?";x.classList.remove("open");y.classList.remove("open");}},600);
+        }
+      };
+    });
+    mem.onclick=function(){checkOk(matched.length===it.a.length);};
+  }
+  // квест-цепочка (chain): последовательные шаги с выбором
+  var ch=h.querySelector("#chainbox");
+  if(ch){
+    var steps=it.steps||[];
+    var si=0;
+    var chq=document.getElementById("chq");
+    var chopts=document.getElementById("chopts");
+    var chbtn=document.getElementById("chainbtn");
+    var chin=document.getElementById("chin");
+    function renderStep(){
+      if(si>=steps.length){checkOk(true);ch.innerHTML="";return;}
+      var st=steps[si];
+      chq.textContent="Шаг "+(si+1)+" из "+steps.length+": "+st.q;
+      // варианты: верное определение + случайные чужие
+      var right=st.a;
+      var wrong=[];
+      for(var wi=0;wi<steps.length;wi++){if(steps[wi].a.length>=10&&steps[wi].a!==right)wrong.push(steps[wi].a);}
+      wrong=wrong.slice(0,2);
+      var opts=right?[right].concat(wrong):[right];
+      for(var qi=opts.length-1;qi>0;qi--){var wj=Math.floor(Math.random()*(qi+1));var tv=opts[qi];opts[qi]=opts[wj];opts[wj]=tv;}
+      chbtn.disabled=true;
+      chopts.innerHTML="";
+      opts.forEach(function(o){
+        var d=document.createElement("div");d.className="opt";d.setAttribute("data-v",escT(o));d.textContent=o;
+        d.onclick=function(){
+          var vv=d.getAttribute("data-v");
+          var ok=(vv===escT(right));
+          chopts.querySelectorAll(".opt").forEach(function(x){x.classList.add(x===d?(ok?"ok":"no"):(x.getAttribute("data-v")===escT(right)?"ok":""));});
+          if(ok){si++;renderStep();}
+        };
+        chopts.appendChild(d);
+      });
+    }
+    renderStep();
+  }
+}
+function end(){
+  bar();
+  var ratio=Math.round(pts/Math.max(1,G.length)*100);
+  var txt=ratio>=80?"Отлично! Ты собрал код!":(ratio>=50?"Хорошо, но есть над чем поработать":"Попробуй ещё раз — и получится!");
+  stage.innerHTML='<div class="panel end"><div class="big">'+pts+' / '+G.length+'</div><p style="font-size:1.05rem;font-weight:800">'+txt+'</p>'
+    +'<div class="actions" style="justify-content:center"><button class="btn ghost" onclick="location.reload()">Играть снова</button></div></div>';
+}
+render(0);bar();
+</script><style>
+/* ===== Единая дизайн-система ===== */
+:root{
+  --ds-ink:#191f33;            /* основной текст */
+  --ds-mut:#5b6b83;            /* приглушённый текст */
+  --ds-paper:#fffdf6;          /* светлый фон «бумага» */
+  --ds-white:#ffffff;          /* карточки */
+  --ds-ac:#e8436f;             /* акцент розовый (референсы) */
+  --ds-ac2:#6d4fd1;            /* акцент фиолетовый */
+  --ds-ac3:#2563eb;            /* акцент синий */
+  --ds-line:rgba(40,50,80,.12);/* тонкая линия-разделитель */
+  --ds-soft:#f2eefb;           /* мягкая подложка */
+  --ds-rad:16px;               /* радиус карточек */
+  --ds-shadow:0 10px 26px rgba(25,31,51,.07);
+  --ds-menu-bg:#151d33;        /* фон меню (тёмная плашка) */
+  --ds-radius-input:12px;
+}
+body{background:var(--ds-paper);color:var(--ds-ink);}
+/* правильная типографика */
+.ds-title{font-weight:900;letter-spacing:-.01em;color:var(--ds-ink);line-height:1.05}
+.ds-sub{color:var(--ds-mut)}
+/* ===== СЕТКА: максимум 3 карточки в ряд ===== */
+.ds-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.ds-grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));max-width:820px}
+/* ВАЖНО: правило «до 3 плашек в ряд» — применяется к карточкам-фичам/тем,
+   дальше карточки идут вниз (grid-auto-flow). Никогда не разрешать 4+ в ряд. */
+@media(max-width:900px){.ds-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}}
+.ds-card{background:var(--ds-white);border:1px solid var(--ds-line);border-radius:var(--ds-rad);padding:1.1rem 1.2rem;box-shadow:var(--ds-shadow);}
+.ds-card.ds-accented{border-top:4px solid var(--ds-ac)}
+.ds-chip{display:inline-block;background:var(--ds-soft);color:var(--ds-ac2);border-radius:999px;padding:.22em .75em;font-size:.8rem;font-weight:800}
+.ds-note{background:#fff7ea;border-left:4px solid #c9a227;border-radius:0 10px 10px 0;padding:.8rem 1rem;font-size:.92rem}
+.ds-warn{background:#fdece8;border-left:4px solid #d4492f;border-radius:0 10px 10px 0;padding:.8rem 1rem;font-size:.92rem}
+.ds-ok{background:#e9f8f0;border-left:4px solid #1e7a45;border-radius:0 10px 10px 0;padding:.8rem 1rem;font-size:.92rem}
+
+.ds-menu{position:sticky;top:0;z-index:60;background:var(--ds-menu-bg);color:#fff;box-shadow:0 2px 14px rgba(0,0,0,.2);
+  display:flex;align-items:center;gap:1.2rem;padding:.65rem 1.1rem;flex-wrap:nowrap}
+.ds-menu .ds-brand{font-weight:900;color:#fff;text-decoration:none;font-size:1.02rem;letter-spacing:.01em;white-space:nowrap}
+.ds-menu .ds-nav{display:flex;gap:.2rem;flex:1;flex-wrap:wrap}
+.ds-menu .ds-nav a{color:#dfe4f5;text-decoration:none;font-weight:700;font-size:.88rem;padding:.42rem .7rem;border-radius:999px;white-space:nowrap}
+.ds-menu .ds-nav a:hover{background:rgba(255,255,255,.14);color:#fff}
+.ds-menu .ds-nav a.on{background:var(--ds-ac);color:#fff}
+.ds-menu .ds-right{display:flex;align-items:center;gap:.5rem;margin-left:auto;white-space:nowrap}
+.ds-menu .ds-cta{background:var(--ds-ac);color:#fff;font-weight:800;border-radius:999px;padding:.5rem 1rem;text-decoration:none;font-size:.88rem}
+.ds-menu .ds-burger{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;display:none;line-height:1}
+@media(max-width:720px){.ds-menu .ds-nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ds-menu-bg);
+  flex-direction:column;padding:.5rem 1rem}.ds-menu .ds-nav.open{display:flex}.ds-menu .ds-burger{display:block}}
+
+/* коллаж: контейнер с анимированными элементами */
+.ds-collage{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:18px;
+  background:radial-gradient(130% 150% at 82% 10%,#c04576 0%,#7a3f86 40%,#2a3a6e 78%,#151d33 100%);
+  display:flex;align-items:center;justify-content:center;min-height:140px}
+.ds-collage>*{position:absolute}
+/* общие анимации */
+@keyframes ds-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes ds-spin{to{transform:rotate(360deg)}}
+@keyframes ds-pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.95;transform:scale(1.08)}}
+@keyframes ds-bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px)}}
+@keyframes ds-dash{to{stroke-dashoffset:-40}}
+/* 1) НЕЙРОСЕТЬ: узлы и связи пульсируют */
+.ds-collage.net .node{width:14px;height:14px;border-radius:50%;background:#ffd9e5;box-shadow:0 0 14px #ffd9e5;animation:ds-pulse 3s infinite}
+.ds-collage.net .link{height:2px;background:rgba(255,255,255,.35);transform-origin:left center;animation:ds-pulse 4s infinite}
+.ds-collage.net .chip{position:static;align-self:center;font-weight:900;color:#fff;font-size:1.4rem;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+/* 2) КОД: строки-медузы танцуют, персонаж-«монитор» слева */
+.ds-collage.code .screen{left:8%;top:50%;transform:translateY(-50%);width:34%;height:58%;background:#0d1226;border-radius:12px;border:3px solid #ffb3ca;display:flex;align-items:center;justify-content:center;animation:ds-bounce 5s infinite}
+.ds-collage.code .screen span{color:#7ef0c8;font-family:ui-monospace,Consolas,monospace;font-weight:900;font-size:1.2rem}
+.ds-collage.code .lrow{left:48%;top:0;right:4%;height:100%;display:flex;flex-direction:column;justify-content:space-around}
+.ds-collage.code .lrow i{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--ds-ac),#ffb3ca);opacity:.85;animation:ds-float 4s infinite}
+.ds-collage.code .lrow i:nth-child(2n){animation-delay:-1s;background:linear-gradient(90deg,#6d4fd1,#a78bfa)}
+/* 3) РОБОТ/ГИД: робот-рука и сфера (человек+техника) */
+.ds-collage.robot .robotarm{left:18%;top:46%;width:40%;height:26%;background:linear-gradient(90deg,#3b5bdb,#6d4fd1);border-radius:40% 40% 10px 10px;animation:ds-float 5s infinite}
+.ds-collage.robot .sphere{right:22%;top:34%;width:26%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#ffb3ca,#e8436f 55%,#151d33);box-shadow:0 0 30px rgba(255,179,202,.6);animation:ds-pulse 3.5s infinite}
+.ds-collage.robot .ring{right:16%;top:28%;width:38%;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(255,255,255,.45);animation:ds-spin 14s linear infinite}
+/* 4) ПЛАНЕТА/ДЕКОР: вращающееся кольцо + точки-частицы */
+.ds-collage.planet .globe{bottom:-18%;right:-6%;width:64%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ffd9e5,#e8436f 50%,#6d4fd1 80%);animation:ds-pulse 6s infinite}
+.ds-collage.planet .ring{left:14%;top:24%;width:56%;aspect-ratio:1;border-radius:50%;border:3px solid rgba(255,255,255,.4);animation:ds-spin 20s linear infinite}
+.ds-collage.planet .dust{width:8px;height:8px;border-radius:50%;background:#ffb3ca;animation:ds-float 5s infinite}
+.ds-collage.planet .ttl{position:static;align-self:center;font-weight:900;color:#fff;font-size:1.5rem;letter-spacing:.02em;text-shadow:0 2px 10px rgba(0,0,0,.45);text-align:center;z-index:3}
+/* надписи коллажей могут задаваться отдельно через .ds-collage .ttl */
+</style><div class="ds-menu" data-burger><a class="ds-brand" href="#top">Информатика 3–11</a><nav class="ds-nav"><a href="../../../../../../index.html">Курс</a><a href="../prezentaciya/index.html">Презентация</a><a href="../lekciya/index.html">Лекция</a><a href="#" class="on">Приложение</a><a href="../metodkarta/index.html">Карта урока</a></nav><div class="ds-right"><a class="ds-cta" href="../../../../../../index.html">Подписка</a><button class="ds-burger" aria-label="Меню">☰</button></div></div>
+<script>
+(function(){
+  /* бургер-меню (единое) */
+  var burger=document.querySelector('.ds-burger');
+  if(burger){burger.addEventListener('click',function(){var n=document.querySelector('.ds-nav');if(n)n.classList.toggle('open');});}
+  /* единая активация подписки */
+  var MASTER="DF7US-RYBAA-C3VP2";
+  function norm(s){return String(s||"").replace(/\s+/g,"").toUpperCase();}
+  function active(){try{return localStorage.getItem("inf_act")===MASTER;}catch(e){return false;}}
+  /* оверлей подписки, если есть на странице */
+  var pw=document.getElementById("pw");
+  if(pw && !active()){
+    setTimeout(function(){pw.classList.add("show");},300);
+    var ok=document.getElementById("pwok"),inp=document.getElementById("pwkey"),msg=document.getElementById("pwmsg");
+    function tryLock(){
+      if(norm(inp.value)===MASTER){try{localStorage.setItem("inf_act",MASTER);}catch(e){}
+        msg.className="msg ok";msg.textContent="Доступ открыт!";setTimeout(function(){pw.classList.remove("show");},500);}
+      else{msg.className="msg no";msg.textContent="Неверный ключ.";inp.value="";}
+    }
+    if(ok)ok.addEventListener("click",tryLock);
+    if(inp)inp.addEventListener("keydown",function(e){if(e.key==="Enter")tryLock();});
+  }
+})();
+</script>
+<div style="position:fixed;bottom:0;left:0;right:0;background:#16233b;color:#fff;padding:.45rem 1rem;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;justify-content:center;z-index:999;box-shadow:0 -2px 8px rgba(0,0,0,.25);font-family:system-ui,Arial,sans-serif"><a href="../prezentaciya/index.html" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.12);border-radius:999px;padding:.3rem .7rem;font-size:.82rem;font-weight:700">Презентация</a> <a href="../lekciya/index.html" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.12);border-radius:999px;padding:.3rem .7rem;font-size:.82rem;font-weight:700">Лекция</a> <span style="color:#fff;background:rgba(255,255,255,.25);border-radius:999px;padding:.3rem .7rem;font-weight:700;font-size:.82rem;text-decoration:none">Приложение</span> <a href="../metodkarta/index.html" style="color:#fff;text-decoration:none;background:rgba(255,255,255,.12);border-radius:999px;padding:.3rem .7rem;font-size:.82rem;font-weight:700">Карта урока</a><span style="opacity:.4">|</span><a href="../../../../../../index.html" style="color:#fff;text-decoration:none;opacity:.75;font-size:.8rem">← навигатор курса</a></div><style>.pw{position:fixed;inset:0;z-index:99990;background:rgba(20,26,48,.72);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:1rem}.pw.show{display:flex}.pw-box{background:#fff;border-radius:20px;padding:2rem;max-width:420px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}.pw-box h3{font-size:1.4rem;color:#191f33;margin-bottom:.4rem}.pw-box p{color:#5b6b83;font-size:.95rem;margin-bottom:1rem}.pw-box .key{width:100%;border:2px solid rgba(40,50,80,.18);border-radius:12px;padding:.8rem;font-size:1.05rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-family:ui-monospace,Consolas,monospace;text-align:center;margin-bottom:.7rem}.pw-box .key:focus{outline:none;border-color:#e8436f}.pw-box .btn{width:100%;border:none;background:#e8436f;color:#fff;font-weight:800;border-radius:12px;padding:.85rem;cursor:pointer;font-size:1rem}.pw-box .msg{margin-top:.7rem;font-weight:700;min-height:1.3em;font-size:.9rem}.pw-box .msg.ok{color:#1e7a45}.pw-box .msg.no{color:#b3451d}.pw-box a.alt{display:inline-block;margin-top:.9rem;color:#e8436f;font-weight:700;text-decoration:none;font-size:.9rem}</style><div class="pw" id="pw"><div class="pw-box"><h3>Доступ по подписке</h3><p>Этот материал курса открыт для подписчиков. Введите ключ доступа или оформите подписку.</p><input class="key" id="pwkey" placeholder="XXXXX-XXXXX-XXXXX" autocomplete="off"><button class="btn" id="pwok">Активировать ключ</button><div class="msg" id="pwmsg"></div><a class="alt" href="../../../../../../index.html">Оформить подписку 399 ₽/мес →</a></div></div><script>
+(function(){
+  var MASTER="DF7US-RYBAA-C3VP2";
+  function norm(s){return String(s||"").replace(/\s+/g,"").toUpperCase();}
+  function active(){try{return localStorage.getItem("inf_act")===MASTER;}catch(e){return false;}}
+  var pw=document.getElementById("pw");if(!pw)return;
+  function show(){pw.classList.add("show");}
+  function hide(){pw.classList.remove("show");}
+  if(!active()){setTimeout(show,300);}
+  var ok=document.getElementById("pwok");
+  var inp=document.getElementById("pwkey");
+  var msg=document.getElementById("pwmsg");
+  function tryUnlock(){
+    if(norm(inp.value)===MASTER){try{localStorage.setItem("inf_act",MASTER);}catch(e){}
+      msg.className="msg ok";msg.textContent="Доступ открыт!";setTimeout(hide,500);}
+    else{msg.className="msg no";msg.textContent="Неверный ключ.";inp.value="";}
+  }
+  if(ok)ok.addEventListener("click",tryUnlock);
+  if(inp)inp.addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock();});
+})();
+</script></body></html>

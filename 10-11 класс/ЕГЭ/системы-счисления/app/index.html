@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Системы счисления · ЕГЭ</title>
+<style>
+  :root{--bg:#f4f6fb; --ink:#1d2742; --accent:#3b5bdb; --accent-d:#2743a8; --soft:#eef1fb; --line:#dde3f1;
+        --ok:#1e7a45; --ok-soft:#e8f6ee; --bad:#b3451d; --bad-soft:#fbece4;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:1.5rem 1.25rem;}
+  .wrap{max-width:740px; margin:0 auto;}
+  .kicker{font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.4rem;}
+  header h1{font-size:1.5rem; font-weight:800;}
+  header p{color:#dbe4fb; font-size:.95rem; margin-top:.2rem;}
+  main{max-width:740px; margin:0 auto; padding:1.4rem 1.25rem 2.5rem;}
+  .tabs{display:flex; gap:.5rem; margin:1rem 0; flex-wrap:wrap;}
+  .tab{border:1px solid var(--line); background:#fff; padding:.5rem 1rem; border-radius:999px; cursor:pointer; font-weight:600; font-size:.9rem;}
+  .tab.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .panel{display:none;} .panel.on{display:block;}
+  .hint{background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem;}
+  .card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; margin:.8rem 0;}
+  .card h3{font-size:1.02rem; margin-bottom:.6rem;}
+  .qtext{font-weight:700; margin-bottom:.5rem;}
+  .field{display:flex; gap:.5rem; align-items:center; flex-wrap:wrap;}
+  .field input{border:1px solid var(--line); border-radius:9px; padding:.6rem .8rem; font-size:1rem; width:170px; font-family:ui-monospace,Consolas,monospace;}
+  .field .lbl{color:var(--muted);}
+  .opt{border:1px solid var(--line); background:#fbfcff; border-radius:9px; padding:.6rem .85rem; margin:.4rem 0; cursor:pointer;}
+  .opt.selected{border-color:var(--accent); background:var(--soft);}
+  .opt.right{background:var(--ok-soft); border-color:var(--ok);}
+  .opt.wrong{background:var(--bad-soft); border-color:var(--bad);}
+  .actions{display:flex; gap:.6rem; margin-top:1rem; flex-wrap:wrap;}
+  .btn{border:none; border-radius:10px; padding:.7rem 1.2rem; font-weight:700; cursor:pointer;}
+  .btn.primary{background:var(--accent); color:#fff;}
+  .btn.ghost{background:#fff; border:1px solid var(--line); color:var(--ink);}
+  .result{display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.3rem; text-align:center; margin-top:1rem;}
+  .result .big{font-size:1.9rem; font-weight:800; color:var(--accent-d);}
+  .result.show{display:block;}
+  footer{max-width:740px; margin:0 auto; padding:0 1.25rem 2rem; color:#6b7a92; font-size:.82rem;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Приложение для работы на уроке · ЕГЭ</div>
+  <h1>Системы счисления</h1>
+  <p>10–11 класс · три тренажёра с автопроверкой</p>
+</div></header>
+
+<main class="wrap">
+  <div class="tabs">
+    <div class="tab on" data-tab="conv">1 · Переводы</div>
+    <div class="tab" data-tab="cmp">2 · Сравнение</div>
+    <div class="tab" data-tab="add">3 · Сложение</div>
+  </div>
+
+  <div id="panel-conv" class="panel on">
+    <div class="hint">Введи число в указанной системе и нажми «Проверить». Значение проверяется автоматически.</div>
+    <div id="convQ"></div>
+    <div class="actions"><button class="btn primary" id="checkConv">Проверить</button></div>
+    <div class="result" id="resConv"><p>Результат</p><div class="big" id="resConvScore">0</div></div>
+  </div>
+
+  <div id="panel-cmp" class="panel">
+    <div class="hint">Выбери большее число из пары.</div>
+    <div id="cmpQ"></div>
+    <div class="actions"><button class="btn primary" id="checkCmp">Проверить</button></div>
+    <div class="result" id="resCmp"><p>Результат</p><div class="big" id="resCmpScore">0</div></div>
+  </div>
+
+  <div id="panel-add" class="panel">
+    <div class="hint">Сложи два двоичных числа. Введи ответ в двоичной системе.</div>
+    <div id="addQ"></div>
+    <div class="actions"><button class="btn primary" id="checkAdd">Проверить</button></div>
+    <div class="result" id="resAdd"><p>Результат</p><div class="big" id="resAddScore">0</div></div>
+  </div>
+</main>
+
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС. Приложение к уроку «Системы счисления» (ЕГЭ).</footer>
+
+<script>
+"use strict";
+const HEXD={0:0,1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,A:10,B:11,C:12,D:13,E:14,F:15};
+function digitVal(c){return HEXD[c.toUpperCase()]!==undefined?HEXD[c.toUpperCase()]:null;}
+function toDec(s,base){s=s.trim().toUpperCase();if(!s)return NaN;let v=0;for(const ch of s){const d=digitVal(ch);if(d===null||d>=base)return NaN;v=v*base+d;}return v;}
+function decTo(s,base){let n=Math.floor(s),r="";if(n===0)return "0";while(n>0){const rem=n%base;r=(rem>=10?String.fromCharCode(55+rem):rem)+r;n=Math.floor(n/base);}return r;}
+
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));t.classList.add("on");
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+  document.getElementById("panel-"+t.dataset.tab).classList.add("on");
+});
+
+/* 1. Переводы: из заданной системы в десятичную */
+const CONV=[
+  {s:"1011",base:2},{s:"2F",base:16},{s:"65",base:8},{s:"101100",base:2},{s:"1C",base:16}
+];
+let convSel={};
+function buildConv(){
+  const box=document.getElementById("convQ"); box.innerHTML="";
+  CONV.forEach((it,i)=>{
+    const c=document.createElement("div"); c.className="card";
+    const q=document.createElement("div"); q.className="qtext"; q.textContent=(i+1)+". Переведи "+it.s+" из основания "+it.base+" в десятичную.";
+    const f=document.createElement("div"); f.className="field";
+    const b=document.createElement("span"); b.className="lbl"; b.textContent="10 → ";
+    const inp=document.createElement("input"); inp.dataset.i=i;
+    inp.oninput=()=>{convSel[i]=inp.value.trim();};
+    f.appendChild(b); f.appendChild(inp); c.appendChild(q); c.appendChild(f); box.appendChild(c);
+  });
+}
+function checkConv(){
+  const box=document.getElementById("convQ");
+  if(Object.keys(convSel).length<CONV.length){alert("Заполни все переводы.");return;}
+  let ok=0;
+  CONV.forEach((it,i)=>{
+    const v=parseInt(convSel[i]||"",10);
+    if(v===toDec(it.s,it.base))ok++;
+  });
+  document.getElementById("resConvScore").textContent=ok+" из "+CONV.length;
+  document.getElementById("resConv").classList.add("show");
+}
+document.getElementById("checkConv").onclick=checkConv;
+document.getElementById("resConv").onclick=()=>{convSel={};buildConv();document.getElementById("resConv").classList.remove("show");};
+document.getElementById("resConv").style.cursor="pointer";
+
+/* 2. Сравнение */
+const CMP=[
+  {l:"1101",lb:2,r:"15",rb:10},{l:"3A",lb:16,r:"58",rb:10},{l:"101",lb:2,r:"5A",rb:16},{l:"77",lb:8,r:"63",rb:10}
+];
+let cmpSel={};
+function buildCmp(){
+  const box=document.getElementById("cmpQ"); box.innerHTML="";
+  CMP.forEach((it,i)=>{
+    const c=document.createElement("div"); c.className="card";
+    const q=document.createElement("div"); q.className="qtext"; q.textContent=(i+1)+". Что больше: "+it.l+" (осн."+it.lb+") или "+it.r+" (осн."+it.rb+")?";
+    const opts=["Вариант A («"+it.l+"»)","Вариант B («"+it.r+"»)"];
+    opts.forEach((o,oi)=>{
+      const opt=document.createElement("div"); opt.className="opt"+(cmpSel[i]===oi?" selected":"");
+      opt.textContent=o; opt.dataset.q=i; opt.dataset.o=oi;
+      opt.onclick=()=>{box.querySelectorAll('.opt[data-q="'+i+'"]').forEach(x=>x.classList.remove("selected"));opt.classList.add("selected");cmpSel[i]=oi;};
+      c.appendChild(opt);
+    });
+    box.appendChild(c);
+  });
+}
+function checkCmp(){
+  const box=document.getElementById("cmpQ");
+  if(Object.keys(cmpSel).length<CMP.length){alert("Выбери вариант в каждой паре.");return;}
+  let ok=0;
+  CMP.forEach((it,i)=>{
+    const biggerLeft=toDec(it.l,it.lb)>=toDec(it.r,it.rb);
+    const chosen=cmpSel[i]===0;
+    if(biggerLeft===chosen)ok++;
+    box.querySelectorAll('.opt[data-q="'+i+'"]').forEach(o=>o.classList.remove("right","wrong"));
+    box.querySelectorAll('.opt[data-q="'+i+'"]').forEach(o=>{
+      const oi=+o.dataset.o, isRight= (oi===0)===biggerLeft;
+      if(isRight)o.classList.add("right");
+      else if(cmpSel[i]===oi)o.classList.add("wrong");
+    });
+  });
+  document.getElementById("resCmpScore").textContent=ok+" из "+CMP.length;
+  document.getElementById("resCmp").classList.add("show");
+}
+document.getElementById("checkCmp").onclick=checkCmp;
+document.getElementById("resCmp").onclick=()=>{cmpSel={};buildCmp();document.getElementById("resCmp").classList.remove("show");};
+document.getElementById("resCmp").style.cursor="pointer";
+
+/* 3. Сложение двоичных */
+const ADD=[
+  ["1101","1011"],["1010","1100"],["111","11"],["1001","111"]
+];
+let addSel={};
+function binStr(n){return decTo(n,2);}
+function buildAdd(){
+  const box=document.getElementById("addQ"); box.innerHTML="";
+  ADD.forEach((pair,i)=>{
+    const c=document.createElement("div"); c.className="card";
+    const q=document.createElement("div"); q.className="qtext"; q.textContent=(i+1)+". Сложи: "+pair[0]+" + "+pair[1]+" (в двоичной системе).";
+    const f=document.createElement("div"); f.className="field";
+    const inp=document.createElement("input"); inp.dataset.i=i; inp.placeholder="₂"; inp.oninput=()=>{addSel[i]=inp.value.trim();};
+    f.appendChild(inp); c.appendChild(q); c.appendChild(f); box.appendChild(c);
+  });
+}
+function checkAdd(){
+  const box=document.getElementById("addQ");
+  if(Object.keys(addSel).length<ADD.length){alert("Введи все ответы.");return;}
+  let ok=0;
+  ADD.forEach((pair,i)=>{
+    const expected=decTo(toDec(pair[0],2)+toDec(pair[1],2),2);
+    const v=(addSel[i]||"").trim();
+    if(v===expected)ok++;
+  });
+  document.getElementById("resAddScore").textContent=ok+" из "+ADD.length;
+  document.getElementById("resAdd").classList.add("show");
+}
+document.getElementById("checkAdd").onclick=checkAdd;
+document.getElementById("resAdd").onclick=()=>{addSel={};buildAdd();document.getElementById("resAdd").classList.remove("show");};
+document.getElementById("resAdd").style.cursor="pointer";
+
+buildConv();buildCmp();buildAdd();
+</script>
+</body>
+</html>

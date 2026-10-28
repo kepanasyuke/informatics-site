@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Безопасность в интернете · 3 класс</title>
+<style>
+  :root{--bg:#f4f6fb; --ink:#1d2742; --accent:#3b5bdb; --accent-d:#2743a8; --soft:#eef1fb; --line:#dde3f1;
+        --ok:#1e7a45; --ok-soft:#e8f6ee; --bad:#c2542f; --bad-soft:#fdeee7;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:19px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:1.4rem 1.25rem;}
+  .wrap{max-width:720px; margin:0 auto;}
+  .kicker{font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.4rem;}
+  header h1{font-size:1.6rem; font-weight:800;}
+  main{max-width:720px; margin:0 auto; padding:1.4rem 1.25rem 2.5rem;}
+  .hint{background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem;}
+  .cardq{background:#fff; border:1px solid var(--line); border-radius:14px; padding:1rem 1.1rem; margin:.8rem 0;}
+  .cardq .txt{font-size:1.05rem; margin-bottom:.6rem;}
+  .btns{display:flex; gap:.6rem;}
+  .big{border:none; border-radius:12px; padding:.75rem 1.4rem; font-size:1.05rem; font-weight:700; cursor:pointer; flex:1;}
+  .yes{background:var(--ok-soft); color:var(--ok); border:2px solid var(--ok);}
+  .no{background:var(--bad-soft); color:var(--bad); border:2px solid var(--bad);}
+  .big:disabled{opacity:.4; cursor:not-allowed;}
+  .fb{display:none; margin-top:.7rem; font-weight:700; border-radius:10px; padding:.6rem .9rem;}
+  .fb.show{display:block;}
+  .fb.good{background:var(--ok-soft); color:var(--ok);}
+  .fb.bad{background:var(--bad-soft); color:var(--bad);}
+  .bar{display:flex; gap:.4rem; margin:.4rem 0 1rem;}
+  .bar i{flex:1; height:10px; border-radius:4px; background:#dfe6f3;}
+  .bar i.on{background:var(--ok);}
+  .res{display:none; background:#fff; border:1px solid var(--line); border-radius:16px; padding:1.6rem; text-align:center;}
+  .res .big2{font-size:2.2rem; font-weight:800; color:var(--accent-d);}
+  .res.show{display:block;}
+  .btn{border:none; border-radius:10px; padding:.7rem 1.3rem; font-weight:700; cursor:pointer;}
+  .btn.primary{background:var(--accent); color:#fff;}
+  footer{max-width:720px; margin:0 auto; padding:0 1.25rem 2rem; color:#6b7a92; font-size:.82rem;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Приложение для работы на уроке</div>
+  <h1>Можно или нельзя?</h1>
+  <p>3 класс · правила безопасности в интернете</p>
+</div></header>
+
+<main class="wrap">
+  <div class="hint">Читай ситуацию и нажимай кнопку «Можно» или «Нельзя». Проверь свои знания!</div>
+  <div class="bar" id="bar"></div>
+  <div id="game"></div>
+  <div class="res" id="res">
+    <p>Твой результат</p>
+    <div class="big2" id="resScore">0</div>
+    <button class="btn primary" id="again" style="margin-top:1rem;">Сыграть ещё раз</button>
+  </div>
+</main>
+
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС. Приложение к уроку «Компьютер и безопасность в интернете».</footer>
+
+<script>
+"use strict";
+const ITEMS=[
+  {txt:"Незнакомый человек в чате просит назвать твоё имя и адрес.", ok:false},
+  {txt:"Ты спрашиваешь родителей, можно ли открыть сайт с мультиком.", ok:true},
+  {txt:"В смс пришла ссылка «Ты выиграл подарок, перейди по ссылке».", ok:false},
+  {txt:"Непонятная картинка или сообщение тебя пугает — ты зовёшь взрослого.", ok:true},
+  {txt:"Друг из интернета предлагает встретиться без разрешения родителей.", ok:false},
+  {txt:"Ты не сообщаешь свой пароль никому, даже «другу по игре».", ok:true},
+  {txt:"Незнакомец обещает золотой аккаунт за твою фотографию.", ok:false},
+  {txt:"Перед занятием на компьютере ты спрашиваешь учителя задание.", ok:true},
+  {txt:"Ты сам придумываешь и записываешь свой секретный пароль с родителями.", ok:true}
+];
+let done={};
+function progress(){return Object.keys(done).length;}
+function render(){
+  const bar=document.getElementById("bar"); bar.innerHTML="";
+  ITEMS.forEach((_,i)=>bar.appendChild(Object.assign(document.createElement("i"),{className:"dot"+(done[i]!==undefined?" on":"")})));
+  const box=document.getElementById("game"); box.innerHTML="";
+  const idx=ITEMS.findIndex((_,i)=>done[i]===undefined);
+  if(idx<0){finish();return;}
+  const it=ITEMS[idx];
+  const c=document.createElement("div"); c.className="cardq";
+  const t=document.createElement("div"); t.className="txt"; t.textContent=(idx+1)+". "+it.txt;
+  const b=document.createElement("div"); b.className="btns";
+  const y=document.createElement("button"); y.className="big yes"; y.textContent="Можно";
+  const n=document.createElement("button"); n.className="big no"; n.textContent="Нельзя";
+  b.appendChild(y); b.appendChild(n);
+  const fb=document.createElement("div"); fb.className="fb";
+  c.appendChild(t); c.appendChild(b); c.appendChild(fb);
+  box.appendChild(c);
+  [["Правильно!",it.ok],["Осторожно — так делать нельзя!",it.ok]].forEach((pair,i)=>{
+    const btn=i===0?y:n; const ok=it.ok=== (i===0);
+    btn.onclick=()=>{ done[idx]=ok; y.disabled=n.disabled=true;
+      fb.className="fb show "+(ok?"good":"bad");
+      fb.textContent=ok?("Верно! "+(it.ok?"Это безопасно.":"Это запрещено.")):(it.ok?"Подумай ещё: это действие как раз безопасное.":"Неверно. Так делать нельзя.");
+      setTimeout(render,1300);
+    };
+  });
+}
+function finish(){
+  const ok=Object.values(done).filter(Boolean).length;
+  const box=document.getElementById("game"); box.innerHTML="";
+  const r=document.getElementById("res");
+  document.getElementById("resScore").textContent=ok+" из "+ITEMS.length;
+  r.classList.add("show");
+}
+document.getElementById("again").onclick=()=>{done={};document.getElementById("res").classList.remove("show");render();};
+render();
+</script>
+</body>
+</html>

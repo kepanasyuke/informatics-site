@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8436f"/>
+      <stop offset="1" stop-color="#6d4fd1"/>
+    </linearGradient>
+  </defs>
+  <!-- фон-круг -->
+  <circle cx="64" cy="64" r="58" fill="url(#lg)" opacity=".9"/>
+  <!-- шестерёнка: зубцы по кругу -->
+  <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round">
+    <path d="M64 8 L64 18 M64 110 L64 120 M8 64 L18 64 M110 64 L120 64"/>
+    <path d="M28 28 L35 35 M93 93 L100 100 M100 28 L93 35 M35 93 L28 100"/>
+  </g>
+  <!-- внутреннее кольцо -->
+  <circle cx="64" cy="64" r="48" fill="none" stroke="#ffffff" stroke-opacity=".5" stroke-width="4"/>
+  <!-- код </> крупно в центре -->
+  <g fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M46 52 L30 64 L46 76"/>
+    <path d="M82 52 L98 64 L82 76"/>
+    <path d="M62 76 L66 52"/>
+  </g>
+  <!-- искра вверху справа -->
+  <circle cx="99" cy="26" r="6" fill="#ffd9e5"/>
+  <path d="M99 16 L99 10 M99 36 L99 42 M89 26 L83 26 M109 26 L115 26" stroke="#ffd9e5" stroke-width="3" stroke-linecap="round"/>
+</svg>

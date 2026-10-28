@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Алгоритмы в нашей жизни · 4 класс</title>
+<style>
+  :root{--bg:#f4f6fb; --ink:#1d2742; --accent:#3b5bdb; --accent-d:#2743a8; --soft:#eef1fb; --line:#dde3f1;
+        --ok:#1e7a45; --ok-soft:#e8f6ee; --bad:#c2542f; --bad-soft:#fdeee7;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:18px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:1.4rem 1.25rem;}
+  .wrap{max-width:720px; margin:0 auto;}
+  .kicker{font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.4rem;}
+  header h1{font-size:1.55rem; font-weight:800;}
+  main{max-width:720px; margin:0 auto; padding:1.4rem 1.25rem 2.5rem;}
+  .hint{background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem;}
+  .task{padding:1.15rem 1rem;}
+  .task h2{font-size:1.15rem; margin-bottom:.6rem;}
+  .steps{list-style:none; padding:0; display:grid; gap:.5rem;}
+  .steps li{background:#fff; border:1px solid var(--line); border-radius:12px; padding:.8rem 1rem; display:flex; align-items:center; gap:.6rem; cursor:pointer; user-select:none; transition:transform .05s;}
+  .steps li .grab{font-size:1rem; color:var(--accent); font-weight:800;}
+  .steps li.active{outline:2px solid var(--accent);}
+  .steps li.placed{background:var(--ok-soft); border-color:var(--ok); cursor:default;}
+  .steps li .num{min-width:1.4rem; height:1.4rem; background:var(--accent); color:#fff; border-radius:50%; display:inline-grid; place-items:center; font-size:.85rem; font-weight:700;}
+  .controls{display:flex; gap:.6rem; margin-top:1rem; flex-wrap:wrap;}
+  .btn{border:none; border-radius:10px; padding:.7rem 1.2rem; font-weight:700; cursor:pointer;}
+  .btn.primary{background:var(--accent); color:#fff;}
+  .btn.ghost{background:#fff; border:1px solid var(--line); color:var(--ink);}
+  .res{display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.3rem; text-align:center; margin-top:1rem;}
+  .res .big{font-size:1.7rem; font-weight:800; color:var(--accent-d);}
+  .res.show{display:block;}
+  .feedback{margin-top:.6rem; font-weight:700;}
+  .feedback.ok{color:var(--ok);} .feedback.no{color:var(--bad);}
+  footer{max-width:720px; margin:0 auto; padding:0 1.25rem 2rem; color:#6b7a92; font-size:.82rem;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Приложение для работы на уроке</div>
+  <h1>Собери алгоритм</h1>
+  <p>4 класс · расставь шаги по порядку</p>
+</div></header>
+
+<main class="wrap">
+  <div class="hint">Шаги перепутаны. Нажимай на них по порядку: как должно быть, чтобы алгоритм сработал правильно.</div>
+
+  <div class="task" id="taskA">
+    <h2>Задание 1. «Как пришли в школу»</h2>
+    <ul class="steps" id="listA"></ul>
+    <div class="feedback" id="fbA"></div>
+  </div>
+
+  <div class="task" id="taskB">
+    <h2>Задание 2. «Посади цветок»</h2>
+    <ul class="steps" id="listB"></ul>
+    <div class="feedback" id="fbB"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn ghost" id="reset">Сбросить всё</button>
+  </div>
+
+  <div class="res" id="res">
+    <p>Поздравляю! Ты собрал все алгоритмы правильно.</p>
+    <div class="big">Готово!</div>
+  </div>
+</main>
+
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС. Приложение к уроку «Алгоритмы в нашей жизни».</footer>
+
+<script>
+"use strict";
+// Порядок правильный: order[i] — текст, который должен стоять на месте i.
+const TASKS=[
+  {name:"Как пришли в школу", order:["Взять рюкзак","Одеться по погоде","Выйти из дома","Дойти до школы","Войти в класс"]},
+  {name:"Как посадить цветок", order:["Взять горшок и землю","Насыпать землю","Положить семечко","Присыпать землёй","Полить водой"]}
+];
+const state={A:[],B:[]}; // вычеркнутые (в правильном порядке) индексы по заданиям
+function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function build(taskId,data,pos){
+  const list=document.getElementById("list"+taskId);
+  const remaining=data.order.map((txt,i)=>({txt,i}));
+  const placed=state[taskId].map(i=>i);
+  const pool=remaining.filter(o=>!placed.includes(o.i));
+  const earlier=placed.map(i=>data.order[i]);
+  const shown=shuffle(pool);
+  list.innerHTML="";
+  // Сначала уже поставленные (правильные), потом пул
+  let clickable=[];
+  placed.forEach((_,k)=>list.appendChild(stepEl(null,earlier[k],true,k)));
+  shown.forEach(o=>{
+    const li=stepEl(o,o.txt,false,null);
+    li.onclick=()=>{ tryPlace(taskId,data,pos,o,li); };
+    clickable.push({o,li});
+    list.appendChild(li);
+  });
+  updateFb(taskId,data);
+  if(state[taskId].length===data.order.length){ finish(taskId,data); }
+}
+function stepEl(o,txt,placed,num){
+  const li=document.createElement("li");
+  li.className=placed?"placed":"active";
+  if(placed){ const n=document.createElement("span"); n.className="num"; n.textContent=(num+1); li.appendChild(n); }
+  else { const g=document.createElement("span"); g.className="grab"; g.textContent="☰"; li.appendChild(g); }
+  const t=document.createElement("span"); t.textContent=txt; li.appendChild(t);
+  return li;
+}
+function tryPlace(taskId,data,pos,o,li){
+  const want=pos; // позиция, которую заполняем = длина state
+  if(o.i===want){
+    state[taskId].push(o.i);
+    build(taskId,data,pos); // перестроим
+  } else {
+    const fb=document.getElementById("fb"+taskId);
+    fb.className="feedback no";
+    fb.textContent="Не тот шаг. Подумай: какой шаг идёт сейчас по порядку?";
+    li.style.outline="2px solid var(--bad)";
+    setTimeout(()=>{li.style.outline="";build(taskId,data,pos);},700);
+  }
+}
+function updateFb(id,data){
+  const fb=document.getElementById("fb"+id);
+  if(state[id].length===data.order.length){ fb.className="feedback ok"; fb.textContent="Правильно!"; }
+  else{ fb.className="feedback"; fb.textContent="Правильно поставлено: "+state[id].length+" из "+data.order.length+"."; }
+}
+function finish(id,data){
+  const fb=document.getElementById("fb"+id);
+  fb.className="feedback ok"; fb.textContent="Алгоритм «"+data.name+"» собран верно!";
+  const a=document.getElementById("list"+id); a.innerHTML="";
+  data.order.forEach((txt,k)=>a.appendChild(stepEl(null,txt,true,k)));
+  if(state.A.length===TASKS[0].order.length && state.B.length===TASKS[1].order.length){
+    document.getElementById("res").classList.add("show");
+  }
+}
+document.getElementById("reset").onclick=()=>{
+  state.A=[];state.B=[];document.getElementById("fbA").className="feedback";document.getElementById("fbB").className="feedback";
+  document.getElementById("res").classList.remove("show");
+  build("A",TASKS[0],0); build("B",TASKS[1],0); updateFb("A",TASKS[0]); updateFb("B",TASKS[1]);
+};
+build("A",TASKS[0],0); build("B",TASKS[1],0);
+</script>
+</body>
+</html>
