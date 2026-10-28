@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Системы счисления · ЕГЭ</title>
+<style>
+  :root{--ink:#1b2740; --accent:#3b5bdb; --accent-d:#2743a8; --line:#d8e0f0; --muted:#5b6b83;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:#161c33; font:21px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink);}
+  #deck{position:relative; width:100vw; height:100vh; overflow:hidden;}
+  .slide{position:absolute; inset:0; display:none; padding:6.5vh 7vw; flex-direction:column; justify-content:center; background:#f2f6ff;}
+  .slide.active{display:flex;}
+  .slide h1{font-size:2.3em; font-weight:800; color:var(--accent-d); line-height:1.15; margin-bottom:.4em;}
+  .slide h2{font-size:1.45em; font-weight:700; margin-bottom:.4em;}
+  .slide p,.slide li{font-size:.96em;}
+  .slide ul,ol{margin:.4em 0 .4em 1.2em;}
+  .slide li{margin:.2em 0;}
+  .slide code{background:#eef1fb; border:1px solid var(--line); border-radius:6px; padding:.05em .35em; font-family:ui-monospace,Consolas,monospace;}
+  .slide .kicker{font-size:.64em; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:.5em;}
+  .slide .foot{margin-top:auto; font-size:.5em; color:var(--muted); padding-top:1em;}
+  .slide.cover{background:linear-gradient(135deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff;}
+  .slide.cover .kicker{color:#c7d4fa;}
+  .slide.cover h1{color:#fff;}
+  .formula{background:#fff; border:1px solid var(--line); border-radius:10px; padding:.7em 1em; margin:.5em 0; font-size:1em;}
+  .btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); color:#fff; border:none; width:52px; height:52px; border-radius:50%; font-size:22px; cursor:pointer; z-index:10;}
+  #prev{left:12px;} #next{right:12px;}
+  #count{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:#fff; opacity:.7; font-size:13px; background:rgba(0,0,0,.3); padding:3px 12px; border-radius:20px; z-index:10;}
+  @media print{ body{background:#fff;} .btn,#count{display:none;} .slide{position:static; display:flex!important; height:auto; min-height:96vh; break-after:page;} }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <section class="slide cover active">
+    <div class="kicker">Подготовка к ЕГЭ по информатике · урок 1</div>
+    <h1>Системы счисления</h1>
+    <p>Двоичная, восьмеричная, шестнадцатеричная. Переводы и арифметика.</p>
+    <div class="foot">Автор: [ваше имя] · Информатика · ФГОС</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Базовое понятие</div>
+    <h2>Что такое система счисления</h2>
+    <p>Система счисления — способ записи чисел с помощью цифр. Позиционная: значение цифры зависит от позиции.</p>
+    <div class="formula">Число в системе с основанием <b>p</b>: <code>a<sub>n</sub>...a<sub>1</sub>a<sub>0</sub></code> = <code>a<sub>n</sub>·p<sup>n</sup> + ... + a<sub>1</sub>·p + a<sub>0</sub></code></div>
+    <p>Основание — количество цифр в системе (десятичная: 10, двоичная: 2...).</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Системы и их цифры</div>
+    <h2>Основные системы</h2>
+    <ul>
+      <li><b>Двоичная</b> (осн. 2): цифры <code>0,1</code></li>
+      <li><b>Восьмеричная</b> (осн. 8): <code>0–7</code></li>
+      <li><b>Десятичная</b> (осн. 10): <code>0–9</code></li>
+      <li><b>Шестнадцатеричная</b> (осн. 16): <code>0–9, A=10, B=11, C=12, D=13, E=14, F=15</code></li>
+    </ul>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Перевод из любой системы в десятичную</div>
+    <h2>Перевод в десятичную</h2>
+    <div class="formula"><code>1011<sub>2</sub></code> = 1·2³ + 0·2² + 1·2¹ + 1·2⁰ = 8+0+2+1 = <b>11</b></div>
+    <div class="formula"><code>2F<sub>16</sub></code> = 2·16¹ + 15·16⁰ = 32+15 = <b>47</b></div>
+    <p>Каждую цифру умножаем на основание в степени позиции и складываем.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Перевод из десятичной</div>
+    <h2>Метод деления с остатком</h2>
+    <p>Делим число на основание, пока не станет меньше основания. Остатки, прочитанные снизу вверх, — искомое число.</p>
+    <div class="formula">27 → 27:2=13 ост.1; 13:2=6 ост.1; 6:2=3 ост.0; 3:2=1 ост.1; 1 → читаем: <code>11011<sub>2</sub></code></div>
+    <p>Универсальный приём для любой системы счисления.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Ключевой приём</div>
+    <h2>Связь двоичной ↔ восьмеричной/16-ричной</h2>
+    <p>8 = 2³, значит каждая восьмеричная цифра = ровно 3 двоичные.</p>
+    <p>16 = 2⁴, значит каждая 16-ричная цифра = ровно 4 двоичные.</p>
+    <div class="formula"><code>110 101<sub>2</sub></code> → <code>65<sub>8</sub></code> (слева дополните нули: <code>001 101 01</code>?) — группируем по 3 от конца.</div>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Арифметика в двоичной</div>
+    <h2>Сложение в двоичной системе</h2>
+    <div class="formula">0+0=0; 0+1=1; 1+1=10 (перенос 1 в старший разряд); 1+1+1=11</div>
+    <div class="formula">1101 + 1011 = <code>11000</code></div>
+    <p>Правила сложения в двоичной — база для задач на арифметику в ЕГЭ.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Практика</div>
+    <h2>Задание на уроке</h2>
+    <p>В приложении: переведи числа, сравни значения, выполни сложение в двоичной системе. Есть подсказки и проверка.</p>
+    <p>Разбери типовую задачу ЕГЭ: сколько значащих нулей в двоичной записи числа.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Рефлексия</div>
+    <h2>Итог урока</h2>
+    <ul>
+      <li>Перевод в десятичную — по степеням основания.</li>
+      <li>Перевод из десятичной — делением с остатком.</li>
+      <li>Двоичная ↔ 8/16-ричная — группировкой цифр.</li>
+    </ul>
+    <p><b>Дома:</b> 5 переводов и 3 примера на сложение в двоичной системе.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+</div>
+
+<button class="btn" id="prev">‹</button>
+<button class="btn" id="next">›</button>
+<div id="count">1 / 10</div>
+
+<script>
+"use strict";
+const slides=[].slice.call(document.querySelectorAll(".slide"));
+let cur=slides.findIndex(s=>s.classList.contains("active"));
+function upd(){slides.forEach((s,k)=>s.classList.toggle("active",k===cur));document.getElementById("count").textContent=(cur+1)+" / "+slides.length;}
+function next(){cur=Math.min(cur+1,slides.length-1);upd();}
+function prev(){cur=Math.max(cur-1,0);upd();}
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){next();e.preventDefault();}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){prev();e.preventDefault();}
+});
+</script>
+</body>
+</html>

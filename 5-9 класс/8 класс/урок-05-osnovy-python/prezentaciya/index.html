@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентация · Основы Python · 8 класс</title>
+<style>
+  :root{--ink:#1b2740; --accent:#3b5bdb; --accent-d:#2743a8; --line:#d8e0f0; --muted:#5b6b83;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{background:#161c33; font:21px/1.5 ui-monospace,Consolas,monospace; color:var(--ink);}
+  #deck{position:relative; width:100vw; height:100vh; overflow:hidden;}
+  .slide{position:absolute; inset:0; display:none; padding:6.5vh 7vw; flex-direction:column; justify-content:center; background:#f2f6ff;}
+  .slide.active{display:flex;}
+  .slide h1{font-size:2.1em; font-weight:800; color:var(--accent-d); line-height:1.15; margin-bottom:.4em;}
+  .slide h2{font-size:1.35em; font-weight:700; margin-bottom:.4em;}
+  .slide p,.slide li{font-size:.9em;}
+  .slide .kicker{font-size:.6em; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:.5em;}
+  .slide .foot{margin-top:auto; font-size:.45em; color:var(--muted); padding-top:1em;}
+  .slide.cover{background:linear-gradient(135deg,#16233b,#2f4f86 60%,#3b5bdb); color:#fff;}
+  .slide.cover .kicker{color:#c7d4fa;}
+  .slide.cover h1{color:#fff;}
+  pre{background:#0f1b33; color:#d7e3ff; border-radius:12px; padding:1em 1.2em; font-size:.82em; line-height:1.5; overflow-x:auto; margin:.5em 0;}
+  pre .k{color:#7fb3ff;} pre .s{color:#a9e6a9;} pre .n{color:#ffc appendix;} pre .c{color:#6b7a92;}
+  .out{background:#fff; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; padding:.5em .9em; margin:.4em 0; font-size:.75em;}
+  .btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); color:#fff; border:none; width:52px; height:52px; border-radius:50%; font-size:22px; cursor:pointer; z-index:10;}
+  #prev{left:12px;} #next{right:12px;}
+  #count{position:absolute; bottom:12px; left:50%; transform:translateX(-50%); color:#fff; opacity:.7; font-size:13px; background:rgba(0,0,0,.3); padding:3px 12px; border-radius:20px; z-index:10;}
+  @media print{ body{background:#fff;} .btn,#count{display:none;} .slide{position:static; display:flex!important; height:auto; min-height:96vh; break-after:page;} }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <section class="slide cover active">
+    <div class="kicker">Информатика · 8 класс</div>
+    <h1>Основы программирования на Python</h1>
+    <p>Переменные, условия и циклы — первые шаги в коде.</p>
+    <div class="foot">Автор: [ваше имя] · Информатика · ФГОС</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Организационный момент</div>
+    <h2>О чём урок</h2>
+    <p>Программирование — это составление алгоритма на понятном компьютеру языке. Сегодня возьмём самый популярный школьный язык — Python.</p>
+    <p>Рассмотрим: вывод на экран, переменные, условия «если», циклы «пока».</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Первый код</div>
+    <h2>Вывод на экран</h2>
+    <pre><span class="k">print</span>("Привет, мир!")
+<span class="k">print</span>(2 + 3 * 4)</pre>
+    <div class="out">Привет, мир!<br>14</div>
+    <p>Команда <b>print</b> выводит результат на экран. Python считает за вас.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Переменные</div>
+    <h2>Храним значения</h2>
+    <pre>age = 12
+city = "Москва"
+age = age + 1
+print(age, city)</pre>
+    <div class="out">13 Москва</div>
+    <p>Переменная — «ящик» с именем, где хранится значение. Значение можно менять.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Условия</div>
+    <h2>Команда «если»</h2>
+    <pre>score = 85
+<span class="k">if</span> score >= 60:
+    print("Зачёт")
+<span class="k">else</span>:
+    print("Не зачёт")</pre>
+    <div class="out">Зачёт</div>
+    <p>Программа выбирает один из двух путей в зависимости от условия.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Циклы</div>
+    <h2>Повторение команд</h2>
+    <pre>n = 1
+<span class="k">while</span> n <= 3:
+    print(n)
+    n = n + 1</pre>
+    <div class="out">1<br>2<br>3</div>
+    <p>Цикл «пока» повторяет блок, пока условие истинно. Важно, чтобы цикл когда-нибудь завершился.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Итог по конструкциям</div>
+    <h2>Три главные конструкции</h2>
+    <ul>
+      <li><b>Последовательность</b> — команды по порядку.</li>
+      <li><b>Ветвление</b> — выбор пути по условию (if).</li>
+      <li><b>Повторение</b> — цикл (while).</li>
+    </ul>
+    <p>Из этих блоков строятся любые программы.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Практика</div>
+    <h2>Задание на уроке</h2>
+    <p>В приложении «прокрути» выполнение кода по шагам: укажи, что выведет программа.</p>
+    <p>Разбери, какие значения примут переменные в конце.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Рефлексия</div>
+    <h2>Итог урока</h2>
+    <ul>
+      <li>print выводит, переменная хранит.</li>
+      <li>if выбирает, while повторяет.</li>
+      <li>Команды можно читать и предсказывать результат.</li>
+    </ul>
+    <p><b>Дома:</b> подбери значения, чтобы цикл while выполнился ровно 5 раз.</p>
+    <div class="foot">Автор: [ваше имя]</div>
+  </section>
+
+</div>
+
+<button class="btn" id="prev">‹</button>
+<button class="btn" id="next">›</button>
+<div id="count">1 / 10</div>
+
+<script>
+"use strict";
+const slides=[].slice.call(document.querySelectorAll(".slide"));
+let cur=slides.findIndex(s=>s.classList.contains("active"));
+function upd(){slides.forEach((s,k)=>s.classList.toggle("active",k===cur));document.getElementById("count").textContent=(cur+1)+" / "+slides.length;}
+function next(){cur=Math.min(cur+1,slides.length-1);upd();}
+function prev(){cur=Math.max(cur-1,0);upd();}
+document.getElementById("next").onclick=next;
+document.getElementById("prev").onclick=prev;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){next();e.preventDefault();}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){prev();e.preventDefault();}
+});
+</script>
+</body>
+</html>

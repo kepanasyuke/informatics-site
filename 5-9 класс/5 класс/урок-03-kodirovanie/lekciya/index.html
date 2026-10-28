@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лекция · Кодирование информации · 5 класс</title>
+<style>
+  :root{--bg:#fbfaf7; --ink:#26241f; --accent:#3b5bdb; --accent-d:#2743a8; --muted:#6a6255; --line:#e7e1d5;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:17px/1.7 Georgia,serif;}
+  .wi{max-width:820px; margin:0 auto; padding:0 1.4rem;}
+  header{background:linear-gradient(120deg,#1a2740,#2f4f86 60%,#3b5bdb); color:#fff; padding:2rem 1.4rem;}
+  .kicker{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.5rem;}
+  header h1{font-size:1.9rem; font-weight:800;}
+  header p{color:#dbe4fb; margin-top:.4rem;}
+  main{max-width:820px; margin:0 auto; padding:1.6rem 1.4rem 3rem;}
+  h2{font-size:1.35rem; color:var(--accent-d); margin:1.5rem 0 .5rem; border-top:1px solid var(--line); padding-top:.5rem;}
+  h3{font-size:1.05rem; margin:.9rem 0 .3rem;}
+  p{margin:.5rem 0;}
+  ul,ol{margin:.4rem 0 .6rem 1.2rem;}
+  li{margin:.2rem 0;}
+  code{background:#f1f4fd; border:1px solid var(--line); border-radius:5px; padding:.05em .3em; font-family:ui-monospace,Consolas,monospace;}
+  .term{background:#f1f4fd; border-left:3px solid var(--accent); padding:.6rem .9rem; margin:.7rem 0; border-radius:0 8px 8px 0;}
+  .term b{color:var(--accent-d);}
+  .ex{background:#f6faf6; border-left:3px solid #2f9e6b; padding:.6rem .9rem; margin:.7rem 0; border-radius:0 8px 8px 0;}
+  .ex b{color:#1e7a45;}
+  .qa{background:#fff7ea; border-radius:10px; padding:.8rem 1rem; margin:.7rem 0;}
+  .qa b{color:#a07a00;}
+  .action{display:flex; justify-content:flex-end; margin-bottom:1rem;}
+  .btn{border:none; background:var(--accent); color:#fff; font-weight:700; padding:.6rem 1.2rem; border-radius:9px; cursor:pointer;}
+  .foot{max-width:820px; margin:0 auto; padding:0 1.4rem 2rem; color:var(--muted); font-size:.85rem;}
+  @media print{ .action{display:none;} }
+</style>
+</head>
+<body>
+<header><div class="wi">
+  <div class="kicker">Лекция · материал для вычитки</div>
+  <h1>Кодирование информации</h1>
+  <p>5 класс · Раздел «Информация и информационные процессы»</p>
+</div></header>
+
+<main>
+  <div class="action"><button class="btn" onclick="window.print()">Печать лекции</button></div>
+
+  <h2>1. Организация урока</h2>
+  <p><b>Цель урока:</b> сформировать представление о кодировании как о способе представления информации с помощью условных знаков.</p>
+  <p><b>Задачи:</b></p>
+  <ul>
+    <li>ввести понятия «код» и «кодирование»;</li>
+    <li>показать примеры кодов в повседневной жизни и технике;</li>
+    <li>научить кодировать и декодировать простые сообщения.</li>
+  </ul>
+
+  <h2>2. Вводная часть (5 минут)</h2>
+  <p>Задайте вопрос: «Как сообщить другу секрет, чтобы другой не понял?». Подведите к идее: придумать условные знаки — то есть код.</p>
+
+  <h2>3. Основной материал</h2>
+  <h3>3.1. Код и кодирование</h3>
+  <p>Код — система условных знаков для представления информации. Кодирование — перевод информации в форму, удобную для хранения и передачи.</p>
+  <div class="term"><b>Термин:</b> кодирование — представление информации с помощью определённой системы знаков (кода).</div>
+  <p>Обратный процесс — декодирование (расшифровка).</p>
+
+  <h3>3.2. Примеры кодов</h3>
+  <ul>
+    <li>Буквы алфавита и цифры;</li>
+    <li>азбука Морзе (точки и тире);</li>
+    <li>дорожные знаки, сигналы светофора;</li>
+    <li>штрих-коды и QR-коды;</li>
+    <li>двоичный код компьютера (0 и 1).</li>
+  </ul>
+
+  <h3>3.3. Одна информация — разные коды</h3>
+  <p>Одну и ту же информацию можно представить разными способами.</p>
+  <div class="ex"><b>Пример.</b> Число «10»: «10» (десятичное), «десять», «X» (римское), <code>1010<sub>2</sub></code> (двоичное). Смысл один, форма разная.</div>
+
+  <h3>3.4. Требования к коду</h3>
+  <ul>
+    <li><b>Однозначность</b> — каждому знаку соответствует одно значение;</li>
+    <li><b>Понятность</b> — получатель знает правила кода;</li>
+    <li><b>Удобство</b> — кодирование упрощает хранение и передачу.</li>
+  </ul>
+
+  <h2>4. Практическая часть</h2>
+  <p>Ученики в приложении расшифровывают сообщение, закодированное правилом «А=1, Б=2…», и кодируют собственное слово. Правильность проверяется автоматически.</p>
+
+  <h2>5. Закрепление и рефлексия</h2>
+  <div class="qa"><b>Вопросы для проверки:</b>
+    <ol>
+      <li>Что такое код?</li>
+      <li>Назови три примера кодов из жизни.</li>
+      <li>Как называется обратный процесс — расшифровка?</li>
+    </ol>
+  </div>
+
+  <h2>6. Домашнее задание</h2>
+  <p>Закодируй своё имя правилом «А=1, Б=2, …, Я=33» и запиши результат. Придумай собственный код из знаков для трёх слов.</p>
+</main>
+
+<div class="foot">Автор: [ваше имя] · Информатика · ФГОС. Материал для вычитки к уроку «Кодирование информации».</div>
+</body>
+</html>

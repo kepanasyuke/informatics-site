@@ -1,0 +1,19 @@
+{
+  "users": {
+    "anna@test.ru": {
+      "name": "Anna",
+      "key": "7NKP8-6BCSP-XG4KM",
+      "date": "2026-10-28"
+    },
+    "boris@test.ru": {
+      "name": "Boris",
+      "key": "PLR2U-ZUALD-7CNRW",
+      "date": "2026-10-28"
+    },
+    "vika@test.ru": {
+      "name": "Vika",
+      "key": "AMS7A-L5FZT-4T6QY",
+      "date": "2026-10-28"
+    }
+  }
+}

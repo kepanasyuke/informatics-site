@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приложение · Основы Python · 8 класс</title>
+<style>
+  :root{--bg:#f4f6fb; --ink:#1d2742; --accent:#3b5bdb; --accent-d:#2743a8; --soft:#eef1fb; --line:#dde3f1;
+        --ok:#1e7a45; --ok-soft:#e8f6ee; --bad:#b3451d; --bad-soft:#fbece4;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:16px/1.6 ui-monospace,Consolas,monospace;}
+  header{background:linear-gradient(120deg,#16233b,#2f4f86 60%,#3b5bdb); color:#fff; padding:1.5rem 1.25rem;}
+  .wrap{max-width:740px; margin:0 auto;}
+  .kicker{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#c7d4fa; font-weight:700; margin-bottom:.4rem;}
+  header h1{font-size:1.5rem; font-weight:800;}
+  main{max-width:740px; margin:0 auto; padding:1.4rem 1.25rem 2.5rem;}
+  .hint{background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; border-radius:0 10px 10px 0; margin-bottom:1rem;}
+  .card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; margin:.9rem 0;}
+  .card h3{font-size:1rem; margin-bottom:.5rem; font-family:system-ui,sans-serif;}
+  pre{background:#0f1b33; color:#d7e3ff; border-radius:10px; padding:.9em 1em; font-size:.9em; line-height:1.5; margin:.5rem 0;}
+  .q{font-family:system-ui,sans-serif; font-weight:700; margin:.6rem 0 .4rem;}
+  .opt{border:1px solid var(--line); background:#fbfcff; border-radius:9px; padding:.6rem .85rem; margin:.35rem 0; cursor:pointer; font-family:system-ui,sans-serif;}
+  .opt.selected{border-color:var(--accent); background:var(--soft);}
+  .opt.right{background:var(--ok-soft); border-color:var(--ok);}
+  .opt.wrong{background:var(--bad-soft); border-color:var(--bad);}
+  .actions{display:flex; gap:.6rem; margin-top:1rem; flex-wrap:wrap;}
+  .btn{border:none; border-radius:10px; padding:.7rem 1.2rem; font-weight:700; cursor:pointer; font-family:system-ui,sans-serif;}
+  .btn.primary{background:var(--accent); color:#fff;}
+  .btn.ghost{background:#fff; border:1px solid var(--line); color:var(--ink);}
+  .res{display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.3rem; text-align:center; margin-top:1rem; font-family:system-ui,sans-serif;}
+  .res .big{font-size:1.7rem; font-weight:800; color:var(--accent-d);}
+  .res.show{display:block;}
+  footer{max-width:740px; margin:0 auto; padding:0 1.25rem 2rem; color:#6b7a92; font-size:.82rem;}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Приложение для работы на уроке</div>
+  <h1>Основы Python · трассировка</h1>
+  <p>8 класс · что выведет программа?</p>
+</div></header>
+
+<main class="wrap">
+  <div class="hint">Выполни код «в голове» по шагам и выбери, что программа выведет на экран. Это навык трассировки.</div>
+  <div id="quiz"></div>
+  <div class="actions">
+    <button class="btn primary" id="check">Проверить</button>
+    <button class="btn ghost" id="again">Заново</button>
+  </div>
+  <div class="res" id="res"><p>Твой результат</p><div class="big" id="resScore">0</div></div>
+</main>
+
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС. Приложение к уроку «Основы Python».</footer>
+
+<script>
+"use strict";
+const QUIZ=[
+  {code:`a = 3\nb = a * 2\nprint(b)`, opts:["5","6","9","32"], a:1},
+  {code:`x = 10\nif x > 5:\n    print("да")\nelse:\n    print("нет")`, opts:["да","нет","10","ошибка"], a:0},
+  {code:`n = 1\ns = 0\nwhile n <= 3:\n    s = s + n\n    n = n + 1\nprint(s)`, opts:["3","6","10","1+2+3"], a:1},
+  {code:`print(7 % 3)`, opts:["2","1","3","0"], a:1},
+  {code:`name = "Кот"\nprint("Привет, " + name)`, opts:["Привет,Кот","Привет, Кот","ошибка","Кот"], a:1}
+];
+let sel={};
+function render(){
+  const box=document.getElementById("quiz"); box.innerHTML="";
+  QUIZ.forEach((item,qi)=>{
+    const c=document.createElement("div"); c.className="card";
+    const h=document.createElement("h3"); h.textContent="Задача "+(qi+1);
+    const pre=document.createElement("pre"); pre.textContent=item.code;
+    const q=document.createElement("div"); q.className="q"; q.textContent="Что выведет программа?";
+    c.appendChild(h); c.appendChild(pre); c.appendChild(q);
+    item.opts.forEach((o,oi)=>{
+      const opt=document.createElement("div"); opt.className="opt"+(sel[qi]===oi?" selected":"");
+      opt.textContent=o; opt.dataset.q=qi; opt.dataset.o=oi;
+      opt.onclick=()=>{box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(x=>x.classList.remove("selected"));opt.classList.add("selected");sel[qi]=oi;};
+      c.appendChild(opt);
+    });
+    box.appendChild(c);
+  });
+}
+function check(){
+  const box=document.getElementById("quiz");
+  if(Object.keys(sel).length<QUIZ.length){alert("Ответь на все задачи.");return;}
+  let ok=0;
+  QUIZ.forEach((item,qi)=>{
+    if(sel[qi]===item.a)ok++;
+    box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(o=>o.classList.remove("right","wrong"));
+    box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(o=>{
+      if(+o.dataset.o===item.a)o.classList.add("right");
+      else if(+o.dataset.o===sel[qi])o.classList.add("wrong");
+    });
+  });
+  document.getElementById("resScore").textContent=ok+" из "+QUIZ.length;
+  document.getElementById("res").classList.add("show");
+}
+document.getElementById("check").onclick=check;
+document.getElementById("again").onclick=()=>{sel={};document.getElementById("res").classList.remove("show");render();};
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЕГЭ · тренажёр · Системы счисления</title><style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#f4f6fb;color:#1d2742;font:17px/1.6 system-ui,Arial,sans-serif}
+header{background:linear-gradient(120deg,#16233b,#2f4f86 60%,#3b5bdb);color:#fff;padding:1.6rem 1.25rem}
+.wrap{max-width:780px;margin:0 auto}.kicker{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:#c7d4fa;font-weight:700;margin-bottom:.4rem}header h1{font-size:1.6rem;font-weight:800}header p{color:#dbe4fb;font-size:.95rem;margin-top:.2rem}
+main{max-width:780px;margin:0 auto;padding:1.4rem 1.25rem 2.5rem}
+.hint{background:#eef1fb;border-left:4px solid #3b5bdb;padding:.8rem 1rem;border-radius:0 10px 10px 0;margin-bottom:1rem}
+.card{background:#fff;border:1px solid #dde3f1;border-radius:12px;padding:1rem 1.1rem;margin:.8rem 0}
+.card h3{font-size:1.05rem;margin-bottom:.4rem}
+.qtext{font-weight:700;margin-bottom:.5rem}
+code,pre{font-family:ui-monospace,Consolas,monospace;background:#eef1fb;border-radius:5px;padding:.05em .3em}
+.opt{border:1px solid #dde3f1;background:#fbfcff;border-radius:9px;padding:.55rem .85rem;margin:.4rem 0;cursor:pointer}.opt.selected{border-color:#3b5bdb;background:#eef1fb}.opt.right{background:#e8f6ee;border-color:#1e7a45}.opt.wrong{background:#fbece4;border-color:#b3451d}
+.sol{display:none;background:#fff7ea;border-left:4px solid #c9a227;border-radius:0 10px 10px 0;padding:.7rem .9rem;margin-top:.6rem;font-size:.95rem}.sol.show{display:block}.sol b{color:#8a6a10}
+.actions{display:flex;gap:.6rem;margin:1rem 0;flex-wrap:wrap}.btn{border:none;border-radius:10px;padding:.7rem 1.2rem;font-weight:700;cursor:pointer}.btn.primary{background:#3b5bdb;color:#fff}.btn.ghost{background:#fff;border:1px solid #dde3f1;color:#1d2742}
+.res{display:none;background:#fff;border:1px solid #dde3f1;border-radius:14px;padding:1.3rem;text-align:center;margin-top:1rem}.res .big{font-size:1.9rem;font-weight:800;color:#2743a8}.res.show{display:block}
+footer{max-width:780px;margin:0 auto;padding:0 1.25rem 2rem;color:#6b7a92;font-size:.82rem}
+</style></head><body>
+<header><div class="wrap"><div class="kicker">Подготовка к ЕГЭ · тренажёр</div><h1>Системы счисления</h1><p>Реши задачу, затем нажми «Разбор» и сверь своё решение с пошаговым.</p></div></header>
+<main class="wrap">
+<div class="hint">Задания по переводу и анализу чисел в разных системах счисления — частая тема ЕГЭ (№ 1, 14, 16).</div>
+<div id="tasks"></div>
+<div class="res" id="res"><p>Решено верно</p><div class="big" id="score">0</div></div>
+</main>
+<footer class="wrap">Автор: [ваше имя] · Информатика · ФГОС · ЕГЭ: тренажёр «Системы счисления».</footer>
+<script>
+"use strict";
+var TASKS=[
+ {q:"Чему равно число 101101₂ в десятичной системе счисления?", opts:["44","45","46","53"],a:1,
+  sol:"Развернём по степеням двойки: 101101₂ = 1·2⁵+0·2⁴+1·2³+1·2²+0·2¹+1·2⁰ = 32+0+8+4+0+1 = <b>45</b>."},
+ {q:"Сколько единиц в двоичной записи числа 50?", opts:["3","4","5","2"],a:0,
+  sol:"50 = 32+16+0+0+2+0 = 110010₂. Считаем единицы: 1,1,0,0,1,0 — итого <b>3</b> единицы."},
+ {q:"Какое из чисел наименьшее: 21₁₆, 25₈ или 100110₂?", opts:["21₁₆","25₈","100110₂","равны"],a:2,
+  sol:"Переведём: 21₁₆=2·16+1=33; 25₈=2·8+5=21; 100110₂=32+4+2=38. Наименьшее — <b>100110₂=38</b>."},
+ {q:"Чему равно значение в десятичной системе у числа 2F₁₆?", opts:["31","47","52","22"],a:1,
+  sol:"F=15. 2F₁₆ = 2·16+15 = 32+15 = <b>47</b>."},
+ {q:"Сколько значащих нулей в двоичной записи числа 40?", opts:["4","3","5","2"],a:1,
+  sol:"40 = 32+8 = 101000₂. Битовая запись: 1 0 1 0 0 0. Ведущие нули не считаем. Значащие нули: позиции 4,2,1 — итого <b>3</b>."}
+];
+var sel={};
+function render(){var box=document.getElementById("tasks");box.innerHTML="";TASKS.forEach(function(it,qi){var c=document.createElement("div");c.className="card";var h=document.createElement("h3");h.textContent="Задача "+(qi+1);c.appendChild(h);var q=document.createElement("div");q.className="qtext";q.textContent=it.q;c.appendChild(q);it.opts.forEach(function(o,oi){var x=document.createElement("div");x.className="opt"+(sel[qi]===oi?" selected":"");x.textContent=o;x.dataset.q=qi;x.dataset.o=oi;x.onclick=function(){box.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(function(y){y.classList.remove("selected")});x.classList.add("selected");sel[qi]=oi};c.appendChild(x)});var s=document.createElement("div");s.className="sol";s.innerHTML="<b>Разбор:</b> "+it.sol;s.id="sol"+qi;c.appendChild(s);c.appendChild(sAbsBtn(qi));box.appendChild(c)})}
+function sAbsBtn(qi){var b=document.createElement("button");b.className="btn ghost";b.style.padding=".4rem .8rem";b.textContent="Показать разбор";b.style.marginTop=".4rem";b.onclick=function(){document.getElementById("sol"+qi).classList.toggle("show")};return b}
+document.getElementById("tasks").innerHTML="";render();
+var checkBtn=document.createElement("button");checkBtn.className="btn primary";checkBtn.textContent="Проверить";checkBtn.onclick=function(){if(Object.keys(sel).length<TASKS.length){alert("Ответь на все задачи.");return}var ok=0;TASKS.forEach(function(it,qi){if(sel[qi]===it.a)ok++});document.querySelectorAll(".opt").forEach(function(o){o.classList.remove("right","wrong")});TASKS.forEach(function(it,qi){document.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(function(o){if(+o.dataset.o===it.a)o.classList.add("right");else if(+o.dataset.o===sel[qi])o.classList.add("wrong")})});document.getElementById("score").textContent=ok+" из "+TASKS.length;document.getElementById("res").classList.add("show")};
+var again=document.createElement("button");again.className="btn ghost";again.textContent="Заново";again.onclick=function(){sel={};document.getElementById("res").classList.remove("show");document.querySelectorAll(".sol").forEach(function(s){s.classList.remove("show")});render()};
+document.getElementById("tasks").insertAdjacentElement("afterend",(function(){var d=document.createElement("div");d.className="actions";d.appendChild(checkBtn);d.appendChild(again);return d})());
+</script></body></html>
