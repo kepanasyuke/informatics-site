@@ -64,6 +64,22 @@ footer{max-width:760px;margin:0 auto;padding:0 1.25rem 2rem;color:#8a93ad;font-s
 <script>"use strict";
 var G=[{"type": "term", "title": "Терминал: где я?", "hint": "Покажи текущую папку.", "shell": "Git Bash / bash", "prompt": "user@pc:~$ _\n(покажи, в какой папке ты находишься)", "expect": "pwd", "correct": "pwd"}, {"type": "term", "title": "Терминал: посмотри папку", "hint": "Выведи список файлов и папок.", "shell": "Git Bash / bash", "prompt": "user@pc:~$ _\n(посмотри, что лежит в папке)", "expect": "ls", "correct": "ls"}, {"type": "term", "title": "Терминал: открой текстовый файл", "hint": "Прочитай содержимое файла notes.txt через терминал.", "shell": "Git Bash / bash", "prompt": "user@pc:~/docs$ _\n(открой и покажи содержимое notes.txt)", "expect": "cat notes.txt", "correct": "cat notes.txt"}, {"type": "term", "title": "PowerShell: прочитай файл", "hint": "В PowerShell прочитай текстовый файл readme.txt.", "shell": "PowerShell", "prompt": "PS C:\\docs> _\n(покажи содержимое readme.txt)", "expect": "Get-Content readme.txt", "correct": "Get-Content readme.txt"}, {"type": "term", "title": "Терминал: создай текстовый файл", "hint": "Создай текстовый файл hello.txt.", "shell": "Git Bash / bash", "prompt": "user@pc:~$ _\n(создай файл hello.txt)", "expect": "touch hello.txt", "correct": "touch hello.txt"}, {"type": "term", "title": "PowerShell: список каталога", "hint": "Выведи содержимое каталога.", "shell": "PowerShell", "prompt": "PS C:\\> _\n(покажи список файлов и папок)", "expect": "dir", "correct": "dir"}, {"type": "order", "title": "Собери последовательность понятий", "hint": "Расставь понятия урока в удобном порядке изучения.", "lines": ["Информационный объём", "Кодирование"], "solution": ["Кодирование", "Информационный объём"]}, {"type": "fill", "title": "Вставь недостающее понятие", "hint": "Какой термин соответствует определению?", "base": "представление информации с помощью кода.", "options": ["Кодирование", "Информационный объём"], "correct": "Кодирование"}, {"type": "odd", "title": "Найди лишний факт", "hint": "Убери блок, который не по теме.", "lines": ["Алфавитный подход измеряет информационный объём сообщения.", "Единицы информации: бит, байт, Кбайт, Мбайт, Гбайт.", "Одну информацию можно закодировать разными способами."], "extra": "Одну информацию можно закодировать разными способами."}, {"type": "tf", "title": "Верно или неверно?", "hint": "Оцени утверждение по теме урока.", "stmt": "Алфавитный подход измеряет информационный объём сообщения.", "answer": true}, {"type": "seq", "title": "Выстрой шаги по порядку", "hint": "Расположи шаги в правильной последовательности.", "lines": ["Единицы информации: бит, байт, Кбайт, Мбайт, Гбайт.", "Алфавитный подход измеряет информационный объём сообщения.", "Одну информацию можно закодировать разными способами."], "solution": ["Алфавитный подход измеряет информационный объём сообщения.", "Единицы информации: бит, байт, Кбайт, Мбайт, Гбайт.", "Одну информацию можно закодировать разными способами."]}, {"type": "code_order", "title": "Собери код из кусочков", "hint": "Расставь фрагменты так, чтобы получился верный блок.", "lines": ["Кодирование"], "solution": ["Кодирование"]}, {"type": "what", "title": "Что делает этот блок?", "hint": "Выбери верное описание действия.", "code": "\"Кодирование\"", "options": ["представление информации с помощью кода.", "количество информации в сообщении; зависит от алфавита."], "correct": "представление информации с помощью кода."}, {"type": "code_fill", "title": "Восстанови строку кода", "hint": "Вставь пропущенный фрагмент.", "base": "представление информации с помощью кода.", "options": ["Кодирование", "Информационный объём"], "correct": "Кодирование"}, {"type": "bug", "title": "Найди ошибку", "hint": "Строка содержит ошибку. Выбери вариант.", "code": "повтори по теме: \"Алфавитный подход измеряет информационный объём сообщения.\"", "options": ["Единицы информации: бит, байт, Кбайт, Мбайт, Гбайт.", "Алфавитный подход измеряет информационный объём сообщения.", "верного варианта нет"], "correct": "Единицы информации: бит, байт, Кбайт, Мбайт, Гбайт."}, {"type": "sort", "title": "Отсортируй по алфавиту", "hint": "Расположи понятия в алфавитном порядке.", "lines": ["Информационный объём", "Кодирование"], "solution": ["Информационный объём", "Кодирование"]}, {"type": "choose", "title": "Что вернёт этот блок?", "hint": "Представь, что команда выполнилась. Что она вернёт?", "code": "\"Кодирование\" → результат", "options": ["представление информации с помощью кода.", "количество информации в сообщении; зависит от алфавита."], "correct": "представление информации с помощью кода."}];
 var cur=0,pts=0,fdb=null,selL=null,selR={},found=[],openA=null,openB=null,dz=[];
+/* «аватары» мини-игр: у каждого типа своя иконка и акцентный цвет (как в Яндекс Играх) */
+var GA={order:["🧩","#6d4fd1"],seq:["🔁","#6d4fd1"],code_order:["🧱","#6d4fd1"],py_order:["🐍","#2563eb"],
+        py_out:["▶️","#2563eb"],py_fill:["🔤","#2563eb"],odd:["🙈","#d4492f"],match:["🔗","#0f9d8c"],
+        tf:["⚖️","#2563eb"],term:["🖥️","#0e5e6c"],sim_app:["🪟","#0e5e6c"],fill:["✏️","#d97706"],
+        code_fill:["🟰","#d97706"],what:["🤔","#d97706"],bug:["🐞","#d4492f"],sort:["🔤","#0f9d8c"],
+        memory:["🃏","#d4492f"],choose:["🎯","#2563eb"],chain:["🗺️","#e8436f"]};
+var FREE=3; /* первые 3 игры открыты бесплатно, дальше — по подписке */
+function paidGame(){ try{ return !!localStorage.getItem("inf_act"); }catch(e){ return false; } }
+window.__noAutoPw=true; /* в app не показываем оверлей подписки автоматически (гейт свой) */
+function buyLaterPanel(){
+  stage.innerHTML='<div class="panel" style="text-align:center;padding:2rem"><div style="font-size:3rem">🔒</div>'
+    +'<h2 style="font-size:1.3rem;margin:.4rem 0">Остальные игры — по подписке</h2>'
+    +'<p style="color:#5b6b83;margin-bottom:1rem">Ты прошёл '+FREE+' бесплатных игр. Оформи подписку или введи ключ доступа, чтобы открыть все '+G.length+' игр урока.</p>'
+    +'<div class="actions" style="justify-content:center"><button class="btn primary" onclick="__pwShow&&__pwShow()">Ввести ключ / подписка</button>'
+    +'<button class="btn ghost" onclick="cur=0;pts=0;render(0);bar()">Купить позже</button></div></div>';
+}
 var stage=document.getElementById("stage");
 function bar(){var p=document.getElementById("prog");p.innerHTML="";G.forEach(function(_,i){var s=document.createElement("div");s.className="step"+(i<cur?" on":"");p.appendChild(s)});}
 function escT(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
@@ -75,11 +91,15 @@ function checkOk(ok){fdb={ok:ok};
   var old=stage.querySelector(".fdb");if(old)old.remove();stage.appendChild(d);
   document.querySelector(".btn.primary").disabled=false;}
 function render(t){
+  if(t>=FREE&&!paidGame()){cur=t;buyLaterPanel();return;}
   document.querySelectorAll(".fdb").forEach(function(x){x.remove()});
   var it=G[t];var h=document.createElement("div");
   h.className="panel";
+  var gv=GA[it.type]||["🎮","#e8436f"];
   var body="";
-  function fmtOK(){var b=document.createElement("button");b.className="btn primary";b.textContent="Дальше →";b.disabled=true;b.onclick=function(){cur++;if(cur>=G.length){end();}else{render(cur);}};return b.outerHTML;}
+  var headAvatar='<div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.4rem"><span style="flex:none;width:2.6rem;height:2.6rem;border-radius:14px;background:'+gv[1]+';display:inline-flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 8px 18px rgba(0,0,0,.14)">'+gv[0]+'</span><h2 style="font-size:1.15rem;font-weight:900;color:#191f33;margin:0">'+escT(it.title)+'</h2></div>';
+  function fmtOK(){var b=document.createElement("button");b.className="btn primary";b.textContent="Дальше →";b.disabled=true;b.onclick=function(){goNext();};return b.outerHTML;}
+  function goNext(){cur++;if(cur>=G.length){end();}else if(cur>=FREE&&!paidGame()){buyLaterPanel();}else{render(cur);}}
   if(it.type==="order"||it.type==="seq"||it.type==="code_order"||it.type==="py_order"){
     body='<span class="pnote">Расставь по порядку</span><div class="code">'+it.lines.map(function(x,i){return '<div class="row" data-i="'+i+'">'+escT(x)+'</div>'}).join("")+'</div><div class="actions">'+fmtOK()+'</div>';
   } else if(it.type==="py_out"){
@@ -132,7 +152,7 @@ function render(t){
     body='<span class="pnote">Открой пары</span><div class="grid2">'+tiles.map(function(x,i){return '<div class="tile" data-t="'+i+'" data-g="'+x.g+'" data-i="'+x.i+'">?</div>'}).join("")+'</div>'
         +'<div class="actions"><button class="btn primary" id="membtn" disabled>Пары найдены</button></div>';
   }
-  h.innerHTML='<h2>'+escT(it.title)+'</h2><div class="hint">'+escT(it.hint||"")+'</div>'+body
+  h.innerHTML=headAvatar+'<div class="hint">'+escT(it.hint||"")+'</div>'+body
     +'<div class="score">Очки: <b>'+pts+'</b></div>';
   stage.innerHTML="";
   stage.appendChild(h);
@@ -399,7 +419,8 @@ body{background:var(--ds-paper);color:var(--ds-ink);font-family:var(--ds-font);}
   var pw=document.getElementById("pw");if(!pw)return;
   function show(){pw.classList.add("show");}
   function hide(){pw.classList.remove("show");}
-  if(!active()){setTimeout(show,300);}
+  window.__pwShow=show;
+  if(!active() && !window.__noAutoPw){setTimeout(show,300);}
   var ok=document.getElementById("pwok");
   var inp=document.getElementById("pwkey");
   var msg=document.getElementById("pwmsg");
