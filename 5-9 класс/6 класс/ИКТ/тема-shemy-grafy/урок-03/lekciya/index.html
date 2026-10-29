@@ -135,7 +135,8 @@ body{background:var(--ds-paper);color:var(--ds-ink);font-family:var(--ds-font);}
   var pw=document.getElementById("pw");if(!pw)return;
   function show(){pw.classList.add("show");}
   function hide(){pw.classList.remove("show");}
-  if(!active()){setTimeout(show,300);}
+  window.__pwShow=show;
+  if(!active() && !window.__noAutoPw){setTimeout(show,300);}
   var ok=document.getElementById("pwok");
   var inp=document.getElementById("pwkey");
   var msg=document.getElementById("pwmsg");
